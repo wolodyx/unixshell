@@ -15,8 +15,10 @@ chapters:
 - file: src/streams
 - file: src/vim
 - file: src/jobs
+- file: src/script
 - file: src/build
 - file: src/tmux
 - file: src/getopt
-- file: src/regex
+- file: src/compile
+- file: src/search
 
