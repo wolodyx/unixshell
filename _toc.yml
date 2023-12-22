@@ -13,6 +13,7 @@ chapters:
 - file: src/fs
 - file: src/env
 - file: src/streams
+- file: src/archive
 - file: src/vim
 - file: src/jobs
 - file: src/script
