@@ -4,6 +4,17 @@
 format: jb-book
 root: intro
 chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+- file: src/setup
+- file: src/cli
+- file: src/less
+- file: src/man
+- file: src/fs
+- file: src/env
+- file: src/streams
+- file: src/vim
+- file: src/jobs
+- file: src/build
+- file: src/tmux
+- file: src/getopt
+- file: src/regex
+
