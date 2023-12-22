@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>4. Справочная система man &#8212; Командная оболочка UNIX</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/man';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Работа с файлами" href="fs.html" />
+    <link rel="prev" title="3. Утилита less" href="less.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Введение
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">1. Подготовка рабочего окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">2. Терминал и командная строка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="less.html">3. Утилита less</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Справочная система man</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fs.html">5. Работа с файлами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env.html">6. Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streams.html">7. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archive.html">8. Архивирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">9. Редактирование в vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">10. Управление заданиями</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">11. Сценарии bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">12. Создание простой программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">13. Терминальный мультиплексор</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getopt.html">14. Разбор аргументов программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compile.html">15. Компиляция программы на Си</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">16. Поиск файлов и в файлах</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell/issues/new?title=Issue%20on%20page%20%2Fsrc/man.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/src/man.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Справочная система man</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2. О справочной системе <code class="docutils literal notranslate"><span class="pre">man</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.3. Структура справочной страницы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.4. Поиск информации</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.5. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.6. Вопросы для самоконтроля</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="man">
+<h1><span class="section-number">4. </span>Справочная система man<a class="headerlink" href="#man" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2><span class="section-number">4.1. </span>Введение<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Невозможно удержать в голове всю необходимую информацию об инструментах и средствах, которые понадобятся при решении задач.
+Приобретенный ранее опыт забывается, если не воспользоваться им в течение продолжительного времени.
+Помнить подробности не обязательно, если уметь находить нужную информацию.
+Огромный массив постоянно обновляемой неструктурированной информации предоставляет веб, а инструментом поиска является поисковые системы <code class="docutils literal notranslate"><span class="pre">yandex</span></code> и <code class="docutils literal notranslate"><span class="pre">google</span></code>.
+Система UNIX укомплектована собственной справочной системой с подробной и структурированной информацией о системе и установленных программах.
+В отличие от веба, она доступна и без подключения к интернету.</p>
+<p>В мире UNIX распространено убеждение, что программа без справки – это некачественная программа.
+Все популярные программы дополнены подробной документацией, в которой пользователи ищут ответы на свои вопросы.
+Технические тексты в UNIX написаны разработчиками для разработчиков и отлажены в течение долгих лет.
+Их содержание однозначно и лаконично, что заставляет читать документацию неспешно и вдумчиво.
+В среде русскоязычных пользователей процесс изучения документации UNIX описывают выражением “курить маны”, где под словом “ман” подразумевают утилиту <code class="docutils literal notranslate"><span class="pre">man</span></code>, используемую для работы со справочной системой.</p>
+<p><em>Краткую информацию</em> о себе любая консольная программа выдает самостоятельно, если запустить ее с опцией <code class="docutils literal notranslate"><span class="pre">--help</span></code>, <code class="docutils literal notranslate"><span class="pre">-h</span></code> или <code class="docutils literal notranslate"><span class="pre">-help</span></code>.
+Ту же самую информацию программа распечатает, если аргументов команды не хватает или они оформлены неверно:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[skt@machine ~]$ </span>grep
+<span class="go">Usage: grep [OPTION]... PATTERN [FILE]...</span>
+<span class="go">Try `grep --help&#39; for more information.</span>
+</pre></div>
+</div>
+<p>В краткой информации обычно содержится версия исполняемого файла и описание опций и аргументов.
+Многофункциональные утилиты как <code class="docutils literal notranslate"><span class="pre">bash</span></code>, <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">git</span></code> обладают более обширным описанием.
+Такой объем текста следует структурировать (разбивать на разделы, выделять заголовки, ставить ссылки), искать по нему и перемещаться.
+Поэтому <em>дополнительная справочная информация</em> поставляется отдельно и обслуживается справочной системой.</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">4.2. </span>О справочной системе <code class="docutils literal notranslate"><span class="pre">man</span></code><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>В системе UNIX наиболее популярна справочная система <code class="docutils literal notranslate"><span class="pre">man</span></code>.
+Название системы и одноименной утилиты произошло от сокращения английского слова “manual”, что в переводе значит “справочник”, “руководство”.
+Формат вызова утилиты выглядит как <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">[опции]</span> <span class="pre">[раздел]</span> <span class="pre">заголовок</span></code>.
+Команда находит и отображает на экране справочную страницу, связанную с переданным ей аргументом-заголовком.
+Так, команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">pwd</span></code> отобразит на экране справку об утилите <code class="docutils literal notranslate"><span class="pre">pwd</span></code>, а команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">bash</span></code> – о командном интерпретаторе <code class="docutils literal notranslate"><span class="pre">bash</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>В описании формата командной строки аргументы, указанные в квадратных скобках, могут быть пропущены.</p>
+</div>
+<p>Для отображения и навигации по справочной странице <code class="docutils literal notranslate"><span class="pre">man</span></code> использует утилиту <code class="docutils literal notranslate"><span class="pre">less</span></code>.
+За раз отображается только одна справочная страница.
+Передаваемый в командную строку <code class="docutils literal notranslate"><span class="pre">man</span></code> <em>заголовок</em> является также <em>названием страницы</em>.
+Содержимое страницы поделено на <em>секции</em>, одна из которых (<code class="docutils literal notranslate"><span class="pre">NAME</span></code>) содержит ее краткое описание.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>                  Справочная информация
+┌─────────────────────────────────────────────────────────────┐
+│  Тематический раздел #1       Тематический раздел #2        │
+│┌─────────────────────────┐ ┌─────────────────────────┐ ...  │
+││      man-страницы       │ │      man-страницы       │ ...  │
+││┌────┐ ┌────┐&lt;- секция 1 │ │┌────┐ ┌────┐ ...  ┌────┐│ ...  │
+││├────┤ ├────┤&lt;- секция 2 │ │├────┤ ├────┤ ...  ├────┤│ ...  │
+││├────┤ ├────┤    ...     │ │├────┤ ├────┤ ...  ├────┤│ ...  │
+││├────┤ ├────┤    ...     │ │├────┤ ├────┤ ...  ├────┤│ ...  │
+││└────┘ └────┘            │ │└────┘ └────┘ ...  └────┘│ ...  │
+│└─────────────────────────┘ └─────────────────────────┘ ...  │
+└─────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+<p>Справочная система охватывает не только информацию об утилитах, но и функциях библиотеки Си, форматах файлов, об устройстве системы и многом другом.
+Это приводит к тому, что названия страниц (заголовки) повторяются.
+Например, заголовок <code class="docutils literal notranslate"><span class="pre">man</span></code> связан как с утилитой, так и с названием макросов для форматирования справочных страниц.
+С заголовком <code class="docutils literal notranslate"><span class="pre">close</span></code> связаны как системный вызов (функция ядра ОС), так и функция стандартной библиотеки Си.
+Чтобы разрешить противоречия в заголовках, справочные страницы поделены на 8 стандартных <em>тематических разделов</em>, обозначенных числами от 1 до 8.</p>
+<ol class="arabic simple">
+<li><p>Команды (вызываемые пользователем прикладные программы и утилиты).</p></li>
+<li><p>Системные вызовы (функции ядра ОС, вызываемые прикладными программами).</p></li>
+<li><p>Функции библиотек (стандартной библиотеки Си и C++, библиотеки времени выполнения
+и других).</p></li>
+<li><p>Специальные файлы (файлы из каталога <code class="docutils literal notranslate"><span class="pre">/dev</span></code>, чтение и запись на которые привязана к устройствам ввода/вывода).</p></li>
+<li><p>Форматы файлов и соглашения (спецификации используемых форматов).</p></li>
+<li><p>Игры.</p></li>
+<li><p>Остальное (что не попало в другие разделы).</p></li>
+<li><p>Утилиты для управления системой (системные утилиты для настройки компьютера, обычно запускаемые с правами суперпользователя).</p></li>
+</ol>
+<p>Уникальность имени страницы ограничивается пределами одного раздела, а в разных разделах имена могут повторяться.
+Чтобы точно идентифицировать справочную страницу, к ее имени добавляют номер раздела в скобках.
+Таким образом, <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">(1)</span></code> ссылается на утилиту, а <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">(7)</span></code> – группу макросов, <code class="docutils literal notranslate"><span class="pre">close</span> <span class="pre">(2)</span></code> указывает на системный вызов, а <code class="docutils literal notranslate"><span class="pre">close</span> <span class="pre">(3)</span></code> – на функцию стандартной библиотеки Си.
+Чтобы отобразить страницу из конкретного раздела, его номер указывается в командной строке: <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">2</span> <span class="pre">close</span></code>.
+Если номер раздела не указан, то отобразится страница из раздела с наименьшим номером.</p>
+<p>Разделов не всегда достаточно для обеспечения уникальности заголовков.
+Как пример, одна утилита может иметь два описания – одна задается стандартом POSIX, а вторая как фактическая реализация.
+Поэтому разделы расширяются – вводятся новые или разбиваются старые.
+Подразделы <code class="docutils literal notranslate"><span class="pre">1p</span></code>, <code class="docutils literal notranslate"><span class="pre">3p</span></code> собирают страницы, посвященные стандарту POSIX.
+Суффикс <code class="docutils literal notranslate"><span class="pre">x</span></code> выделяет подразделы для документации <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">Windows</span> <span class="pre">System</span></code>.
+Дополнительно, могут быть добавлены нестандартные разделы.</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">4.3. </span>Структура справочной страницы<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>Справочная страница обладает структурой за счет разделения содержимого на секции.
+Существуют следующие стандартные секции:</p>
+<ul class="simple">
+<li><p>NAME</p></li>
+<li><p>SYNOPSIS</p></li>
+<li><p>CONFIGURATION</p></li>
+<li><p>DESCRIPTION</p></li>
+<li><p>OPTIONS</p></li>
+<li><p>EXIT STATUS</p></li>
+<li><p>RETURN VALUE</p></li>
+<li><p>ERRORS</p></li>
+<li><p>ENVIRONMENT</p></li>
+<li><p>FILES</p></li>
+<li><p>VERSIONS</p></li>
+<li><p>CONFORMING TO</p></li>
+<li><p>NOTES</p></li>
+<li><p>BUGS</p></li>
+<li><p>EXAMPLE</p></li>
+<li><p>SEE ALSO</p></li>
+</ul>
+<p>К обязательным относятся NAME, SYNOPSIS, DESCRIPTION и SEE ALSO.
+Подробности о справочных страницах показаны в <code class="docutils literal notranslate"><span class="pre">man-pages(7)</span></code>.</p>
+<p>Секция NAME содержит имя команды (функции, системного вызова или другого описываемого объекта), за которым следует ее краткое описание.
+Подробное описание приводится в секции DESCRIPTION.
+Ссылки на другие страницы перечисляются в секции SEE ALSO.</p>
+<p>Секция SYNOPSIS содержит краткое описание способа вызова команды или функции.
+Если страница посвящена библиотечной функции, то в ней указывается заголовочный файл и объявление с названием функции, перечислением формальных параметров и типа возвращаемого значения.
+Для команды она задает формат командной строки, включающий перечисление и порядок аргументов.
+В квадратные скобки помещают необязательные аргументы, символ <code class="docutils literal notranslate"><span class="pre">|</span></code> разделяет альтернативные аргументы для выбора одного из нескольких, символы <code class="docutils literal notranslate"><span class="pre">...</span></code> показывают, что аргумент может повторяться, подчеркнутый (или наклонный) текст указывает на замещаемые пользователем данные.</p>
+<p>Перечисление и описание опций и возвращаемых кодов команд содержатся в секциях <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code> и <code class="docutils literal notranslate"><span class="pre">EXIT</span> <span class="pre">STATUS</span></code>.
+Эти секции характерны только для разделов 1 и 8.
+Аналогичны по сути формальные параметры и возвращаемые значения библиотечных функций.
+Формальные параметры раскрываются по мере описания функции в секции <code class="docutils literal notranslate"><span class="pre">DESCRIPTION</span></code>.
+Возвращаемые значения, если они есть у функции, раскрываются в секции <code class="docutils literal notranslate"><span class="pre">RETURN</span> <span class="pre">VALUE</span></code>.</p>
+<p>Семейство ОС UNIX разработано на основе соглашений и стандартов.
+Их полный список приведен на man-странице <code class="docutils literal notranslate"><span class="pre">standards(7)</span></code>.
+Секция <code class="docutils literal notranslate"><span class="pre">CONFORMING</span> <span class="pre">TO</span></code> перечисляет стандарты, которым соответствует описываемая команда (функция).</p>
+<p>Коротко опишем остальные секции:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> перечисляет переменные окружения и то, как они влияют на выполнение команды или функции;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EXAMPLE</span></code> содержит примеры использования;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BUGS</span></code> указывает на известные ошибки и проблемы в использовании;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ERRORS</span></code>, сценариев вызова функции, приводящих к ошибке выполнения;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HISTORY</span></code> содержит историю изменений утилиты;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AUTHORS</span></code> перечисляет имена разработчиков;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COPYRIGHT</span></code> содержит лицензию на распространяемую программу;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CONFIGURATION</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FILES</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VERSIONS</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NOTES</span></code></p></li>
+</ul>
+</section>
+<section id="id4">
+<h2><span class="section-number">4.4. </span>Поиск информации<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Одна из главных задач, решаемая справочной системой – это поиск информации.
+Нужную страницу можно отобразить, если известен ее заголовок.
+В остальных случаях необходимо найти страницу, содержащее аргумент поиска – ключевое слово.
+Время поиска существенно зависит от того, на каких данных он совершается.
+Существует три уровня поиска, отличающихся объемом данных – это:</p>
+<ul class="simple">
+<li><p>поиск по заголовкам страниц;</p></li>
+<li><p>поиск в кратких описаниях страниц;</p></li>
+<li><p>полнотекстовый поиск;</p></li>
+</ul>
+<p>Во всех трех случаях поиск не зависит от регистра символа.</p>
+<p>Поиск по заголовкам страниц осуществляется по команде <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">-f</span> <span class="pre">keyword</span></code>, которая эквивалентна <code class="docutils literal notranslate"><span class="pre">whatis</span> <span class="pre">keyword</span></code>.</p>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">-k</span> <span class="pre">ls</span></code> ищет вхождение ключевого слова в кратких описаниях справочных страниц (в секции NAME). Команда эквивалента <code class="docutils literal notranslate"><span class="pre">apropos</span> <span class="pre">keyword</span></code>.</p>
+<p>Поиск по всему содержимому страницы (полнотекстовый) наиболее медленный.
+Он запускается по команде <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">-K</span> <span class="pre">keyword</span></code>.
+Найденная страница и фрагмент текста отображаются сразу по обнаружению.
+Поиск можно в любой момент остановить комбинацией клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code>.</p>
+<p>Поиск внутри страницы.
+С опытом пользователь расширяет список известных ему команд и ему не составляет труда найти нужную справочную страницу.
+Сложности возникают в поиске нужной опции.
+Так, команда <code class="docutils literal notranslate"><span class="pre">ls</span></code>, выводящая содержимое каталога на экран, поддерживает 60 опций, управляющих ее поведением.
+Опция может быть найдена поиском по ключевым словам.
+Переход к известной секции, опции команды, аргумента функции может быть выполнен в <code class="docutils literal notranslate"><span class="pre">less</span></code> командой поиска и перехода к следующему найденному слову.</p>
+<p>Поиск по ссылкам.
+Одна из характеристик справочной информации – это ссылки, которые связывают страницы друг с другом.
+Ссылки перечисляются в секции <code class="docutils literal notranslate"><span class="pre">SEE</span> <span class="pre">ALSO</span></code>.
+С каждым из тематических разделов связана страница <code class="docutils literal notranslate"><span class="pre">intro</span></code> с введением.
+Введение в первый раздел отображается командой <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">1</span> <span class="pre">intro</span></code>.
+Страницы с ключевым словом <code class="docutils literal notranslate"><span class="pre">intro</span></code> в кратком описании часто соответствуют введениям в самостоятельные темы, тематические разделы и подразделы.
+Список имен таких страниц выводит на экран команда <code class="docutils literal notranslate"><span class="pre">apropos</span> <span class="pre">intro</span></code>.
+Примеры некоторых из них:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">C++Intro</span></code> – введение в стандартную библиотеку языка программирования C++;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Kerberos</span></code> – введение в систему Kerberos;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">perlintro</span></code> – введение в язык программирования Perl.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2><span class="section-number">4.5. </span>Заключение<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>В отличие от современных справочных систем в <code class="docutils literal notranslate"><span class="pre">man</span></code> нет перекрестных ссылок.
+Некоторое подобие связности добавляют указатели на man-страницы.
+Но чтобы ими воспользоваться, необходимо выйти из просмотра и заново набрать команду.
+Современная документация представлена преимущественно в виде иерархических гипертекстовых документов, связанных с гиперссылками.
+Этот недостаток исправляет утилита <code class="docutils literal notranslate"><span class="pre">info</span></code>.
+По популярности она единственная, кто сравнится с <code class="docutils literal notranslate"><span class="pre">man</span></code>.
+Утилита <code class="docutils literal notranslate"><span class="pre">info</span></code> в связке с <code class="docutils literal notranslate"><span class="pre">GNU</span> <span class="pre">Emacs</span></code> организует подобие связанных веб-страницы и поддерживает работу с мышью.</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">4.6. </span>Вопросы для самоконтроля<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Перечислите источники справочной информации о программах в системе.</p></li>
+<li><p>Вызовите встроенную справку интерпретатора python, текстового редактора vi, утилиты less.</p></li>
+<li><p>На какой утилите основана справочная система UNIX?</p></li>
+<li><p>Сравните встроенную и внешнюю информацию об утилите grep. Чем они отличаются?</p></li>
+<li><p>Как получить подробную справочную информацию по утилите <code class="docutils literal notranslate"><span class="pre">touch</span></code>?</p></li>
+<li><p>Что такое справочная страница, тематический раздел?</p></li>
+<li><p>Что такое заголовок, краткое описание и содержимое справочной страницы?</p></li>
+<li><p>Как выглядят ссылки на справочные страницы man?</p></li>
+<li><p>Перечислите не менее четырех стандартных тематических разделов в man.</p></li>
+<li><p>Перечислите секции справочной страницы <code class="docutils literal notranslate"><span class="pre">map(1)</span></code>, <code class="docutils literal notranslate"><span class="pre">close(2)</span></code>, <code class="docutils literal notranslate"><span class="pre">printf(3)</span></code>, <code class="docutils literal notranslate"><span class="pre">passwd(5)</span></code>, <code class="docutils literal notranslate"><span class="pre">intro(6)</span></code>, <code class="docutils literal notranslate"><span class="pre">libc(7)</span></code>, <code class="docutils literal notranslate"><span class="pre">ping(8)</span></code>.</p></li>
+<li><p>О чем написано в странице <code class="docutils literal notranslate"><span class="pre">man-pages(7)</span></code>?</p></li>
+<li><p>Как выполняется поиск по названиям справочных страниц?</p></li>
+<li><p>Как выполняется поиск по кратким описаниям справочных страниц?</p></li>
+<li><p>Как выполняется поиск по содержимому справочных страниц?</p></li>
+<li><p>Как можно использовать страницы-введения и ссылки при поиске информации?</p></li>
+<li><p>Найдите справочные страницы, содержащие секции SYNOPSIS, DESCRIPTION, EXAMPLE, SEE ALSO, BUGS, OPTIONS, EXIT STATUS, ENVIRONMENT, HISTORY, AUTHORS, RETURN VALUE, ERRORS.</p></li>
+<li><p>Какую проблему <code class="docutils literal notranslate"><span class="pre">man</span></code> решает справочная система <code class="docutils literal notranslate"><span class="pre">info</span></code>?</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="less.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Утилита less</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="fs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Работа с файлами</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2. О справочной системе <code class="docutils literal notranslate"><span class="pre">man</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.3. Структура справочной страницы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.4. Поиск информации</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.5. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.6. Вопросы для самоконтроля</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Лазарев Владимир
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

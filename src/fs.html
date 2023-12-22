@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Работа с файлами &#8212; Командная оболочка UNIX</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/fs';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Переменные окружения" href="env.html" />
+    <link rel="prev" title="4. Справочная система man" href="man.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Введение
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">1. Подготовка рабочего окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">2. Терминал и командная строка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="less.html">3. Утилита less</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man.html">4. Справочная система man</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Работа с файлами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env.html">6. Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streams.html">7. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archive.html">8. Архивирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">9. Редактирование в vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">10. Управление заданиями</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">11. Сценарии bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">12. Создание простой программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">13. Терминальный мультиплексор</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getopt.html">14. Разбор аргументов программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compile.html">15. Компиляция программы на Си</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">16. Поиск файлов и в файлах</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell/issues/new?title=Issue%20on%20page%20%2Fsrc/fs.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/src/fs.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Работа с файлами</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2. Файлы и каталоги</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.3. Именование файлов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.4. Перемещения в файловой системе</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.5. Изучение файловой системы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5.6. Изменение файловой системы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5.7. Подстановка имен файлов и метасимволы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">5.8. Вопросы для самоконтроля</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">5. </span>Работа с файлами<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">5.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<!-- Важность темы -->
+<p>При работе с компьютером пользователь прямо или косвенно касается файлов и каталогов.
+В них размещается система и ее состояние: данные и программы, файлы настроек, справочная информация.
+Умение обращаться с файловой системой показывает насколько эффективно пользователь будет работать с компьютером.</p>
+<!-- Что мы знаем о ФС -->
+<p>Файловая система для пользователей Windows ассоциируется с корзиной, ярлыками, папками и дисками.
+Для обзора и манипулирования файлами в среде рабочего стола применяют <em>файловый обозреватель</em>.
+Продвинутые пользователи используют двухпанельные файловые менеджеры: “Far” и “Total Commander” в Windows и “Midnight Commander” (утилита <code class="docutils literal notranslate"><span class="pre">mc</span></code>) в UNIX.</p>
+<!-- Папка vs. каталог -->
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Для пользователя Windows привычнее термин “папка”, чем “каталог”.
+Папка – это объект применительно к графической среде.
+На системном уровне и в среде UNIX предпочитают использовать термин “каталог”.</p>
+</div>
+<!-- Что такое ФС -->
+<p><em>Файловая система</em> (далее ФС) определяет структуру представления файлов и каталогов на дисках и предлагает операции для их просмотра и изменений.
+Здесь мы посмотрим на нее с точки зрения пользователя командной строки.</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">5.2. </span>Файлы и каталоги<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<!-- Что такое файл -->
+<p>Данные в ФС хранятся на диске в виде файлов.
+Файл представляет часть дискового пространства, выделенной ОС для хранения данных.
+Файл является результатом сокрытия диска от программ, своего рода абстракция.
+Доступ программы к диску происходит только через файл.
+Современные ОС не накладывают ограничений на содержимое файлов.
+В них можно записывать любой набор байтов и любой длины, пока достаточно дискового пространства.
+Также система не интересуется смыслом записываемых данных, т.е. форматом файла.
+Это отдается на усмотрение пользователя и приложения.
+Что именно хранится в файле – видео, изображение или текстовый документ – от этого ФС абстрагируются.</p>
+<!-- Каталог, дерево каталогов и корневой каталог -->
+<p>В системе содержится большое количество файлов различного содержания.
+Чтобы организовать их в удобную структуру, они группируются в каталоги.
+Внутри каталога могут размещаться не только файлы, но и другие каталоги.
+В результате файлы и каталоги образуют иерархическую систему, называемую <em>деревом каталогов</em>.
+На вершине дерева размещается <em>корневой каталог</em>, который не входит ни в какой другой каталог.
+В UNIX корневой каталог обозначают символом <code class="docutils literal notranslate"><span class="pre">/</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>В Windows, в отличие от UNIX, присутствуют несколько корневых каталогов, называемых <em>дисками</em>.
+Имя диска состоит из буквы алфавита и последующим за ней двоеточием:</p>
+<ul class="simple">
+<li><p>системный диск <code class="docutils literal notranslate"><span class="pre">C:</span></code>;</p></li>
+<li><p>диск <code class="docutils literal notranslate"><span class="pre">D:</span></code> с пользовательскими данными;</p></li>
+<li><p>сетевые диски <code class="docutils literal notranslate"><span class="pre">X:</span></code>, <code class="docutils literal notranslate"><span class="pre">Y:</span></code>, <code class="docutils literal notranslate"><span class="pre">Z:</span></code>;</p></li>
+<li><p>съемный диск <code class="docutils literal notranslate"><span class="pre">E:</span></code>.</p></li>
+</ul>
+</div>
+<!-- Полный путь к файлу, полное имя файла -->
+<p>С каждым файловым объектом (файлом и каталогом) связано имя.
+В пределах одного каталога имена файловых объектов не совпадают, но они могут совпадать в разных каталогах.
+Чтобы однозначно идентифицировать объект в ФС, с ним связывают <em>полный путь</em> – последовательность имен каталогов от корневого до искомого файла, разделенных символом косой черты (<code class="docutils literal notranslate"><span class="pre">/</span></code>).
+В пределах одной системы, полный путь уникален для каждого файла и однозначно определяет его расположение в ФС.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>В Windows в путях используют символ обратной косой черты (<code class="docutils literal notranslate"><span class="pre">\</span></code>).</p>
+</div>
+<!--
+Каталог рассматривается как служебный файл, единственная цель которого содержать записи о других файлах.
+-->
+<!-- Относительный путь к файлу и текущий каталог -->
+<p>Полный путь к файлу часто оказывается слишком длинным, что усложняет его набор.
+Сослаться на файл по имени также не получится из-за неоднозначности.
+Поэтому используют подход с относительным путем к файлу.
+Для этого вводят понятие текущего каталога, относительно которого составляют путь к файловому объекту.
+Такой путь называют <em>относительным</em>.
+Оболочка хранит и управляет полным путем к текущему каталогу.
+Полный путь формируется как объединение текущего каталога с относительным путем.
+Относительный путь отличается от полного тем, что не начинается с корневого каталога.</p>
+<!-- Родительский каталог -->
+<p>При написании пути указывая каждый раз имя каталога мы спускаемся вниз по дереву каталогов.
+Но можно и подняться наверх.
+Любой каталог, кроме корневого, находится внутри другого каталога, называемого родительским.
+Родительский каталог обозначают символами <code class="docutils literal notranslate"><span class="pre">..</span></code>.</p>
+<!-- Системные и пользовательские файлы и каталоги -->
+<p>Файловые объекты с точки зрения пользователя делятся на системные и пользовательские.
+В системных каталогах хранятся файлы, необходимые для функционирования системы.
+Системный каталог изменяется, если обновляют программу, изменяют настройку компьютера или устанавливают новую программу.
+Это может выполнить только специальный пользователь с привилегиями – системный администратор, также известный как суперпользователь.
+Для обычного пользователя выделяют отдельный каталог, называемый также <em>домашним каталогом</em> этого пользователя.
+Содержимое домашнего каталога полностью принадлежит его пользователю.
+Он может добавлять, изменять и удалять файлы и каталоги в нем.</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">5.3. </span>Именование файлов<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>С каждым файлом связано имя, уникальное в пределах каталога.
+Имя задается при создании файла и может быть изменено в будущем.</p>
+<!-- Зависимость имени от регистра -->
+<p>UNIX, в отличие от Windows, различает регистр символов в имени файла.
+Это значит, что имена <code class="docutils literal notranslate"><span class="pre">projects</span></code> и <code class="docutils literal notranslate"><span class="pre">Projects</span></code> будут соответствовать разным файлам.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Регистр символа в именах также по-разному учитывается в языках C++ и Fortran.</p>
+</div>
+<p>Часть имени с последней точки в конце называется <em>расширением файла</em>.
+Расширение подсказывает пользователю или системе формат файла и то, какой программой можно его открыть.
+Примеры расширений: <code class="docutils literal notranslate"><span class="pre">.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">.jpg</span></code>, <code class="docutils literal notranslate"><span class="pre">.png</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.odf</span></code>, <code class="docutils literal notranslate"><span class="pre">.docx</span></code>, <code class="docutils literal notranslate"><span class="pre">.avi</span></code>.
+Среда рабочего стола по расширению подбирает для файла значок для отображения и приложение, в котором откроется файл при активации значка.</p>
+<p>Современные ОС используют формат UTF8 для внутреннего представления строки.
+Это позволяет использовать в именах файлов любые символы таблицы UNICODE.
+Она включает символы алфавитов всех существующих и существовавших письменностей мира, символов эмодзи, нотной нотации и многое другое.
+Ваша файловая система может выглядеть как на рисунке ниже.</p>
+<img alt="../_images/emoji-files.png" class="align-center" src="../_images/emoji-files.png" />
+<!-- Нерекомендуемые символы -->
+<p>В UNIX в именах файлов запрещены только два символа (<code class="docutils literal notranslate"><span class="pre">/</span></code> и <code class="docutils literal notranslate"><span class="pre">\0</span></code>), используемые в служебных целях.
+Символ косой черты разделяет имена в путях, а нулевой символ указывает на конец строки во внутреннем представлении.
+Но это не значит, что можно использовать все остальное.
+Следует отказаться от непечатных символов, потому что не всегда их получиться отобразить на экране или ввести с клавиатуры.
+Также не рекомендуется именовать файлы нелатинскими символами, так как переключение раскладки клавиатуры в виртуальном терминале затруднительно.
+Дополнительно, но не обязательно, отказываются от пробела в имени, иначе придется обрамлять аргумент в кавычки, и заглавных символов, ввод которых замедляет работу с компьютером.</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">5.4. </span>Перемещения в файловой системе<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<!-- Перемещение по ФС -->
+<p><em>Перемещение</em> (или навигация) по ФС означает изменение текущего каталога.
+Говорят, что пользователь находится в этом каталоге.</p>
+<!-- Информация о текущем каталоге -->
+<p>Текущий каталог указывается в строке приветствия.
+Его имя хранится в переменной окружения <code class="docutils literal notranslate"><span class="pre">PWD</span></code> и может быть выведен на экран командой <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PWD</span></code>.
+То же самое действие выполняет команда <code class="docutils literal notranslate"><span class="pre">pwd</span></code>, образованная от сокращения слов “<strong>p</strong>rint <strong>w</strong>orking <strong>d</strong>irectory”.</p>
+<!-- Домашний каталог -->
+<p>Пользователь при входе в систему попадает в домашний каталог с полным именем <code class="docutils literal notranslate"><span class="pre">/home/user_name</span></code>, где <code class="docutils literal notranslate"><span class="pre">user_name</span></code> – имя пользователя в системе.
+Домашний каталог коротко обозначают символом <code class="docutils literal notranslate"><span class="pre">~</span></code>.
+Полный путь к домашнему каталогу содержится в переменной окружения <code class="docutils literal notranslate"><span class="pre">HOME</span></code>.</p>
+<!-- Изменение текущего каталога -->
+<p>Для изменения текущего каталога, а значит и перемещения по ФС, применяют команду <code class="docutils literal notranslate"><span class="pre">cd</span></code>, которая образована от сокращения “<strong>c</strong>hange <strong>d</strong>irectory”.
+Новый текущий каталог передается ей через аргумент.
+Если аргумент не передан, то перемещение происходит в домашний каталог.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Команды <code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~</span></code> и <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">${HOME}</span></code> эквивалентны.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>woldemar@skt:~/Projects/files$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$HOME</span>
+/home/woldemar
+woldemar@skt:~/Projects/files$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~
+woldemar@skt:~$<span class="w"> </span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Заметим, что текущим может быть только каталог и переместиться в файл не получится.</p>
+</div>
+<!-- Вернуться назад -->
+<p>Бывает необходимо быстро вернуться туда, откуда пришел.
+Команда <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">-</span> </code> возвращает в предыдущий каталог.
+Путь к предыдущему каталогу содержится в переменной окружения <code class="docutils literal notranslate"><span class="pre">OLDPWD</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Каталог</p></th>
+<th class="head text-center"><p>Обозначение</p></th>
+<th class="head"><p>Переменная</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>корневой</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">/</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>родительский</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">..</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>домашний</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">~</span></code></p></td>
+<td><p>HOME</p></td>
+</tr>
+<tr class="row-odd"><td><p>текущий</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">.</span></code></p></td>
+<td><p>PWD</p></td>
+</tr>
+<tr class="row-even"><td><p>предыдущий</p></td>
+<td class="text-center"><p></p></td>
+<td><p>OLDPWD</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id6">
+<h2><span class="section-number">5.5. </span>Изучение файловой системы<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<!-- Команда `ls` -->
+<p>Для просмотра содержимого каталогов применяют команду <code class="docutils literal notranslate"><span class="pre">ls</span></code> (образована от “<strong>l</strong>i<strong>s</strong>t”).
+Без аргументов она выводит содержимое текущего каталога.
+Если ей передаnm путь к каталогу, то выведет файлы из этого каталога.
+Это позволяет посмотреть содержимое каталога, не переходя в него.</p>
+<p>С файлом связано не только содержимое, но и дополнительная информация:</p>
+<ul class="simple">
+<li><p>когда создан и изменен файл;</p></li>
+<li><p>кому принадлежит файл;</p></li>
+<li><p>кто и что может делать с файлом.</p></li>
+</ul>
+<p><em>Структура вывода команды <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code></em>.
+Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> по умолчанию выводит только имена файлов.
+Она выведет дополнительные сведения о файлах, если указать опцию <code class="docutils literal notranslate"><span class="pre">-l</span></code> (образована от “long”).
+Разберем вывод команды.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>woldemar@skt:~/Projects/json$<span class="w"> </span>ls<span class="w"> </span>-l
+итого<span class="w"> </span><span class="m">508</span>
+drwxrwxr-x<span class="w">  </span><span class="m">6</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>build
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">2634</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>BUILD.bazel
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w"> </span><span class="m">304881</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>ChangeLog.md
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">    </span><span class="m">410</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>CITATION.cff
+drwxrwxr-x<span class="w">  </span><span class="m">3</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>cmake
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">7144</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>CMakeLists.txt
+drwxrwxr-x<span class="w">  </span><span class="m">6</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>docs
+drwxrwxr-x<span class="w">  </span><span class="m">3</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>include
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">1076</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>LICENSE.MIT
+drwxrwxr-x<span class="w">  </span><span class="m">2</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>LICENSES
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">  </span><span class="m">13438</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>Makefile
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">    </span><span class="m">629</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>meson.build
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">  </span><span class="m">19578</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>nlohmann_json.natvis
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w"> </span><span class="m">110430</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>README.md
+drwxrwxr-x<span class="w">  </span><span class="m">3</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>single_include
+drwxrwxr-x<span class="w"> </span><span class="m">14</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>tests
+drwxrwxr-x<span class="w">  </span><span class="m">7</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">   </span><span class="m">4096</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>tools
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">     </span><span class="m">34</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>WORKSPACE.bazel
+-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>woldemar<span class="w"> </span>woldemar<span class="w">    </span><span class="m">608</span><span class="w"> </span>апр<span class="w"> </span><span class="m">17</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>wsjcpp.yml
+</pre></div>
+</div>
+<p>В первой строке (“итого 508”) указан размер содержимого в блоках.
+Один блок занимает 1 Кб пространства.
+При подсчете размера каталога учитывают только объем, занимаемый служебной информацией, но не вложенными данными.</p>
+<p>Каждая следующая строка в таблице показывает информацию о файлах (и каталогах).
+Первый символ в каждой строке указывает на тип файла.
+Каталоги обозначены символом <code class="docutils literal notranslate"><span class="pre">d</span></code>, а обычные файлы символом <code class="docutils literal notranslate"><span class="pre">-</span></code>.</p>
+<!-- Существуют и другие типы файлов, которые будут рассмотрены в разделе ...
+-->
+<p>Следующие девять символов в строках показывают режим доступа к файлу.
+Они показывают, что может сделать пользователь с ними.
+Всего определено три действия – прочитать и изменить содержимое, а также запустить файл на исполнение.
+Разрешение этих действий указывается символами <code class="docutils literal notranslate"><span class="pre">r</span></code> (<strong>r</strong>ead), <code class="docutils literal notranslate"><span class="pre">w</span></code> (<strong>w</strong>rite), <code class="docutils literal notranslate"><span class="pre">x</span></code> (e<strong>x</strong>ecutable).
+Если действие запрещено, то вместо этих символов стоит символ <code class="docutils literal notranslate"><span class="pre">-</span></code>.
+Режим доступа определяется для трех групп пользователей.</p>
+<p>Далее идут:</p>
+<ul class="simple">
+<li><p>количество ссылок на файл;</p></li>
+<li><p>владелец файла;</p></li>
+<li><p>группа пользователей, которые владеют файлом;</p></li>
+<li><p>размер файла;</p></li>
+<li><p>время последнего изменения файла;</p></li>
+<li><p>название файла.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2><span class="section-number">5.6. </span>Изменение файловой системы<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<p>Модификация ФС охватывает три действия – создать, удалить и изменить.</p>
+<p>Файл может создать любое приложение для редактирования, если воспользоваться командой “Новый файл”, например в текстовом редакторе.
+Быстро создать новый пустой файл можно командой <code class="docutils literal notranslate"><span class="pre">touch</span></code> если передать ей имя несуществующего файла.
+Новый каталог создается командой <code class="docutils literal notranslate"><span class="pre">mkdir</span></code> (образована сокращением от “<strong>m</strong>a<strong>k</strong>e <strong>d</strong>irectory”).</p>
+<p>Обратная операцию к созданию – удаление – доступна с командой <code class="docutils literal notranslate"><span class="pre">rm</span></code> (образована сокращением от “<strong>r</strong>e<strong>m</strong>ove”).
+Она удаляет как файлы, так и каталоги.
+При удалении каталога команде передают опцию <code class="docutils literal notranslate"><span class="pre">-r</span></code> (образована от “<strong>r</strong>ecursive”), указывая на необходимость рекурсивно удалять вложенные файлы и каталоги.</p>
+<p>Файлы и каталоги копирует команда <code class="docutils literal notranslate"><span class="pre">cp</span></code> (образована сокращением от “copy”).
+Первым аргументом она принимает копируемые объекты, а вторым аргументом – место назначения.</p>
+<p>Перемещение файлов и каталогов выполняет команда <code class="docutils literal notranslate"><span class="pre">mv</span></code> (образована сокращением от “<strong>m</strong>o<strong>v</strong>e”).
+Порядок аргументов аналогичен команде копирования: что и куда перемещается.
+Логически, она объединяет копирование и удаление, но фактически делает это эффективнее за счет того, что вместо перемещения данных, меняет служебные записи, оставляя данные на месте (если перемещение происходит в пределах одного диска).
+Перемещение также решает задачу переименования, если происходит в пределах одного каталога: <code class="docutils literal notranslate"><span class="pre">mv</span> <span class="pre">file.txt</span> <span class="pre">file.doc</span></code>.</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">5.7. </span>Подстановка имен файлов и метасимволы<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<p>Команды копирования, перемещения, удаления и другие могут быть применены к группе файлов, имеющих общую структуру в именах.
+Например, имеют одинаковое расширение или в составе имени содержат определенную строку.
+Для указания правил, по которому будут выбираться файлы, используют регулярные выражения, которые расширяясь превращаются в имена файлов.
+При указании имени файла используют метасимволы <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">?</span></code>, <code class="docutils literal notranslate"><span class="pre">[…]</span></code>, <code class="docutils literal notranslate"><span class="pre">[!...]</span></code>.</p>
+<p>Метасимвол <code class="docutils literal notranslate"><span class="pre">*</span></code> заменяет собой один или более символов.
+Перечислим примеры их использования:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build/*</span></code> – все файлы и каталоги в каталоге build;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.sh</span></code> – все файлы с расширением <code class="docutils literal notranslate"><span class="pre">.sh</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build*</span></code> – все файлы, начинающиеся со строки <code class="docutils literal notranslate"><span class="pre">build</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build*.sh</span></code> – все файлы, начинающиеся со строки <code class="docutils literal notranslate"><span class="pre">build</span></code> и с расширением <code class="docutils literal notranslate"><span class="pre">.sh</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*/*.sh</span></code> – все файлы с расширением <code class="docutils literal notranslate"><span class="pre">.sh</span></code> во вложенных каталогах.</p></li>
+</ul>
+<p>Метасимвол <code class="docutils literal notranslate"><span class="pre">*</span></code> применим в аргументах команды <code class="docutils literal notranslate"><span class="pre">cd</span></code>.
+Переход из домашнего каталога в каталог <code class="docutils literal notranslate"><span class="pre">Downloads</span></code>, понимая, что еще есть рядом каталоги <code class="docutils literal notranslate"><span class="pre">Desktop</span></code> и <code class="docutils literal notranslate"><span class="pre">Documents</span></code> достаточно набрать <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Dow*</span></code>.</p>
+<p>Метасимвол <code class="docutils literal notranslate"><span class="pre">?</span></code> обозначает произвольный символ в имени:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">???</span></code> – файлы с именем из трех символов;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">????.png</span></code> – файлы с четырьмя символами в имени с расширением <code class="docutils literal notranslate"><span class="pre">.png</span></code>.</p></li>
+</ul>
+<p>Метасимволы <code class="docutils literal notranslate"><span class="pre">*</span></code> и <code class="docutils literal notranslate"><span class="pre">?</span></code> обозначают произвольные символы.
+Но что делать, если нам нужен диапазон символов типа все цифры, все строчные или заглавные буквы, или только перечисленные элементы?
+В этом помогают выражения <code class="docutils literal notranslate"><span class="pre">[...]</span></code> и <code class="docutils literal notranslate"><span class="pre">[!...]</span></code>.
+Здесь их не будем рассматривать.</p>
+<!--
+В каталоге `Загрузки` (`Downloads`) помещаются файлы, загруженные браузером из сети.
+Если имена загруженных файлов совпадают (например, из-за повторной загрузки), то вместо затирания старого файла, новый файл переименуют в формат типа `имя файла (1).png`.
+Перечислить дубликаты файлов поможет выражение `*\([0-9]*\).*`.
+Команда `ls *\([0-9]*\).*` выведет список файлов, а `rm *\([0-9]*\).*` удалит их.
+-->
+</section>
+<section id="id9">
+<h2><span class="section-number">5.8. </span>Вопросы для самоконтроля<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Что такое файловая система?</p></li>
+<li><p>Какие существуют альтернативные способы работы с ФС?</p></li>
+<li><p>В чем отличие каталога от папки?</p></li>
+<li><p>Что такое корневой и родительский каталоги?</p></li>
+<li><p>Перечислите отличия ФС UNIX и Windows.</p></li>
+<li><p>Что такое дерево каталогов и полный путь к файлу?</p></li>
+<li><p>Чем отличаются полный и относительный пути?</p></li>
+<li><p>Чем отличаются системные и пользовательские файлы и каталоги?</p></li>
+<li><p>Что такое “расширение файла”?</p></li>
+<li><p>Какие ограничения накладываются на именование файлов в UNIX?</p></li>
+<li><p>Что значит “перемещаться в ФС”?</p></li>
+<li><p>Как узнать информацию о текущем каталоге пользователя?
+Выведите на печать текущий каталог несколькими способами.</p></li>
+<li><p>Какими короткими именами обозначают текущий, родительский, корневой, домашний каталоги?</p></li>
+<li><p>Как можно изменить текущий каталог?</p></li>
+<li><p>Как изменить текущий каталог на его предыдущее значение?</p></li>
+<li><p>Выведите на терминал содержимое текущего, домашнего, родительского и системного <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> каталогов.</p></li>
+<li><p>Установите системный каталог <code class="docutils literal notranslate"><span class="pre">/sbin</span></code> текущим, а затем перейдите в домашний каталог.
+Как быстро вернуться обратно?</p></li>
+<li><p>Покажите примеры двух путей, полного и относительного к одному и тому же каталогу.</p></li>
+<li><p>Выведите на терминал файлы из каталога <code class="docutils literal notranslate"><span class="pre">/bin</span></code> с одно-, двух-, трех- (и далее) символьными именами.</p></li>
+<li><p>Какой командой можно создать каталог?</p></li>
+<li><p>Как удалить каталог?</p></li>
+<li><p>Создайте пустой файл и удалите его.</p></li>
+<li><p>Создайте каталог <code class="docutils literal notranslate"><span class="pre">Src</span></code>, содержащий три файла <code class="docutils literal notranslate"><span class="pre">main.c</span></code>, <code class="docutils literal notranslate"><span class="pre">lib.h</span></code> и <code class="docutils literal notranslate"><span class="pre">lib.c</span></code>.
+Переименуйте каталог в <code class="docutils literal notranslate"><span class="pre">src</span></code>.</p></li>
+<li><p>Создайте дубликат каталога <code class="docutils literal notranslate"><span class="pre">src</span></code> под именем <code class="docutils literal notranslate"><span class="pre">Project-1</span></code>.</p></li>
+<li><p>Создайте и удалите из каталога <code class="docutils literal notranslate"><span class="pre">src</span></code> 3 файла с расширением <code class="docutils literal notranslate"><span class="pre">.tmp</span></code>.</p></li>
+<li><p>Создайте следующую иерархию каталогов в домашнем каталоге:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span>
+<span class="o">|-</span><span class="n">b1</span>
+<span class="o">|</span>  <span class="o">|-</span><span class="n">c1</span>
+<span class="o">|</span>  <span class="o">|-</span><span class="n">c2</span>
+<span class="o">|-</span><span class="n">b2</span>
+<span class="o">|</span>  <span class="o">|-</span><span class="n">c3</span>
+<span class="o">|</span>  <span class="o">|-</span><span class="n">c4</span>
+<span class="o">|-</span><span class="n">b3</span>
+   <span class="o">|-</span><span class="n">c5</span>
+   <span class="o">|-</span><span class="n">c6</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="man.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Справочная система man</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="env.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Переменные окружения</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2. Файлы и каталоги</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.3. Именование файлов</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.4. Перемещения в файловой системе</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.5. Изучение файловой системы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5.6. Изменение файловой системы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5.7. Подстановка имен файлов и метасимволы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">5.8. Вопросы для самоконтроля</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Лазарев Владимир
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

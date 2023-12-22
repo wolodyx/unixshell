@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>10. Управление заданиями &#8212; Командная оболочка UNIX</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/jobs';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. Сценарии bash" href="script.html" />
+    <link rel="prev" title="9. Редактирование в vim" href="vim.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Введение
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">1. Подготовка рабочего окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">2. Терминал и командная строка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="less.html">3. Утилита less</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man.html">4. Справочная система man</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fs.html">5. Работа с файлами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env.html">6. Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streams.html">7. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archive.html">8. Архивирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">9. Редактирование в vim</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. Управление заданиями</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">11. Сценарии bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">12. Создание простой программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">13. Терминальный мультиплексор</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getopt.html">14. Разбор аргументов программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compile.html">15. Компиляция программы на Си</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">16. Поиск файлов и в файлах</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell/issues/new?title=Issue%20on%20page%20%2Fsrc/jobs.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/src/jobs.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Управление заданиями</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. Управление заданиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. Сигналы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.4. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.5. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.6. Вопросы для самоконтроля</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">10. </span>Управление заданиями<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">10.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<!-- Активная и фоновая группа процессов, передний и задний план -->
+<p>Пользователь держит на компьютере несколько запущенных программ, работая с ними попеременно.
+Принимать ввод от пользователя может только одна программа.
+О ней говорят, что она <em>активная</em> и <em>расположена на переднем плане</em>.
+Остальные программы <em>фоновые</em> и <em>расположены на заднем плане</em>.</p>
+<!-- Потребность в многозадачности -->
+<p>До настоящего момента, из командной оболочки мы запускали только одну терминальную программу.
+Следующую программу запускали после завершения предыдущей.
+Потребность в работе с несколькими программами не возникала, но на практике такое бывает часто.
+Например, небольшую программу пишут в текстовом редакторе, а компиляцию запускают из командной строки.
+Длительные по времени задания, которые не требуют данных от пользователя, как архивация и сборка программы, лучше запускать на заднем плане.</p>
+<!-- Что такое задание -->
+<!-- Warning: не понимают, что такое процесс. -->
+<p>Запуск программы или исполнение команды порождает процессы.
+Процессов может быть один или несколько, например при запуске конвейера или программы с параллельными вычислениями.
+Пользователь в такой группе процессов видит одну целостно управляемую сущность, которую называют <em>заданием</em>.
+Управляющие воздействия на задание, как завершение, приостановка, переключение из переднего плана на задний и наоборот, будут применены ко всей группе процессов.</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">10.2. </span>Управление заданиями<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<!-- Останов программы `Ctrl-C` -->
+<p>Интерактивные терминальные приложения предлагают разные способы завершения работы.
+Пейджер <code class="docutils literal notranslate"><span class="pre">less</span></code> закрывается по команде <code class="docutils literal notranslate"><span class="pre">q</span></code>, текстовый редактор <code class="docutils literal notranslate"><span class="pre">nano</span></code> по <code class="docutils literal notranslate"><span class="pre">Ctrl-X</span></code>, <code class="docutils literal notranslate"><span class="pre">vim</span></code> по <code class="docutils literal notranslate"><span class="pre">:q!</span></code>.
+Остальные (неинтерактивные) программы, если в них не заложено завершение по просьбе, могут быть принудительно завершены системой сочетанием клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code>.</p>
+<!-- Запуск программы на заднем плане -->
+<p>На заднем плане одновременно могут размещаться несколько заданий.
+Если в конец команды добавить символ <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, то команда запустится на заднем плане.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@sppo:~/projects/$ </span>find<span class="w"> </span>~<span class="w"> </span>-name<span class="w"> </span>lab1.txt<span class="w"> </span><span class="p">&amp;</span>
+<span class="go">[1] 33533</span>
+</pre></div>
+</div>
+<p>Дополнительно на экране выведется номер задания ([1]) и идентификатор процесса (33533).
+В последующем они понадобятся, чтобы сослаться на задание.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Если задание состоит из нескольких процессов, то будет выведет идентификатор процесса, являющегося <em>лидером группы</em>.</p>
+<!-- Подробнее об этом будет рассказано в разделе [Управление процессами](process.md). -->
+</div>
+<p>Фоновое задание будет выполнять работу до своего завершения или пока ему не понадобится ввод от пользователя.
+В последнем случае оно приостановит свое выполнение до переключения в активное состояние.
+Примером программы, постоянно нуждающемся в пользовательских данных, является <code class="docutils literal notranslate"><span class="pre">vim</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@sppo:~/projects$ </span>vim<span class="w"> </span><span class="p">&amp;</span>
+<span class="go">[1] 34226</span>
+<span class="gp">user@sppo:~/projects$ </span>
+
+<span class="go">[1]+  Stopped                 vim</span>
+<span class="gp">user@sppo:~/projects$ </span>
+</pre></div>
+</div>
+<p>Фоновые программы выводят сообщения на экране, что может быть неожиданным.
+Чтобы такого не происходило, используют перенаправление потока вывода в файл или системную корзину: <code class="docutils literal notranslate"><span class="pre">./program</span> <span class="pre">&gt;</span> <span class="pre">/dev/null</span> <span class="pre">&amp;</span></code></p>
+<!-- Перевод задания с переднего плана на задний (`Ctrl-Z` + `bg`) -->
+<p>Сочетание клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> приостанавливает активное задание.
+После приостановки на передний план выходит командная оболочка.
+Встроенная команда <code class="docutils literal notranslate"><span class="pre">bg</span></code> (сокращение от “background” в переводе “задний план”) запускает приостановленное задание и перемещает его на задний план.
+Таким образом комбинации <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> и <code class="docutils literal notranslate"><span class="pre">bg</span></code> перемещают задание из переднего плана на задний.</p>
+<!-- Перечисление процессов на заднем плане -->
+<p>На заднем плане могут размещаться несколько заданий.
+Их список на экран выводит встроенная команда <code class="docutils literal notranslate"><span class="pre">jobs</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@sppo:~/projects$ </span><span class="nb">jobs</span>
+<span class="go">[1]+  Stopped                 vim</span>
+<span class="go">[2]   Running                 bzip2 -k9 bigfile.bin &amp;</span>
+<span class="go">[3]-  Running                 sleep 2h &amp;</span>
+</pre></div>
+</div>
+<p>Она выводит список заданий с номером, состоянием и командной строкой запуска.
+Знаком <code class="docutils literal notranslate"><span class="pre">+</span></code> отмечено текущее задание, а знаком <code class="docutils literal notranslate"><span class="pre">-</span></code> – предыдущее.</p>
+<!-- Перевод задания с заднего плана на передний -->
+<p>Перенос задания на передний план выполняет команда <code class="docutils literal notranslate"><span class="pre">fg</span></code> (сокращение от “foreground”, что в переводе “передний план”).
+Если аргумент не указан, то команда перенесет текущее задание (то, что отмечено знаком <code class="docutils literal notranslate"><span class="pre">+</span></code>).
+Чтобы сослаться на конкретное задание, используют символ <code class="docutils literal notranslate"><span class="pre">%</span></code> и номер задания: <code class="docutils literal notranslate"><span class="pre">fg</span> <span class="pre">%2</span></code>.</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">10.3. </span>Сигналы<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Сочетания клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code> и <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> соответственно завершают и приостанавливают активный процесс.
+Технически, это выглядит как отправка терминалом группе процессов сигнала о завершении (<code class="docutils literal notranslate"><span class="pre">-SIGINT</span></code>) и приостановке (<code class="docutils literal notranslate"><span class="pre">-SIGTSTP</span></code>).
+Те же самые сигналы можно отправить произвольному процессу, воспользовавшись утилитой <code class="docutils literal notranslate"><span class="pre">kill</span></code>.
+Утилита требует идентификатор процесса (или номер задания, предваренного символом <code class="docutils literal notranslate"><span class="pre">%</span></code>) и по умолчанию отправляет сигнал <code class="docutils literal notranslate"><span class="pre">-SIGKILL</span></code>, который завершает принудительно процесс.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">bob@pc:~/projects/sppo$ </span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/null<span class="w"> </span><span class="p">&amp;</span>
+<span class="go">[1] 12512</span>
+<span class="gp">bob@pc:~/projects/sppo$ kill %</span><span class="m">1</span>
+<span class="gp">bob@pc:~/projects/sppo$ </span>
+<span class="go">[1]+  Завершено      dd if=/dev/zero of=/dev/null</span>
+<span class="gp">bob@pc:~/projects/sppo$ </span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<!-- Различие сигналов `-SIGINT` и `-SIGKILL` -->
+<p>Сигнал <code class="docutils literal notranslate"><span class="pre">-SIGINT</span></code> “просит” процесс завершиться.
+Если программа не переопределяла обработчик событий на него, то она выполнит это действие.
+Правильно переопределенный обработчик сигнала сохраняет данные и завершает после этого процесс.
+В отличие от него сигнал <code class="docutils literal notranslate"><span class="pre">-SIGKILL</span></code> завершает процесс немедленно, без каких-либо предварительных действий.
+Если <code class="docutils literal notranslate"><span class="pre">-SIGINT</span></code> можно проигнорировать, установив пустой обработчик сигнала, то <code class="docutils literal notranslate"><span class="pre">-SIGKILL</span></code> – нет.</p>
+</div>
+<!-- `Ctrl-\` (`-SIGQUIT`) -- принудительное завершение процесса с сохранением дампа памяти -->
+<p>Полезное сочетание клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-\</span></code> принудительно завершает активное задание сигналом <code class="docutils literal notranslate"><span class="pre">-SIGQUIT</span></code>.
+Но в отличие от <code class="docutils literal notranslate"><span class="pre">-SIGKILL</span></code> в текущем каталоге сохранится содержимое оперативной памяти процесса (дамп памяти).
+В последующем дамп памяти может быть использован для отладки программы.</p>
+<!-- Управление выводом на экран: `Ctrl-S` и `Ctrl-Q` -->
+</section>
+<section id="id5">
+<h2><span class="section-number">10.4. </span>Заключение<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<!-- Работа внутри одного приложения -->
+<p>Работа разработчика состоит в изучении и редактировании исходного кода, отладке, в ожидании сборки и результатов тестирования.
+Вся эта деятельность происходит внутри одного приложения, называемого интегрированной средой разработки.
+Это позволяет отказаться от переключения между разнородными программами.
+Редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code> позволяет настроить себя под полноценную среду разработки.</p>
+<!-- Разбиение экрана на части -->
+<p>Альтернативный способ работы с несколькими приложениями – это разделение экрана терминала на несколько вложенных терминалов с неперекрывающимися видами.
+Подробнее об этом будет рассказано в разделе <a class="reference internal" href="tmux.html"><span class="doc std std-doc">Терминальный мультиплексор</span></a>.</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">10.5. </span>Использованные источники<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Раздел “34.7. Управление заданиями” книги М.Керриск “Linux API. Исчерпывающее руководство.” – СПб.: Питер, 2021. – 1248 с.: ил. – (Серия “Библиотека программиста”).</p></li>
+<li><p><a class="reference external" href="https://www.gnu.org/software/bash/manual/html_node/Job-Control-Basics.html">Job Control Basics</a></p></li>
+<li><p><a class="reference external" href="https://superuser.com/questions/131502/need-a-linux-command-that-takes-much-time">Need a Linux command that takes much time</a></p></li>
+</ol>
+</section>
+<section id="id7">
+<h2><span class="section-number">10.6. </span>Вопросы для самоконтроля<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Расскажите про активные и фоновые программы.
+Чем они отличаются?
+Где они могут понадобиться?</p></li>
+<li><p>В чем отличия между программой, командой, заданием и процессом?</p></li>
+<li><p>Как завершить запущенную программу?</p></li>
+<li><p>Запустите команду <code class="docutils literal notranslate"><span class="pre">sort</span></code> и завершите запущенную программу.</p></li>
+<li><p>Запустите на заднем плане перечисленные ниже команды и объясните, что они делают:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">main.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">1h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dd</span> <span class="pre">if=/dev/zero</span> <span class="pre">of=/dev/null</span></code></p></li>
+</ul>
+</li>
+<li><p>Что произойдет с фоновым заданием, которому вдруг понадобятся пользовательские данные?</p></li>
+<li><p>Что произойдет, если фоновому заданию понадобится вывести данные на экран?</p></li>
+<li><p>Как перевести программу из переднего плана на задний?</p></li>
+<li><p>Как получить список заданий на заднем плане и их состояние.</p></li>
+<li><p>Как перевести задание из заднего плана на передний?</p></li>
+<li><p>Какая связь между сочетаниями клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code>, <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> и <code class="docutils literal notranslate"><span class="pre">Ctrl-\</span></code> и сигналами?</p></li>
+<li><p>Что делает утилита <code class="docutils literal notranslate"><span class="pre">kill</span></code>?
+Запустите на заднем плане задание <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">1h</span></code> и завершите его поочередно отправкой сигналов <code class="docutils literal notranslate"><span class="pre">-SIGINT</span></code>, <code class="docutils literal notranslate"><span class="pre">-SIGKILL</span></code>, <code class="docutils literal notranslate"><span class="pre">-SIGQUIT</span></code>.
+Чем отличаются сообщения командной оболочки на выходе? <!-- Прерывание, Убито, Выход (образ памяти сброшен на диск) --></p></li>
+<li><p>Создайте файл размером 1 Гб командой <code class="docutils literal notranslate"><span class="pre">dd</span> <span class="pre">if=/dev/urandom</span> <span class="pre">of=bigfile.bin</span> <span class="pre">bs=10MiB</span> <span class="pre">count=100</span></code>.
+Сожмите файл утилитой <code class="docutils literal notranslate"><span class="pre">bzip2</span></code> с опцией <code class="docutils literal notranslate"><span class="pre">-9</span></code> (максимальный уровень сжатия) и сохранив оригинал (опция <code class="docutils literal notranslate"><span class="pre">--keep</span></code>).
+Запустите последнюю команду на заднем плане.
+Проконтролируйте, как долго выполнится задание.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vim.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Редактирование в vim</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="script.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Сценарии bash</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. Управление заданиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. Сигналы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.4. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.5. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.6. Вопросы для самоконтроля</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Лазарев Владимир
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

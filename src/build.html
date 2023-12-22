@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>12. Создание простой программы &#8212; Командная оболочка UNIX</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src/build';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="13. Терминальный мультиплексор" href="tmux.html" />
+    <link rel="prev" title="11. Сценарии bash" href="script.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Введение
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">1. Подготовка рабочего окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">2. Терминал и командная строка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="less.html">3. Утилита less</a></li>
+<li class="toctree-l1"><a class="reference internal" href="man.html">4. Справочная система man</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fs.html">5. Работа с файлами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env.html">6. Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="streams.html">7. Стандартные потоки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archive.html">8. Архивирование файлов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vim.html">9. Редактирование в vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">10. Управление заданиями</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">11. Сценарии bash</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Создание простой программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tmux.html">13. Терминальный мультиплексор</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getopt.html">14. Разбор аргументов программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compile.html">15. Компиляция программы на Си</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">16. Поиск файлов и в файлах</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/wolodyx/unixshell/issues/new?title=Issue%20on%20page%20%2Fsrc/build.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/src/build.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Создание простой программы</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. Сценарии</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.3. Двоичная программа на Си</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.4. Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.5. Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.7. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">12.8. Упражнения</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">12. </span>Создание простой программы<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">12.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Под простой программой будем понимать программу, полученную из одного файла исходного кода.</p>
+<p>В UNIX можно выделить два типа программ:</p>
+<ul class="simple">
+<li><p><em>двоичную программу</em> с инструкциями для ЦП;</p></li>
+<li><p><em>текстовую программу</em> с инструкциями для интерпретатора.</p></li>
+</ul>
+<!-- Сценарии и интерпретаторы -->
+<p>Текстовые программы называют <em>сценариями</em> или <em>скриптами</em>.
+Их пошагово выполняет интерпретатор, который можно рассматривать как “виртуальный” процессор.
+Им может быть не только командная оболочка <code class="docutils literal notranslate"><span class="pre">bash</span></code>, но и интерпретаторы языков программирования <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">perl</span></code>.</p>
+<!-- Двоичные программы -->
+<p>Двоичную программу исполняет ЦП.
+Она состоит из машинных инструкций и начальных значений у глобальных данных и константных данных, необходимых при исполнении.
+Такие программы получают преобразованием текстовых файлов, написанных на языке программирования, утилитами компилятора.</p>
+<p>Из описаний выше двоичных и текстовых программ вытекают следующие различия в:</p>
+<ul class="simple">
+<li><p>переносимости;</p></li>
+<li><p>скорости исполнения;</p></li>
+<li><p>сложности с модификацией.</p></li>
+</ul>
+<!-- Переносимость программ -->
+<p>Под переносимостью программы подразумевают возможность ее запуска на другом компьютере.
+Двоичную программу можно запустить на компьютере с той же платформой (комбинацией типа ОС и архитектуры ЦП), под которую она была подготовлена.
+Запуск на отличающейся платформе потребует повторной компиляции программ под нее.
+Текстовая программа же запустится на любом компьютере с установленным интерпретатором.
+В обоих случаях необходима подготовка: в первом подготавливается исполняемый файл и этим занимается разработчик, а во втором настраивается системное окружение (системный администратор устанавливает интерпретатор).</p>
+<!-- Скорость исполнения -->
+<p>Двоичные программы от текстовых отличаются высокой скоростью исполнения.
+Интерпретатор на каждом запуске разбирает текст программы и отражает его в машинном коде.
+При использовании компилятора эти действия происходят один раз при получении исполняемого файла.</p>
+<!-- Редактирование программы -->
+<p>В отличие от двоичных программ, текстовую программу не надо компилировать и можно запустить сразу после редактирования.
+Для внесения изменений достаточно только текстового редактора.
+Поэтому сценарии применяют там, где требуется автоматизация рутинных действий.</p>
+<!-- Исполняемый файл и превращение в него -->
+<p>С программой связан исполняемый файл.
+Исполняемость файла задается не расширением как в Windows, а атрибутом файла.
+Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> в выводе в терминал исполняемые файлы выделяет зеленым цветом.
+Созданный в текстовом редакторе файл по умолчанию не является исполняемым.
+Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">file.sh</span></code> дает файлу <code class="docutils literal notranslate"><span class="pre">file.sh</span></code> такое свойство.</p>
+<img alt="../_images/chmod-executable-1.png" class="align-center" src="../_images/chmod-executable-1.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">-x</span> <span class="pre">file.sh</span></code> сбрасывает атрибут исполняемого файла.</p>
+</div>
+<!-- Запуск исполняемого файла -->
+<p>Исполняемый файл можно запустить по имени только в том случае, если каталог, в котором он находится, входит в список переменной окружения <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
+Каталоги из <code class="docutils literal notranslate"><span class="pre">PATH</span></code> обычно являются системными и защищены от модификации.
+Создаваемая пользователем программа будет расположена в домашнем каталоге.
+Есть два способа запустить такую программу:</p>
+<ol class="arabic simple">
+<li><p>дополнить переменную PATH новым каталогом и запустить программу по имени;</p></li>
+<li><p>запустить файл по полному или относительному имени.</p></li>
+</ol>
+<p>Самый короткий способ сослаться на файл в текущем каталоге, воспользоваться обозначением текущего каталога и именем запускаемого файла: <code class="docutils literal notranslate"><span class="pre">./program</span></code>.</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">12.2. </span>Сценарии<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<!-- Синтаксис сценария bash -->
+<p>Командная оболочка может считывать и исполнять последовательность команд из специального текстового файла, называемого <em>сценарием</em>.
+В простейшем случае сценарий состоит из последовательности команд, набираемых в командной строке.
+В более сложных случаях он содержит переменные, условные и безусловные переходы, циклы и остальные возможности языков программирования.</p>
+<!-- Расширение имени файла со сценарием -->
+<p>Файлу со сценарием bash (и других командных оболочек) принято давать расширение <code class="docutils literal notranslate"><span class="pre">.sh</span></code>.</p>
+<p>Ниже показан небольшая часть кода из сценария <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If this is an xterm set the title to user@host:dir</span>
+<span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TERM</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
+<span class="w">    </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\e]0;</span><span class="si">${</span><span class="nv">debian_chroot</span><span class="p">:+(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="si">}</span><span class="s2">\u@\h: \w\a\]</span><span class="nv">$PS1</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="p">;;</span>
+*<span class="o">)</span>
+<span class="w">    </span><span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="c1"># enable color support of ls and also add handy aliases</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-x<span class="w"> </span>/usr/bin/dircolors<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">test</span><span class="w"> </span>-r<span class="w"> </span>~/.dircolors<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dircolors<span class="w"> </span>-b<span class="w"> </span>~/.dircolors<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dircolors<span class="w"> </span>-b<span class="k">)</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
+<span class="w">    </span><span class="c1">#alias dir=&#39;dir --color=auto&#39;</span>
+<span class="w">    </span><span class="c1">#alias vdir=&#39;vdir --color=auto&#39;</span>
+
+<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
+<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
+<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+<!-- Проблема указания интерпретатора -->
+<p>Любой текстовый файл можно запустить из командной строки если явно указать интерпретатор и путь к файлу:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 my-program.py</span>
+<span class="go">/bin/bash script.sh</span>
+</pre></div>
+</div>
+<!-- Шебанг -->
+<p>Преимущество сценария как исполняемого файла в том, что он может быть запущен по имени без указания интерпретатора.
+Каким образом система (конкретнее, системный загрузчик) узнает, какому интерпретатору передать сценарий?
+Выбор интерпретатора происходит внутри файла сценарии, а именно в первой его строке, где указывают путь к исполняемому файлу.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+</pre></div>
+</div>
+<p>Первые два символа <code class="docutils literal notranslate"><span class="pre">#!</span></code> принято называть словом <em>шебанг</em>.
+С них начинается любой сценарий в UNIX.
+После шебанга указан путь к программе-интерпретатору, возможно с опциями.
+Системный загрузчик при запуске сценария вызывает эту программу и передает ей как параметр путь к сценарию.</p>
+<!-- Автоматический выбор программы для открытия файла -->
+<p>В среде рабочего стола файл связывается с обрабатываемой его программой благодаря ассоциации расширения файла с исполняемым файлом.
+Для этого нужны привилегии суперпользователя.
+Механизм с шебангом позволяет локально ассоциировать файл с нужной программой.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Не рекомендуется использовать кодировки UNICODE (utf-8, utf-16, utf-32) с указанием маркера последовательности байт (BOM).
+В этом случае в файле первые три байта будут равны <code class="docutils literal notranslate"><span class="pre">EF</span> <span class="pre">BB</span> <span class="pre">BF</span></code>, подсказывающие текстовому редактору кодировку и порядок байт.
+Системный загрузчик не увидит шебанг и не сможет выбрать интерпретатор.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Если строка с шебангом отсутствует, исполняемый текстовый файл запустится интерпретатором по умолчанию.</p>
+</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">12.3. </span>Двоичная программа на Си<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<!-- Расширения исполняемых файлов -->
+<p>Файлы с двоичными программами можно поделить на две части – это запускаемые файлы и разделяемые библиотеки.
+Разделяемые библиотеки (динамические библиотеки в Windows) представляют повторно используемые части программ.
+Они пристыковываются системным загрузчиком к программе при запуске.
+У запускаемых файлов расширение как правило отсутствует, а у разделяемых библиотек – это <code class="docutils literal notranslate"><span class="pre">.so</span></code> (сокращение от “shared object”).</p>
+<!-- Сборка программы -->
+<p>Исполняемые файлы являются результатом преобразования текстовых файлов.
+Такое преобразование часто называют компиляцией.
+Если быть точным, то компиляция – это только один из этапов преобразования наравне с предобработкой, компоновкой и оптимизацией.
+Поэтому преобразование текстовых файлов в исполняемый лучше называть <em>сборкой программы</em>.</p>
+<!-- Расширение файлов с исходными кодами -->
+<p>Текстовые файлы оформлены по правилам языка программирования.
+Содержимое файлов еще называют <em>исходным кодом</em>.
+В зависимости от того, на каком языке написан исходный код, файл имеет одно из расширений.
+Для языка программирования Си используют расширение <code class="docutils literal notranslate"><span class="pre">.c</span></code>, а для C++ – <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> (также распространены <code class="docutils literal notranslate"><span class="pre">.cxx</span></code>, <code class="docutils literal notranslate"><span class="pre">.cc</span></code>).</p>
+<!-- GNU GCC -->
+<p>Сборку программ в Linux осуществляют компиляторы, поставляемые проектом “GNU GCC”.
+Для Windows эти же компиляторы доступны через проекты Cygwin и MinGW.
+Набор утилит для программирования поставляет пакет <code class="docutils literal notranslate"><span class="pre">build-essential</span></code>.
+Чтобы проверить доступность компиляторов на машине, запустите команду <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">--version</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">bob@pc:~$ </span>gcc<span class="w"> </span>--version
+<span class="go">gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0</span>
+<span class="go">Copyright (C) 2021 Free Software Foundation, Inc.</span>
+<span class="go">This is free software; see the source for copying conditions.  There is NO</span>
+<span class="go">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span>
+</pre></div>
+</div>
+<p>В проект “GNU GCC” входят компиляторы языков программирования Си, C++, Objective-C, Fortran, Go, Ada и другие.
+Список доступных компиляторов можно узнать из вывода команды <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">-v</span></code> в записи <code class="docutils literal notranslate"><span class="pre">--enable-languages</span></code>.</p>
+<!-- Управляющая утилита `gcc` -->
+<p>Проект GNU GCC предлагает множество утилит командной строки.
+Среди них всех представляет интерес управляющая утилита <code class="docutils literal notranslate"><span class="pre">gcc</span></code>.
+Чтобы собрать простую программу достаточно <code class="docutils literal notranslate"><span class="pre">gcc</span></code> передать имя файла: <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">main.c</span></code>
+На выходе появится исполняемый файл <code class="docutils literal notranslate"><span class="pre">a.out</span></code>.
+Имя выходного файла можно переопределить после опции <code class="docutils literal notranslate"><span class="pre">-o</span></code>: <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">main.c</span> <span class="pre">-o</span> <span class="pre">program</span></code>.</p>
+<!-- Опции `-g` и `-Wall` -->
+<p>Познакомимся с некоторыми опциями.
+Опция <code class="docutils literal notranslate"><span class="pre">-g</span></code> добавляет отладочные символы в программу.
+Отладочные символы увеличивают размер выходного файла, но позволяет увидеть в отладчике значения переменных.
+Также будет полезна опция <code class="docutils literal notranslate"><span class="pre">-Wall</span></code>.
+Она разрешит компилятору выводить все предупреждения на потенциально опасные участки кода.</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">12.4. </span>Вывод переменных окружения<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>Главная функция <code class="docutils literal notranslate"><span class="pre">main</span></code> программы имеет несколько форм, из которых нам знакомы две:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main(int</span> <span class="pre">argc,</span> <span class="pre">char**</span> <span class="pre">argv)</span></code></p></li>
+</ul>
+<p>Также доступна и другая форма функции, в которой третьим аргументом вводится массив с переменными окружения:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">envp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Массив <code class="docutils literal notranslate"><span class="pre">envp</span></code> состоит из указателей на строки.
+Последний элемент в массиве отмечен нулевым символом.
+Иллюстрация к массиву <code class="docutils literal notranslate"><span class="pre">char**</span> <span class="pre">envp</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>             ┌─────────────&gt; SHELL=/bin/bash
+             │    ┌────────&gt; LOGNAME=skt
+             │    │    ┌───&gt; PWD=/home/skt/projects/sppo
+          ┌──┼─┬──┼─┬──┼─┬──⋅⋅⋅┬ ───┐
+envp ────&gt;│  x │  x │  x │     │NULL│
+          └────┴────┴────┴──⋅⋅⋅┴────┘
+</pre></div>
+</div>
+<p>Тот же самый массив доступен из любой точки программы из глобальной переменной <code class="docutils literal notranslate"><span class="pre">environ</span></code>, которую предварительно следует объявить как <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">char</span> <span class="pre">**environ</span></code>.</p>
+<p>Напишем альтернативу команде <code class="docutils literal notranslate"><span class="pre">printenv</span></code>.
+Она обходит массив <code class="docutils literal notranslate"><span class="pre">envp</span></code> и выводит на экран его элементы, т.е. переменные окружения.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">envp</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">envp</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+<span class="w">    </span><span class="o">++</span><span class="n">ptr</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<!--
+Стандартная библиотека Си предоставляет функции для работы с переменными окружения.
+Функции объявлены в заголовочном файле `stdlib.h`:
+* `char* getenv(const char* name)` возвращает указатель на строку со значением переменной, заданной именем `name`;
+* `int setenv(const char* name, const char* value, int overwrite)` добавляет новую переменную или изменяет существующую, если аргумент `overwrite` имеет ненулевое значение;
+* `int putenv(char* string)` добавляет или изменяет существующую переменную, имя и значение которой заданы в `string`;
+* `int unsetenv(const char* name)` удаляет переменную с именем `name` из списка.
+* `int clearenv(void)` удаляет все переменные из списка.
+-->
+</section>
+<section id="id6">
+<h2><span class="section-number">12.5. </span>Чтение файла построчно<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Разберем небольшую программу на Си, выводящую на экран текстовый файл по строкам.
+Программа оформлена вокруг функции <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> из заголовочного файла <code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">FILE</span><span class="o">*</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fopen</span><span class="p">(</span><span class="s">&quot;data.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;r&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">)</span>
+<span class="w">	      </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="o">&amp;</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">line</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fclose</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<!-- Про функцию getline -->
+<p>Функция помещает строку из файлового потока в буфер и имеет следующую форму:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">ssize_t</span><span class="w"> </span><span class="n">getline</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">lineptr</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">FILE</span><span class="w"> </span><span class="o">*</span><span class="n">stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Файловый поток представлен параметром <code class="docutils literal notranslate"><span class="pre">stream</span></code>, а буфер двумя параметрами: указателем на строку <code class="docutils literal notranslate"><span class="pre">lineptr</span></code> и размером строки <code class="docutils literal notranslate"><span class="pre">n</span></code>.
+Перед вызовом функции буфер может быть пуст (<code class="docutils literal notranslate"><span class="pre">*lineptr</span> <span class="pre">==</span> <span class="pre">NULL</span></code> и <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">0</span></code>) или может содержать указатель на память из кучи и размер этой памяти.
+Если память под буфер не выделена или она недостаточна для сохранения результата, то функция <code class="docutils literal notranslate"><span class="pre">getline</span></code> скорректирует его размер.
+Функция возвращает количество прочитанных символов или <code class="docutils literal notranslate"><span class="pre">-1</span></code> при достижении конца файла.
+По завершению программы память под буфер должна быть возвращена системе вызовом функции <code class="docutils literal notranslate"><span class="pre">free</span></code>.</p>
+<p>Для работы с файлом в Си используем структуру <code class="docutils literal notranslate"><span class="pre">FILE</span></code> и функции для открытия <code class="docutils literal notranslate"><span class="pre">fopen(3)</span></code> и закрытия <code class="docutils literal notranslate"><span class="pre">fclose(3)</span></code>.
+Функция <code class="docutils literal notranslate"><span class="pre">FILE</span> <span class="pre">*fopen(const</span> <span class="pre">char</span> <span class="pre">*pathname,</span> <span class="pre">const</span> <span class="pre">char</span> <span class="pre">*mode)</span></code> открывает файл и возвращает ассоциированный с ним указатель на файловый поток.
+Первый параметр содержит строку с именем файла, а второй параметр – настройки для потока.
+Строка <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code> указывает, что открывается текстовый файл для чтения.
+После завершения работы с файлом, он должен быть закрыт функцией <code class="docutils literal notranslate"><span class="pre">fclose</span></code>.</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">12.6. </span>Использованные источники<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html">GCC and Make – A Tutorial on how to compile, link and build C/C++ application</a></p></li>
+<li><p>getline(3)</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2><span class="section-number">12.7. </span>Вопросы для самоконтроля<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Какие типы программ вам известны?</p></li>
+<li><p>Какие расширения дают исполняемым файлам?</p></li>
+<li><p>Чем отличаются двоичные программы от текстовых?</p></li>
+<li><p>Как превратить созданный в редакторе текстовый файл в исполняемый?</p></li>
+<li><p>Какие существуют механизмы для запуска пользовательских программ?</p></li>
+<li><p>Как указывают интерпретатор для сценария?</p></li>
+</ol>
+</section>
+<section id="id9">
+<h2><span class="section-number">12.8. </span>Упражнения<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Оформите сценарий bash, который формирует следующие вложенные каталоги и файлы:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>project
+  ├─&gt; src
+  │    ├─&gt; app ─&gt; ∅
+  │    ├─&gt; core ─&gt; ∅
+  │    └─&gt; utility ─&gt; ∅
+  ├─&gt; test
+  │    ├─&gt; gtest ─&gt; ∅
+  │    └─&gt; unittests ─&gt; ∅
+  ├─&gt; build
+  │    ├─&gt; build-windows.bat
+  │    └─&gt; build-unix.sh
+  ├─&gt; cmake ─&gt; ∅
+  └─&gt; CMakeLists.txt
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Модифицируйте программу вывода переменных окружения на экран так, чтобы она брала строки из глобальной переменной <code class="docutils literal notranslate"><span class="pre">char**</span> <span class="pre">environ</span></code>.</p></li>
+<li><p>Напишите собственную упрощенную версию утилиты <code class="docutils literal notranslate"><span class="pre">echo</span></code>, которая отправит в стандартный вывод переданные ей аргументы командной строки.
+Для отправки строки в стандартный вывод воспользуйтесь функцией <code class="docutils literal notranslate"><span class="pre">fputs(3)</span></code> и файловым потоком из глобальной переменной <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p></li>
+<li><p>Напишите собственную утилиту <code class="docutils literal notranslate"><span class="pre">pwd</span></code>.
+Вам понадобится функция стандартной библиотеки <code class="docutils literal notranslate"><span class="pre">strcmp(3)</span></code>.</p></li>
+<li><p>Напишите собственную утилиту <code class="docutils literal notranslate"><span class="pre">cat</span></code>.</p></li>
+<li><p>Напишите программу, которая ищет в списке аргументов командной строки опцию <code class="docutils literal notranslate"><span class="pre">--help</span></code> и выводит сообщение с краткой справкой.</p></li>
+<li><p>Напишите свой “виртуальный процессор”, который будет выполнять сценарии, просто отправляя на экран его строки.
+В <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> показан пример исходного кода считывающий последовательно строки из файла.</p></li>
+<li><p>Запустите сценарий bash, выводящий на экран строку “Hello, Terminal!”, оформленный в кодировке utf-8 с маркером BOM.
+Редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code> устанавливает такую кодировку командой <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">fileencoding=utf-8</span> <span class="pre">bomb</span></code>.
+Проверьте присутствие байтов командой <code class="docutils literal notranslate"><span class="pre">hexdump</span> <span class="pre">file.sh</span></code>.
+Запустите сценарий и объясните результат.</p></li>
+<li><p>Напишите простой сценарий для интерпретатора python3.
+Чтобы найти путь к исполняемому файлу интерпретатора python3 воспользуйтесь командой <code class="docutils literal notranslate"><span class="pre">whereis</span> <span class="pre">python3</span></code>.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./src"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="script.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Сценарии bash</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tmux.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>Терминальный мультиплексор</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. Сценарии</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.3. Двоичная программа на Си</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.4. Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.5. Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.7. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">12.8. Упражнения</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Лазарев Владимир
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
