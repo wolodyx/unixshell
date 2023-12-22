@@ -380,7 +380,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">13.2. Управление панелями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">13.3. Управление окнами</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.4. Управление сессиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.5. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">13.6. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">13.7. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">13.8. Упражнения</a></li>
 </ul>
             </nav>
         </div>
@@ -394,19 +401,21 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">13. </span>Терминальный мультиплексор<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">13.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<!-- Какую проблему решает терминальный мультиплексор? -->
+<p>Недостаток текстового терминала в том, что экран одновременно принадлежит только одному консольному приложению.
+В процессе работы пользователь взаимодействует с несколькими приложениями: редактирует файлы, запускает утилиты из командной строки, следит за состоянием удаленного сервера.
+Чтобы не завершать текущее приложение, чтобы переключаться на другое, используют <em>терминальный мультиплексор</em>, например <code class="docutils literal notranslate"><span class="pre">tmux</span></code>.</p>
+<!-- Что еще умеет tmux? -->
 <!--
 Тайловый оконный менеджер.
 Произносится как "ти-макс".
 Окно tmux как рабочий стол.
-Ctrl-b t -- показывает часы.
-Ctrl-b Alt-стрелка -- изменяет границы панелей.
 Sessions + Windows + Panes
 Prefix key
 -->
-<p>Недостаток текстового терминала в том, что экран одновременно принадлежит только одному консольному приложению.
-В процессе работы пользователь взаимодействует с несколькими приложениями: редактирует файлы, запускает утилиты из командной строки, следит за состоянием удаленного сервера.
-Чтобы не завершать текущее приложение, чтобы переключаться на другое, используют <em>терминальный мультиплексор</em>, например <code class="docutils literal notranslate"><span class="pre">tmux</span></code>.
-Утилита позволяет разбить терминальное окно на вложенные окна, называемые панелями.
+<p>Утилита позволяет разбить терминальное окно на вложенные окна, называемые панелями.
 Каждая панель выглядит как самостоятельный терминал и имеет свою историю команд.</p>
 <figure class="align-default">
 <img alt="../_images/tmux.png" src="../_images/tmux.png" />
@@ -414,16 +423,62 @@ Prefix key
 <p>С помощью <code class="docutils literal notranslate"><span class="pre">tmux</span></code> можно держать открытыми одновременно текстовый редактор и интерпретатор команд.
 Вы можете редактировать текст программы, собирать и запускать программу, просматривать результаты работы.</p>
 <p>Команды <code class="docutils literal notranslate"><span class="pre">tmux</span></code> принимает после комбинации клавиш <code class="docutils literal notranslate"><span class="pre">ctrl-b</span></code>.</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">13.2. </span>Управление панелями<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Команды <code class="docutils literal notranslate"><span class="pre">%</span></code> и <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> разбивают текущую панель поплам по вертикали и горизонтали, соответственно.
 Панель можно закрыть по команде <code class="docutils literal notranslate"><span class="pre">exit</span></code>.
 Если закрывается последняя панель, то происходит выход из <code class="docutils literal notranslate"><span class="pre">tmux</span></code> в командную оболочку.
 Переключение между панелями происходит по командам <code class="docutils literal notranslate"><span class="pre">→</span></code>, <code class="docutils literal notranslate"><span class="pre">←</span></code>, <code class="docutils literal notranslate"><span class="pre">↑</span></code>, <code class="docutils literal notranslate"><span class="pre">↓</span></code>.
 Размер текущей панели настраивается клавишами перемещения (<code class="docutils literal notranslate"><span class="pre">→</span></code>, <code class="docutils literal notranslate"><span class="pre">←</span></code>, <code class="docutils literal notranslate"><span class="pre">↑</span></code>, <code class="docutils literal notranslate"><span class="pre">↓</span></code>) при набранном <code class="docutils literal notranslate"><span class="pre">ctrl-b</span></code>, но еще не отпущенном <code class="docutils literal notranslate"><span class="pre">ctrl</span></code>.</p>
-<section id="id2">
-<h2><span class="section-number">13.1. </span>Использованные источники<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<!-- Ctrl-b Alt-стрелка -- изменяет границы панелей -->
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">Ctrl-b</span> <span class="pre">t</span></code> показывает цифровые часы с текущим временем на активной панели.</p>
+<figure class="align-default">
+<img alt="../_images/tmux-clock.png" src="../_images/tmux-clock.png" />
+</figure>
+</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">13.3. </span>Управление окнами<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="id5">
+<h2><span class="section-number">13.4. </span>Управление сессиями<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="id6">
+<h2><span class="section-number">13.5. </span>Заключение<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="id7">
+<h2><span class="section-number">13.6. </span>Использованные источники<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://github.com/tmux/tmux/wiki/Getting-Started">Getting Started · tmux/tmux Wiki · GitHub</a></p></li>
 </ol>
+</section>
+<section id="id8">
+<h2><span class="section-number">13.7. </span>Вопросы для самоконтроля<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li></li>
+</ol>
+</section>
+<section id="id9">
+<h2><span class="section-number">13.8. </span>Упражнения<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Разделите окно tmux на панели следующим образом:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌───────┬───────┐
+│       │       │
+├───────┼───────┤
+│       │       │
+└───────┴───────┘
+</pre></div>
+</div>
+<p>Запустите в каждом из окон следующие команды:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">htop</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">main.c</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">3</span> <span class="pre">getline</span></code>.</p></li>
+</ul>
 </section>
 </section>
 
@@ -490,7 +545,14 @@ Prefix key
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">13.2. Управление панелями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">13.3. Управление окнами</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.4. Управление сессиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.5. Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">13.6. Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">13.7. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">13.8. Упражнения</a></li>
 </ul>
   </nav></div>
 
