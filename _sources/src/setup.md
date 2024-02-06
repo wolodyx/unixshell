@@ -211,4 +211,5 @@ sudo apt install ncal # Календарь cal.
 sudo apt install mc
 sudo apt install htop
 sudo apt install tmux
+sudo apt install tree
 ```
