@@ -380,14 +380,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. Сценарии</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.3. Двоичная программа на Си</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.4. Вывод переменных окружения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.5. Чтение файла построчно</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6. Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.7. Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">12.8. Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сценарии</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Двоичная программа на Си</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Упражнения</a></li>
 </ul>
             </nav>
         </div>
@@ -402,7 +402,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">12. </span>Создание простой программы<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">12.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>Под простой программой будем понимать программу, полученную из одного файла исходного кода.</p>
 <p>В UNIX можно выделить два типа программ:</p>
 <ul class="simple">
@@ -460,7 +460,7 @@ document.write(`
 <p>Самый короткий способ сослаться на файл в текущем каталоге, воспользоваться обозначением текущего каталога и именем запускаемого файла: <code class="docutils literal notranslate"><span class="pre">./program</span></code>.</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">12.2. </span>Сценарии<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2>Сценарии<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <!-- Синтаксис сценария bash -->
 <p>Командная оболочка может считывать и исполнять последовательность команд из специального текстового файла, называемого <em>сценарием</em>.
 В простейшем случае сценарий состоит из последовательности команд, набираемых в командной строке.
@@ -523,7 +523,7 @@ xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
 </div>
 </section>
 <section id="id4">
-<h2><span class="section-number">12.3. </span>Двоичная программа на Си<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<h2>Двоичная программа на Си<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <!-- Расширения исполняемых файлов -->
 <p>Файлы с двоичными программами можно поделить на две части – это запускаемые файлы и разделяемые библиотеки.
 Разделяемые библиотеки (динамические библиотеки в Windows) представляют повторно используемые части программ.
@@ -567,7 +567,7 @@ xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
 Она разрешит компилятору выводить все предупреждения на потенциально опасные участки кода.</p>
 </section>
 <section id="id5">
-<h2><span class="section-number">12.4. </span>Вывод переменных окружения<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<h2>Вывод переменных окружения<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <p>Главная функция <code class="docutils literal notranslate"><span class="pre">main</span></code> программы имеет несколько форм, из которых нам знакомы две:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main()</span></code></p></li>
@@ -615,7 +615,7 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 -->
 </section>
 <section id="id6">
-<h2><span class="section-number">12.5. </span>Чтение файла построчно<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<h2>Чтение файла построчно<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <p>Разберем небольшую программу на Си, выводящую на экран текстовый файл по строкам.
 Программа оформлена вокруг функции <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> из заголовочного файла <code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
@@ -655,14 +655,14 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 После завершения работы с файлом, он должен быть закрыт функцией <code class="docutils literal notranslate"><span class="pre">fclose</span></code>.</p>
 </section>
 <section id="id7">
-<h2><span class="section-number">12.6. </span>Использованные источники<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<h2>Использованные источники<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html">GCC and Make – A Tutorial on how to compile, link and build C/C++ application</a></p></li>
 <li><p>getline(3)</p></li>
 </ol>
 </section>
 <section id="id8">
-<h2><span class="section-number">12.7. </span>Вопросы для самоконтроля<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Какие типы программ вам известны?</p></li>
 <li><p>Какие расширения дают исполняемым файлам?</p></li>
@@ -673,7 +673,7 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 </ol>
 </section>
 <section id="id9">
-<h2><span class="section-number">12.8. </span>Упражнения<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<h2>Упражнения<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Оформите сценарий bash, который формирует следующие вложенные каталоги и файлы:</p></li>
 </ol>
@@ -775,14 +775,14 @@ envp ────&gt;│  x │  x │  x │     │NULL│
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. Сценарии</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.3. Двоичная программа на Си</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.4. Вывод переменных окружения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.5. Чтение файла построчно</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6. Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.7. Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">12.8. Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сценарии</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Двоичная программа на Си</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Упражнения</a></li>
 </ul>
   </nav></div>
 

@@ -380,12 +380,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. Управление заданиями</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. Сигналы</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.4. Заключение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.5. Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.6. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Управление заданиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Сигналы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Вопросы для самоконтроля</a></li>
 </ul>
             </nav>
         </div>
@@ -400,7 +400,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">10. </span>Управление заданиями<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">10.1. </span>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <!-- Активная и фоновая группа процессов, передний и задний план -->
 <p>Пользователь держит на компьютере несколько запущенных программ, работая с ними попеременно.
 Принимать ввод от пользователя может только одна программа.
@@ -420,7 +420,7 @@ document.write(`
 Управляющие воздействия на задание, как завершение, приостановка, переключение из переднего плана на задний и наоборот, будут применены ко всей группе процессов.</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">10.2. </span>Управление заданиями<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2>Управление заданиями<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <!-- Останов программы `Ctrl-C` -->
 <p>Интерактивные терминальные приложения предлагают разные способы завершения работы.
 Пейджер <code class="docutils literal notranslate"><span class="pre">less</span></code> закрывается по команде <code class="docutils literal notranslate"><span class="pre">q</span></code>, текстовый редактор <code class="docutils literal notranslate"><span class="pre">nano</span></code> по <code class="docutils literal notranslate"><span class="pre">Ctrl-X</span></code>, <code class="docutils literal notranslate"><span class="pre">vim</span></code> по <code class="docutils literal notranslate"><span class="pre">:q!</span></code>.
@@ -474,7 +474,7 @@ document.write(`
 Чтобы сослаться на конкретное задание, используют символ <code class="docutils literal notranslate"><span class="pre">%</span></code> и номер задания: <code class="docutils literal notranslate"><span class="pre">fg</span> <span class="pre">%2</span></code>.</p>
 </section>
 <section id="id4">
-<h2><span class="section-number">10.3. </span>Сигналы<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<h2>Сигналы<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <p>Сочетания клавиш <code class="docutils literal notranslate"><span class="pre">Ctrl-C</span></code> и <code class="docutils literal notranslate"><span class="pre">Ctrl-Z</span></code> соответственно завершают и приостанавливают активный процесс.
 Технически, это выглядит как отправка терминалом группе процессов сигнала о завершении (<code class="docutils literal notranslate"><span class="pre">-SIGINT</span></code>) и приостановке (<code class="docutils literal notranslate"><span class="pre">-SIGTSTP</span></code>).
 Те же самые сигналы можно отправить произвольному процессу, воспользовавшись утилитой <code class="docutils literal notranslate"><span class="pre">kill</span></code>.
@@ -503,7 +503,7 @@ document.write(`
 <!-- Управление выводом на экран: `Ctrl-S` и `Ctrl-Q` -->
 </section>
 <section id="id5">
-<h2><span class="section-number">10.4. </span>Заключение<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<h2>Заключение<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <!-- Работа внутри одного приложения -->
 <p>Работа разработчика состоит в изучении и редактировании исходного кода, отладке, в ожидании сборки и результатов тестирования.
 Вся эта деятельность происходит внутри одного приложения, называемого интегрированной средой разработки.
@@ -514,7 +514,7 @@ document.write(`
 Подробнее об этом будет рассказано в разделе <a class="reference internal" href="tmux.html"><span class="doc std std-doc">Терминальный мультиплексор</span></a>.</p>
 </section>
 <section id="id6">
-<h2><span class="section-number">10.5. </span>Использованные источники<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<h2>Использованные источники<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Раздел “34.7. Управление заданиями” книги М.Керриск “Linux API. Исчерпывающее руководство.” – СПб.: Питер, 2021. – 1248 с.: ил. – (Серия “Библиотека программиста”).</p></li>
 <li><p><a class="reference external" href="https://www.gnu.org/software/bash/manual/html_node/Job-Control-Basics.html">Job Control Basics</a></p></li>
@@ -522,7 +522,7 @@ document.write(`
 </ol>
 </section>
 <section id="id7">
-<h2><span class="section-number">10.6. </span>Вопросы для самоконтроля<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Расскажите про активные и фоновые программы.
 Чем они отличаются?
@@ -617,12 +617,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. Управление заданиями</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. Сигналы</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.4. Заключение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.5. Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.6. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Управление заданиями</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Сигналы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Заключение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Вопросы для самоконтроля</a></li>
 </ul>
   </nav></div>
 

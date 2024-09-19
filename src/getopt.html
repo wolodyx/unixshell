@@ -380,9 +380,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">14.1. Разбор коротких опций</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">14.2. Разбор длинных опций</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">14.3. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Разбор коротких опций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Разбор длинных опций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вопросы для самоконтроля</a></li>
 </ul>
             </nav>
         </div>
@@ -431,7 +431,7 @@ document.write(`
 </pre></div>
 </div>
 <section id="id2">
-<h2><span class="section-number">14.1. </span>Разбор коротких опций<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Разбор коротких опций<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>Функция getopt разбирает аргументы командной строки на короткие опции.
 При этом длинные опции она не поддерживает.
 <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getopt(int</span> <span class="pre">argc,</span> <span class="pre">char*</span> <span class="pre">const</span> <span class="pre">argv[],</span> <span class="pre">const</span> <span class="pre">char*</span> <span class="pre">optstring)</span></code>
@@ -533,7 +533,7 @@ document.write(`
 </div>
 </section>
 <section id="id3">
-<h2><span class="section-number">14.2. </span>Разбор длинных опций<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2>Разбор длинных опций<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Функция <code class="docutils literal notranslate"><span class="pre">getopt_long</span></code> разбирает не только короткие, но и длинные опции.
 Она ведет себя также, как и <code class="docutils literal notranslate"><span class="pre">getopt</span></code>.
 <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">getopt_long(int</span> <span class="pre">argc,</span> <span class="pre">char*</span> <span class="pre">const</span> <span class="pre">argv[],</span> <span class="pre">const</span> <span class="pre">char*</span> <span class="pre">optstring,</span> <span class="pre">const</span> <span class="pre">struct</span> <span class="pre">option*</span> <span class="pre">longopts,</span> <span class="pre">int*</span> <span class="pre">longindex)</span></code>
@@ -566,7 +566,7 @@ document.write(`
 -1, если разор опций закончился или <code class="docutils literal notranslate"><span class="pre">?</span></code> если встретились с неизвестной опцией или с опцией без параметра.</p>
 </section>
 <section id="id4">
-<h2><span class="section-number">14.3. </span>Вопросы для самоконтроля<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Пусть программа <code class="docutils literal notranslate"><span class="pre">program</span></code> вызвана с тремя опциями <code class="docutils literal notranslate"><span class="pre">-a</span></code>, <code class="docutils literal notranslate"><span class="pre">-b</span></code>, <code class="docutils literal notranslate"><span class="pre">-c</span></code> следующим образом: <code class="docutils literal notranslate"><span class="pre">./program</span> <span class="pre">-abc</span></code>.
 Функция <code class="docutils literal notranslate"><span class="pre">getopt</span></code> вызовется три раза, пока не вернет -1.
@@ -641,9 +641,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">14.1. Разбор коротких опций</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">14.2. Разбор длинных опций</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">14.3. Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Разбор коротких опций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Разбор длинных опций</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вопросы для самоконтроля</a></li>
 </ul>
   </nav></div>
 
