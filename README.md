@@ -1,14 +1,15 @@
 # Учебное пособие по теме "Командная оболочка UNIX"
 
-Учебник создан на основе [jupyter-book](https://jupyterbook.org/intro.html).
+## Настройка системы для сборки учебника
 
-Превращение файлов проекта в файлы html:
+Учебник создан на базе [jupyter-book](https://jupyterbook.org/intro.html).
 
-```bash
-pip install -U jupyter-book
-export PATH=$PATH:$HOME/.local/bin
-jupyter-book build .
+На хост-машине следует установить docker, который нужен для построения образа и запуска контейнера.
+Для этого введите команды
 ```
-
-Затем откройте в веб-браузере файл `./_build/html/index.html`.
+sudo docker build -t unixshell .
+sudo docker run --volume $(pwd):/book --rm unixshell
+```
+Затем откройте бразуером появившийся файлы `_build/html/index.html`.
+Файл обновляется после сохранения изменений в исходных файлах.
 
