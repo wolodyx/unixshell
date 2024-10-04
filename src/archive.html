@@ -381,7 +381,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tar">Работа с tar-архивами</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Компрессия и декомпрессия архива</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gzip-gunzip-zcat">Утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code>, <code class="docutils literal notranslate"><span class="pre">gunzip</span></code> и <code class="docutils literal notranslate"><span class="pre">zcat</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zip-unzip">Утилиты <code class="docutils literal notranslate"><span class="pre">zip</span></code> и <code class="docutils literal notranslate"><span class="pre">unzip</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вопросы для самоконтроля</a></li>
 </ul>
             </nav>
         </div>
@@ -397,22 +401,155 @@ document.write(`
 <h1><span class="section-number">8. </span>Архивирование файлов<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <section id="id2">
 <h2>Введение<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<p>Ситуации в жизни, где используют архивацию:</p>
+<p>Архив – это файловый контейнер, содержащий внутри себя несколько файлов с их метаданными.
+К метаданным относятся имя файла, атрибуты, расширенные атрибуты, время последней модификации.
+Каталог также можно рассматривать как контейнер, но в отличие от архива он привязан к файловой системе.
+Если файл создан в ФС Ext4 и переносится на другой компьютер с той же ФС, но через флешку с FAT, то мы потеряем некоторую метаинформацию, например бит исполняемого файла.</p>
+<p>Ситуации на практике, где можем столкнуться с архивацией:</p>
 <ul class="simple">
-<li><p>отправить электронным письмом (сообщением) каталог с сохранением файловой структуры;</p></li>
-<li><p>уменьшить объем занимаемых данных на файловом сервере;</p></li>
-<li><p>дистрибутивы программ как инсталляторы, пакеты программ – это архивы;</p></li>
-<li><p>сжатие данных перед отправкой и распаковка перед приемом;</p></li>
-<li><p>офисные приложения используют архив для представления составных документов;</p></li>
-<li><p>загрузка из GitHub проекта в виде архива.</p></li>
+<li><p>отправка по электронной почте каталога;</p></li>
+<li><p>формирование дистрибутива программы (инсталлятор, пакет);</p></li>
+<li><p>скачивание из GitHub проекта программы ZIP-архивом;</p></li>
+<li><p>уменьшение объема занимаемых данных на файловом сервере;</p></li>
+<li><p>архивация большого количества небольших файлов для быстрого копирования на флешку;</p></li>
+<li><p>ускорение передачи данных по сети;</p></li>
+<li><p>файл с расширением <code class="docutils literal notranslate"><span class="pre">.docx</span></code> – это составной документ, оформленный в виде архива.</p></li>
 </ul>
 </section>
+<section id="tar">
+<h2>Работа с tar-архивами<a class="headerlink" href="#tar" title="Permalink to this heading">#</a></h2>
+<p>Для работы с архивами в UNIX-системах используют утилиту <code class="docutils literal notranslate"><span class="pre">tar</span></code>.
+Она позволяет:</p>
+<ul class="simple">
+<li><p>создавать и распаковывать архивы;</p></li>
+<li><p>извлекать из архива отдельные файлы;</p></li>
+<li><p>добавлять в архив новые файлы;</p></li>
+<li><p>просматривать содержимое;</p></li>
+</ul>
+<!-- Создание архива -->
+<p>Команда <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-cf</span> <span class="pre">archive.tar</span> <span class="pre">file1</span> <span class="pre">file2</span> <span class="pre">file3</span></code> объединяет три файла (<code class="docutils literal notranslate"><span class="pre">file1</span></code>, <code class="docutils literal notranslate"><span class="pre">file2</span></code> и <code class="docutils literal notranslate"><span class="pre">file3</span></code>) в архивный файл <code class="docutils literal notranslate"><span class="pre">archive.tar</span></code>.
+Если файлы располагаются в каталоге <code class="docutils literal notranslate"><span class="pre">dir</span></code>, то команда <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-cf</span> <span class="pre">archive.tar</span> <span class="pre">dir</span></code> упаковывает в архив каталог вместе с его содержимым.</p>
+<!-- Извлечение файлов из архива -->
+<p>Обратная операция – извлечение – выполняет команда <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-xf</span> <span class="pre">archive.tar</span></code>.
+Она извлекает в текущий каталог содержимое архива <code class="docutils literal notranslate"><span class="pre">archive.tar</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xf<span class="w"> </span>archive.tar
+</pre></div>
+</div>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-c</span></code> указывает утилите создать архив, а <code class="docutils literal notranslate"><span class="pre">-x</span></code> извлечь содержимое.
+Опция <code class="docutils literal notranslate"><span class="pre">-f</span></code> всегда требует аргумента в виде имени архива.
+При извлечении она должна указывать на существующий файл.
+Архивным файлам дают расширение <code class="docutils literal notranslate"><span class="pre">.tar</span></code>.</p>
+<!-- Извлечение файлов из архива в отдельный каталог -->
+<p>Следует быть осторожнее при извлечении архивов в непустой каталог.
+Если файлы в архиве не лежат внутри одного каталога, то такой архив следует извлечь в отдельный пустой каталог, чтобы не перемешать с другими файлами.
+Опция <code class="docutils literal notranslate"><span class="pre">-C</span></code> (`–directory) показывает команде куда следует извлечь содержимое архива:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xf<span class="w"> </span>archive.tar<span class="w"> </span>-C<span class="w"> </span>newdir
+</pre></div>
+</div>
+<!-- Извлечение из архива отдельного файла -->
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xf<span class="w"> </span>archive.tar<span class="w"> </span>file1.txt
+</pre></div>
+</div>
+<!-- Просмотр содержимого архива без извлечения -->
+<p>Команда <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-tf</span> <span class="pre">archive.tar</span></code> выводит на экран содержимое архивного файла в виде списка файлов.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">less</span></code> умеет заглядывать внутрь архивов и показывает список файлов.
+Попробуйте выполнить команду <code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">archive.tar</span></code>.</p>
+</div>
+<!-- Опция `-v` -->
+</section>
 <section id="id3">
-<h2>Вопросы для самоконтроля<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2>Компрессия и декомпрессия архива<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>В UNIX-системах сжатием данных специализируются отдельные утилиты, называемые <strong>компрессорами</strong>.
+Наиболее часто в Linux используют утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code> и <code class="docutils literal notranslate"><span class="pre">bzip2</span></code>.
+Они сжимают непрерывный поток данных, получаемый или из стандартного потока ввода или файла.
+Чтобы сжать несколько файлов или каталогов их используют совместно с архиватором.
+Архиватор подготавливает для них поток.</p>
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">tar</span></code> для сжатия архива использует компрессор, если указать его опцией.
+Так, архив сжимается <code class="docutils literal notranslate"><span class="pre">gzip</span></code>, если задана опция <code class="docutils literal notranslate"><span class="pre">-z</span></code> или утилитой <code class="docutils literal notranslate"><span class="pre">bzip2</span></code> при опции <code class="docutils literal notranslate"><span class="pre">-j</span></code>.
+При сжатии первым компрессором, к архива добавляется расширение <code class="docutils literal notranslate"><span class="pre">.gz</span></code>, что в конечном счете архив получает расширение <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code>.
+Часто это расширение ужимают до <code class="docutils literal notranslate"><span class="pre">.tgz</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-czf<span class="w"> </span>archive.tgz<span class="w"> </span>dir
+</pre></div>
+</div>
+<p>Извлечение сжатого архива происходит как обычно.
+<code class="docutils literal notranslate"><span class="pre">tar</span></code> определяет самостоятельно, каким декомпрессором ей воспользоваться.
+Но, для подстраховки, вы можете передать ей ту же самую опцию:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xzf<span class="w"> </span>archive.tgz
+</pre></div>
+</div>
+<p>Также в системе могут быть доступны другие компрессоры, которые поддерживает <code class="docutils literal notranslate"><span class="pre">tar</span></code>.
+Активирующие их опции совпадают с их именами в случае с длинным вариантом.
+Перечислим их компрессоры:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gzip</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bzip2</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xz</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lzip</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lzop</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lzma</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zstd</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compress</span></code>.</p></li>
+</ul>
+</section>
+<section id="gzip-gunzip-zcat">
+<h2>Утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code>, <code class="docutils literal notranslate"><span class="pre">gunzip</span></code> и <code class="docutils literal notranslate"><span class="pre">zcat</span></code><a class="headerlink" href="#gzip-gunzip-zcat" title="Permalink to this heading">#</a></h2>
+<p>Компрессор <code class="docutils literal notranslate"><span class="pre">gzip</span></code>, представленный одноименной утилитой, использует для сжатия данных алгоритм Лемпеля-Зива, обозначаемый кодовым словом LZ77.
+Он сжимает файлы, переданные ему в виде аргументов командной строки:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bob@pc:~/archive$<span class="w"> </span>ls
+file1.txt<span class="w">  </span>file2.txt<span class="w">  </span>file3.txt
+bob@pc:~/archive$<span class="w"> </span>gzip<span class="w"> </span>file1.txt<span class="w"> </span>file2.txt<span class="w"> </span>file3.txt<span class="w"> </span>
+bob@pc:~/archive$<span class="w"> </span>ls
+file1.txt.gz<span class="w">  </span>file2.txt.gz<span class="w">  </span>file3.txt.gz
+</pre></div>
+</div>
+<p>Заметим, что сжимаемые файлы замещаются результатом сжатия, при этом к имени исходного файла добавляется расширение <code class="docutils literal notranslate"><span class="pre">.gz</span></code>.
+Обратная операция, декомпрессия, активируется опцией <code class="docutils literal notranslate"><span class="pre">-d</span></code> (<code class="docutils literal notranslate"><span class="pre">--decompress</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bob@pc:~/archive$<span class="w"> </span>ls
+file1.txt.gz<span class="w">  </span>file2.txt.gz<span class="w">  </span>file3.txt.gz
+bob@pc:~/archive$<span class="w"> </span>gzip<span class="w"> </span>-d<span class="w"> </span>file1.txt.gz<span class="w"> </span>file2.txt.gz<span class="w"> </span>file3.txt.gz
+bob@pc:~/archive$<span class="w"> </span>ls
+file1.txt<span class="w">  </span>file2.txt<span class="w">  </span>file3.txt
+</pre></div>
+</div>
+<p>Здесь мы снова замечаем, что результирующие файлы замещают исходные.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-k</span></code> (<code class="docutils literal notranslate"><span class="pre">--keep</span></code>) утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code> сохраняет исходные файлы.</p>
+</div>
+<!--
+-c --std-out --to-stdout
+-d --decompress
+-r --recursive
+-->
+</section>
+<section id="zip-unzip">
+<h2>Утилиты <code class="docutils literal notranslate"><span class="pre">zip</span></code> и <code class="docutils literal notranslate"><span class="pre">unzip</span></code><a class="headerlink" href="#zip-unzip" title="Permalink to this heading">#</a></h2>
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">zip</span></code> – это компрессор, в отличие от предыдущих, умеющий работать с несколькими файлами.</p>
+</section>
+<section id="id4">
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Что такое “архив”?</p></li>
 <li><p>Перечислите примеры из жизни, где используются архивация и компрессия данных.</p></li>
+<li><p>Соберите в один архив два отдельных файла и каталог.</p></li>
+<li><p>Что произойдет, если вы создаете архив, который уже существует?</p></li>
+<li><p>Проверьте, какие из перечисленных здесь компрессоров доступны на вашей машине.</p></li>
+<li><p>Опция <code class="docutils literal notranslate"><span class="pre">--delete</span></code> удаляет из архива указанный файл.
+Покажите опцию в действии.</p></li>
+<li><p>Проверьте, можно ли удалить файл из сжатого архива.</p></li>
+<li><p>Упакуйте каталог в архив и сравните их размеры.</p></li>
+<li><p>Продемонстрируйте в действии опцию <code class="docutils literal notranslate"><span class="pre">--list</span></code> утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gzip</span></code> замещает исходные файлы результатом сжатия/распаковки.
+Какая опция позволяет сохранить исходные файлы?</p></li>
 </ol>
+<!--
+* Удаляет файл из сжатого архива:
+  `gzip --to-stdout --decompress "infile.tgz" | tar --to-stdout --delete 'file1.txt' -f - | gzip > 'outfile.tgz'`
+* Подсчитывает размер распакованного файла:
+  `zcat file.Z | wc -c`
+-->
 </section>
 </section>
 
@@ -480,7 +617,11 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tar">Работа с tar-архивами</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Компрессия и декомпрессия архива</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gzip-gunzip-zcat">Утилиты <code class="docutils literal notranslate"><span class="pre">gzip</span></code>, <code class="docutils literal notranslate"><span class="pre">gunzip</span></code> и <code class="docutils literal notranslate"><span class="pre">zcat</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zip-unzip">Утилиты <code class="docutils literal notranslate"><span class="pre">zip</span></code> и <code class="docutils literal notranslate"><span class="pre">unzip</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вопросы для самоконтроля</a></li>
 </ul>
   </nav></div>
 
