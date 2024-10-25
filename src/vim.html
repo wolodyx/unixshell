@@ -655,7 +655,34 @@ Vim удобен при частом редактировании англояз
 <h2>Вопросы для самоконтроля<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Запустите и закройте редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code>.</p></li>
+<li><p>В нижеследующем фрагменте кода замените строку “: invalid filename” на “: invalid blob”.
+Не забудьте выровнять обратные косые черты по вертикали.</p></li>
 </ol>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PARSE_BLOB(val, res)                                                  \</span>
+<span class="cp">  do {                                                                        \</span>
+<span class="cp">    if (!ParseFilename(val, res)) {                                           \</span>
+<span class="cp">      cmSystemTools::Error(cmStrCat(&quot;-E cmake_module_compile_db failed to &quot;,  \</span>
+<span class="cp">                                    &quot;parse &quot;, path, &quot;: invalid filename&quot;));   \</span>
+<span class="cp">      return {};                                                              \</span>
+<span class="cp">    }                                                                         \</span>
+<span class="cp">  } while (0)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>В нижеследующем коде измените положение фигурных скобок так, чтобы они расположились в отдельных строках.</p></li>
+</ol>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">ParseFilename</span><span class="p">(</span><span class="n">Json</span><span class="o">::</span><span class="n">Value</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">result</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">val</span><span class="p">.</span><span class="n">isString</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">.</span><span class="n">asString</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 
