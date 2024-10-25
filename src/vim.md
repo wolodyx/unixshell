@@ -220,4 +220,28 @@ vim [файлы]
 ## Вопросы для самоконтроля
 
 1. Запустите и закройте редактор `vim`.
+2. В нижеследующем фрагменте кода замените строку ": invalid filename" на ": invalid blob".
+   Не забудьте выровнять обратные косые черты по вертикали.
+```c++
+#define PARSE_BLOB(val, res)                                                  \
+  do {                                                                        \
+    if (!ParseFilename(val, res)) {                                           \
+      cmSystemTools::Error(cmStrCat("-E cmake_module_compile_db failed to ",  \
+                                    "parse ", path, ": invalid filename"));   \
+      return {};                                                              \
+    }                                                                         \
+  } while (0)
+```
+3. В нижеследующем коде измените положение фигурных скобок так, чтобы они расположились в отдельных строках.
+```c++
+static bool ParseFilename(Json::Value const& val, std::string& result)
+{
+  if (val.isString()) {
+    result = val.asString();
+  } else {
+    return false;
+  }
 
+  return true;
+}
+```
