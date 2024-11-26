@@ -411,7 +411,8 @@ document.write(`
 Тайловый оконный менеджер.
 Произносится как "ти-макс".
 Окно tmux как рабочий стол.
-Sessions + Windows + Panes
+Сессия (session) + окно (window) + панель (pane).
+Клиент-серверная архитектура.
 Prefix key
 -->
 <p>Утилита позволяет разбить терминальное окно на вложенные окна, называемые панелями.
@@ -426,7 +427,7 @@ Prefix key
 <section id="id3">
 <h2>Управление панелями<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Команды <code class="docutils literal notranslate"><span class="pre">%</span></code> и <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> разбивают текущую панель поплам по вертикали и горизонтали, соответственно.
-Панель можно закрыть по команде <code class="docutils literal notranslate"><span class="pre">exit</span></code>.
+Панель закрывается по команде <code class="docutils literal notranslate"><span class="pre">exit</span></code>, после чего остальные границы остальных панели расширяются, замещая пустую область.
 Если закрывается последняя панель, то происходит выход из <code class="docutils literal notranslate"><span class="pre">tmux</span></code> в командную оболочку.
 Переключение между панелями происходит по командам <code class="docutils literal notranslate"><span class="pre">→</span></code>, <code class="docutils literal notranslate"><span class="pre">←</span></code>, <code class="docutils literal notranslate"><span class="pre">↑</span></code>, <code class="docutils literal notranslate"><span class="pre">↓</span></code>.
 Размер текущей панели настраивается клавишами перемещения (<code class="docutils literal notranslate"><span class="pre">→</span></code>, <code class="docutils literal notranslate"><span class="pre">←</span></code>, <code class="docutils literal notranslate"><span class="pre">↑</span></code>, <code class="docutils literal notranslate"><span class="pre">↓</span></code>) при набранном <code class="docutils literal notranslate"><span class="pre">ctrl-b</span></code>, но еще не отпущенном <code class="docutils literal notranslate"><span class="pre">ctrl</span></code>.</p>
@@ -444,6 +445,13 @@ Prefix key
 </section>
 <section id="id5">
 <h2>Управление сессиями<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmux</span> <span class="n">new</span><span class="o">-</span><span class="n">session</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">session</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>
+<span class="n">tmux</span> <span class="n">detach</span>
+<span class="n">tmux</span> <span class="n">attach</span><span class="o">-</span><span class="n">session</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">session</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>
+<span class="n">tmux</span> <span class="nb">list</span><span class="o">-</span><span class="n">sessions</span>
+<span class="n">tmux</span> <span class="n">kill</span><span class="o">-</span><span class="n">session</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">session</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>
+</pre></div>
+</div>
 </section>
 <section id="id6">
 <h2>Заключение<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
@@ -466,6 +474,11 @@ Prefix key
 <li><p><code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">3</span> <span class="pre">getline</span></code>.</p></li>
 </ul>
 </li>
+<li><p>Начните новую сессию <code class="docutils literal notranslate"><span class="pre">tmux</span></code>, подготовьте в ней рабочее пространство и подключитесь с другого терминала к этой сессии.</p></li>
+<li><p>Откройте окно с эмулятором терминала и выполните команду <code class="docutils literal notranslate"><span class="pre">tty</span></code>.
+Она выведет имя файла, с которым связан ваш терминал.
+Присоединитесь к сессии <code class="docutils literal notranslate"><span class="pre">tmux</span></code>.
+Выведите список клиентов <code class="docutils literal notranslate"><span class="pre">tmux</span></code> и попробуйте определить, который из них вы.</p></li>
 </ol>
 <figure class="align-default">
 <img alt="../_images/tmux-panels-examples.png" src="../_images/tmux-panels-examples.png" />
