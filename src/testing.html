@@ -381,7 +381,11 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Требования к результату</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Проверка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Оценка результата</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Техническое задание</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Примеры технических заданий</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerator"><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cutline"><code class="docutils literal notranslate"><span class="pre">cutline</span></code>, утилита отсекания строк</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -414,6 +418,9 @@
 Далее вместо <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code> подставляется имя теста.
 Для каждого теста создайте сценарий <code class="docutils literal notranslate"><span class="pre">test-&lt;name&gt;.sh</span></code>.
 В тесте вызываются команды, вывод которых перенаправляется в файл <code class="docutils literal notranslate"><span class="pre">output-&lt;name&gt;.txt</span></code></p>
+<div class="highlight-warning notranslate"><div class="highlight"><pre><span></span>Работоспособность сценариев не должно зависеть от положения каталога `exam` в файловой системе.
+</pre></div>
+</div>
 </section>
 <section id="id3">
 <h2>Проверка результата<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
@@ -431,11 +438,13 @@
 </ul>
 </section>
 <section id="id5">
-<h2>Техническое задание<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<h2>Примеры технических заданий<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="enumerator">
+<h3><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк<a class="headerlink" href="#enumerator" title="Link to this heading">#</a></h3>
 <p>Написать программу на языке программирования Си.
 Программа называется <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.
 Программа принимает из командной строки имена файлов и выводит их содержимое на экран, нумеруя каждую строку.
-Нумерация начинается с 1.</p>
+Нумерация сквозная и начинается с 1.</p>
 <p>Программа поддерживает следующие опции:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">--help</span></code> выводит следующее сообщение на экран:</p></li>
@@ -460,6 +469,36 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">mix</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">enumerate</span> <span class="pre">-h</span> <span class="pre">-v</span></code> и <code class="docutils literal notranslate"><span class="pre">enumerate</span> <span class="pre">-v</span> <span class="pre">-h</span></code>; должна отработать первая опция в списке.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">enumerate</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">enumerate</span> <span class="pre">test-*.sh</span></code> и <code class="docutils literal notranslate"><span class="pre">enumerate</span> <span class="pre">output-*.txt</span></code>.</p></li>
 </ul>
+</section>
+<section id="cutline">
+<h3><code class="docutils literal notranslate"><span class="pre">cutline</span></code>, утилита отсекания строк<a class="headerlink" href="#cutline" title="Link to this heading">#</a></h3>
+<p>Написать программу на языке программирования Си.
+Программа называется <code class="docutils literal notranslate"><span class="pre">cutline</span></code>.
+Программа принимает из командной строки имена файлов и выводит строки, отсекая до 30 символов.</p>
+<p>Программа поддерживает следующие опции:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">--help</span></code> выводит следующее сообщение на экран:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="nb">enumerate</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="o">--</span><span class="n">help</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">--</span><span class="n">version</span><span class="p">]</span> <span class="o">...</span>
+    <span class="n">Cut</span> <span class="n">lines</span> <span class="n">to</span> <span class="mi">30</span> <span class="n">characters</span><span class="o">.</span>
+
+<span class="n">Options</span><span class="p">:</span>
+    <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span> 
+        <span class="n">display</span> <span class="n">this</span> <span class="n">help</span> <span class="ow">and</span> <span class="n">exit</span>
+    <span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span>
+        <span class="n">output</span> <span class="n">version</span> <span class="n">information</span> <span class="ow">and</span> <span class="n">exit</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">--version</span></code> выводит номер версии, в нашем случае <code class="docutils literal notranslate"><span class="pre">0.0.1</span></code>.</p></li>
+</ul>
+<p>Список тестов:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-v</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--version</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">help</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-h</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--help</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cutline</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">test-*.sh</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">output-*.txt</span></code>.</p></li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -522,7 +561,11 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Требования к результату</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Проверка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Оценка результата</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Техническое задание</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Примеры технических заданий</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerator"><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cutline"><code class="docutils literal notranslate"><span class="pre">cutline</span></code>, утилита отсекания строк</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
