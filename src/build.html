@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>13. Создание простой программы &#8212; Командная оболочка UNIX</title>
+    <title>13. Двоичная программа на Си &#8212; Командная оболочка UNIX</title>
   
   
   
@@ -16,33 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -67,7 +64,6 @@
     <link rel="prev" title="12. Сценарии bash" href="script.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -83,8 +79,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -92,6 +99,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -99,8 +107,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -116,8 +124,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -147,17 +154,21 @@
     
     
     <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -181,7 +192,7 @@
 <li class="toctree-l1"><a class="reference internal" href="vim.html">10. Редактирование в vim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jobs.html">11. Управление заданиями</a></li>
 <li class="toctree-l1"><a class="reference internal" href="script.html">12. Сценарии bash</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">13. Создание простой программы</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">13. Двоичная программа на Си</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">14. Терминальный мультиплексор</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getopt.html">15. Разбор аргументов программы</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compile.html">16. Компиляция программы на Си</a></li>
@@ -195,14 +206,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -346,16 +352,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -369,7 +383,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Создание простой программы</h1>
+    <h1>Двоичная программа на Си</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -380,13 +394,12 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сценарии</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Двоичная программа на Си</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вывод переменных окружения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Чтение файла построчно</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Создание программы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Упражнения</a></li>
 </ul>
             </nav>
         </div>
@@ -399,7 +412,7 @@
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">13. </span>Создание простой программы<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">13. </span>Двоичная программа на Си<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
 <h2>Введение<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>Под простой программой будем понимать программу, полученную из одного файла исходного кода.</p>
@@ -436,93 +449,9 @@
 <p>В отличие от двоичных программ, текстовую программу не надо компилировать и можно запустить сразу после редактирования.
 Для внесения изменений достаточно только текстового редактора.
 Поэтому сценарии применяют там, где требуется автоматизация рутинных действий.</p>
-<!-- Исполняемый файл и превращение в него -->
-<p>С программой связан исполняемый файл.
-Исполняемость файла задается не расширением как в Windows, а атрибутом файла.
-Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> в выводе в терминал исполняемые файлы выделяет зеленым цветом.
-Созданный в текстовом редакторе файл по умолчанию не является исполняемым.
-Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">file.sh</span></code> дает файлу <code class="docutils literal notranslate"><span class="pre">file.sh</span></code> такое свойство.</p>
-<img alt="../_images/chmod-executable-1.png" class="align-center" src="../_images/chmod-executable-1.png" />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">-x</span> <span class="pre">file.sh</span></code> сбрасывает атрибут исполняемого файла.</p>
-</div>
-<!-- Запуск исполняемого файла -->
-<p>Исполняемый файл можно запустить по имени только в том случае, если каталог, в котором он находится, входит в список переменной окружения <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
-Каталоги из <code class="docutils literal notranslate"><span class="pre">PATH</span></code> обычно являются системными и защищены от модификации.
-Создаваемая пользователем программа будет расположена в домашнем каталоге.
-Есть два способа запустить такую программу:</p>
-<ol class="arabic simple">
-<li><p>дополнить переменную PATH новым каталогом и запустить программу по имени;</p></li>
-<li><p>запустить файл по полному или относительному имени.</p></li>
-</ol>
-<p>Самый короткий способ сослаться на файл в текущем каталоге, воспользоваться обозначением текущего каталога и именем запускаемого файла: <code class="docutils literal notranslate"><span class="pre">./program</span></code>.</p>
 </section>
 <section id="id3">
-<h2>Сценарии<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<!-- Синтаксис сценария bash -->
-<p>Командная оболочка может считывать и исполнять последовательность команд из специального текстового файла, называемого <em>сценарием</em>.
-В простейшем случае сценарий состоит из последовательности команд, набираемых в командной строке.
-В более сложных случаях он содержит переменные, условные и безусловные переходы, циклы и остальные возможности языков программирования.</p>
-<!-- Расширение имени файла со сценарием -->
-<p>Файлу со сценарием bash (и других командных оболочек) принято давать расширение <code class="docutils literal notranslate"><span class="pre">.sh</span></code>.</p>
-<p>Ниже показан небольшая часть кода из сценария <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># If this is an xterm set the title to user@host:dir</span>
-<span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$TERM</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
-xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
-<span class="w">    </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\[\e]0;</span><span class="si">${</span><span class="nv">debian_chroot</span><span class="p">:+(</span><span class="nv">$debian_chroot</span><span class="p">)</span><span class="si">}</span><span class="s2">\u@\h: \w\a\]</span><span class="nv">$PS1</span><span class="s2">&quot;</span>
-<span class="w">    </span><span class="p">;;</span>
-*<span class="o">)</span>
-<span class="w">    </span><span class="p">;;</span>
-<span class="k">esac</span>
-
-<span class="c1"># enable color support of ls and also add handy aliases</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-x<span class="w"> </span>/usr/bin/dircolors<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">test</span><span class="w"> </span>-r<span class="w"> </span>~/.dircolors<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dircolors<span class="w"> </span>-b<span class="w"> </span>~/.dircolors<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dircolors<span class="w"> </span>-b<span class="k">)</span><span class="s2">&quot;</span>
-<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">ls</span><span class="o">=</span><span class="s1">&#39;ls --color=auto&#39;</span>
-<span class="w">    </span><span class="c1">#alias dir=&#39;dir --color=auto&#39;</span>
-<span class="w">    </span><span class="c1">#alias vdir=&#39;vdir --color=auto&#39;</span>
-
-<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">grep</span><span class="o">=</span><span class="s1">&#39;grep --color=auto&#39;</span>
-<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">fgrep</span><span class="o">=</span><span class="s1">&#39;fgrep --color=auto&#39;</span>
-<span class="w">    </span><span class="nb">alias</span><span class="w"> </span><span class="nv">egrep</span><span class="o">=</span><span class="s1">&#39;egrep --color=auto&#39;</span>
-<span class="k">fi</span>
-</pre></div>
-</div>
-<!-- Проблема указания интерпретатора -->
-<p>Любой текстовый файл можно запустить из командной строки если явно указать интерпретатор и путь к файлу:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 my-program.py</span>
-<span class="go">/bin/bash script.sh</span>
-</pre></div>
-</div>
-<!-- Шебанг -->
-<p>Преимущество сценария как исполняемого файла в том, что он может быть запущен по имени без указания интерпретатора.
-Каким образом система (конкретнее, системный загрузчик) узнает, какому интерпретатору передать сценарий?
-Выбор интерпретатора происходит внутри файла сценарии, а именно в первой его строке, где указывают путь к исполняемому файлу.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-</pre></div>
-</div>
-<p>Первые два символа <code class="docutils literal notranslate"><span class="pre">#!</span></code> принято называть словом <em>шебанг</em>.
-С них начинается любой сценарий в UNIX.
-После шебанга указан путь к программе-интерпретатору, возможно с опциями.
-Системный загрузчик при запуске сценария вызывает эту программу и передает ей как параметр путь к сценарию.</p>
-<!-- Автоматический выбор программы для открытия файла -->
-<p>В среде рабочего стола файл связывается с обрабатываемой его программой благодаря ассоциации расширения файла с исполняемым файлом.
-Для этого нужны привилегии суперпользователя.
-Механизм с шебангом позволяет локально ассоциировать файл с нужной программой.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Не рекомендуется использовать кодировки UNICODE (utf-8, utf-16, utf-32) с указанием маркера последовательности байт (BOM).
-В этом случае в файле первые три байта будут равны <code class="docutils literal notranslate"><span class="pre">EF</span> <span class="pre">BB</span> <span class="pre">BF</span></code>, подсказывающие текстовому редактору кодировку и порядок байт.
-Системный загрузчик не увидит шебанг и не сможет выбрать интерпретатор.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Если строка с шебангом отсутствует, исполняемый текстовый файл запустится интерпретатором по умолчанию.</p>
-</div>
-</section>
-<section id="id4">
-<h2>Двоичная программа на Си<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2>Создание программы<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <!-- Расширения исполняемых файлов -->
 <p>Файлы с двоичными программами можно поделить на две части – это запускаемые файлы и разделяемые библиотеки.
 Разделяемые библиотеки (динамические библиотеки в Windows) представляют повторно используемые части программ.
@@ -565,8 +494,8 @@ xterm*<span class="p">|</span>rxvt*<span class="o">)</span>
 Также будет полезна опция <code class="docutils literal notranslate"><span class="pre">-Wall</span></code>.
 Она разрешит компилятору выводить все предупреждения на потенциально опасные участки кода.</p>
 </section>
-<section id="id5">
-<h2>Вывод переменных окружения<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h2>Вывод переменных окружения<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>Главная функция <code class="docutils literal notranslate"><span class="pre">main</span></code> программы имеет несколько форм, из которых нам знакомы две:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main()</span></code></p></li>
@@ -613,8 +542,8 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 * `int clearenv(void)` удаляет все переменные из списка.
 -->
 </section>
-<section id="id6">
-<h2>Чтение файла построчно<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>Чтение файла построчно<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>Разберем небольшую программу на Си, выводящую на экран текстовый файл по строкам.
 Программа оформлена вокруг функции <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> из заголовочного файла <code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>.</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
@@ -653,15 +582,15 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 Строка <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code> указывает, что открывается текстовый файл для чтения.
 После завершения работы с файлом, он должен быть закрыт функцией <code class="docutils literal notranslate"><span class="pre">fclose</span></code>.</p>
 </section>
-<section id="id7">
-<h2>Использованные источники<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>Использованные источники<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html">GCC and Make – A Tutorial on how to compile, link and build C/C++ application</a></p></li>
 <li><p>getline(3)</p></li>
 </ol>
 </section>
-<section id="id8">
-<h2>Вопросы для самоконтроля<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Какие типы программ вам известны?</p></li>
 <li><p>Какие расширения дают исполняемым файлам?</p></li>
@@ -671,8 +600,8 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 <li><p>Как указывают интерпретатор для сценария?</p></li>
 </ol>
 </section>
-<section id="id9">
-<h2>Упражнения<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2>Упражнения<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Оформите сценарий bash, который формирует следующие вложенные каталоги и файлы:</p></li>
 </ol>
@@ -700,13 +629,9 @@ envp ────&gt;│  x │  x │  x │     │NULL│
 <li><p>Напишите собственную утилиту <code class="docutils literal notranslate"><span class="pre">cat</span></code>.</p></li>
 <li><p>Напишите программу, которая ищет в списке аргументов командной строки опцию <code class="docutils literal notranslate"><span class="pre">--help</span></code> и выводит сообщение с краткой справкой.</p></li>
 <li><p>Напишите свой “виртуальный процессор”, который будет выполнять сценарии, просто отправляя на экран его строки.
-В <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> показан пример исходного кода считывающий последовательно строки из файла.</p></li>
-<li><p>Запустите сценарий bash, выводящий на экран строку “Hello, Terminal!”, оформленный в кодировке utf-8 с маркером BOM.
-Редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code> устанавливает такую кодировку командой <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">fileencoding=utf-8</span> <span class="pre">bomb</span></code>.
-Проверьте присутствие байтов командой <code class="docutils literal notranslate"><span class="pre">hexdump</span> <span class="pre">file.sh</span></code>.
-Запустите сценарий и объясните результат.</p></li>
-<li><p>Напишите простой сценарий для интерпретатора python3.
-Чтобы найти путь к исполняемому файлу интерпретатора python3 воспользуйтесь командой <code class="docutils literal notranslate"><span class="pre">whereis</span> <span class="pre">python3</span></code>.</p></li>
+В <code class="docutils literal notranslate"><span class="pre">getline(3)</span></code> показан пример исходного кода считывающий последовательно строки из файла.
+10.Найдите на GitHub исходные коды утилит <code class="docutils literal notranslate"><span class="pre">true</span></code> и <code class="docutils literal notranslate"><span class="pre">false</span></code>.
+Как разработчики смогли реализовать одно, используя программный код другого?</p></li>
 </ol>
 </section>
 </section>
@@ -766,8 +691,7 @@ envp ────&gt;│  x │  x │  x │     │NULL│
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -777,13 +701,12 @@ envp ────&gt;│  x │  x │  x │     │NULL│
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Введение</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Сценарии</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Двоичная программа на Си</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вывод переменных окружения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Чтение файла построчно</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Использованные источники</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Создание программы</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Вывод переменных окружения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Чтение файла построчно</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Использованные источники</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Упражнения</a></li>
 </ul>
   </nav></div>
 
@@ -832,8 +755,8 @@ By Лазарев Владимир
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

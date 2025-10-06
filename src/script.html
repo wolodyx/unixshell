@@ -16,33 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -63,11 +60,10 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'src/script';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="13. Создание простой программы" href="build.html" />
+    <link rel="next" title="13. Двоичная программа на Си" href="build.html" />
     <link rel="prev" title="11. Управление заданиями" href="jobs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -83,8 +79,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -92,6 +99,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -99,8 +107,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -116,8 +124,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -147,17 +154,21 @@
     
     
     <img src="../_static/logo.png" class="logo__image only-light" alt="Командная оболочка UNIX - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Командная оболочка UNIX - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Командная оболочка UNIX - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -181,7 +192,7 @@
 <li class="toctree-l1"><a class="reference internal" href="vim.html">10. Редактирование в vim</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jobs.html">11. Управление заданиями</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Сценарии bash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build.html">13. Создание простой программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">13. Двоичная программа на Си</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">14. Терминальный мультиплексор</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getopt.html">15. Разбор аргументов программы</a></li>
 <li class="toctree-l1"><a class="reference internal" href="compile.html">16. Компиляция программы на Си</a></li>
@@ -195,14 +206,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -346,17 +352,27 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </button>
-
 </div></div>
       
     </div>
@@ -372,6 +388,20 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Простой сценарий</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Подробнее про шебанг</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Коды завершения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные выражения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -383,6 +413,272 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="bash">
 <h1><span class="section-number">12. </span>Сценарии bash<a class="headerlink" href="#bash" title="Link to this heading">#</a></h1>
+<p>До этого момента при решении задач мы последовательно выполняли команды из командной строки.
+При повторении той же задачи мы их искали в истории команд.
+Но есть удобная альтернатива – зафиксировать команды в файле и запутить их как новую команду!
+Это способ расширить функциональность системы собственными наработками.</p>
+<p>Командная оболочка может считывать и исполнять последовательность команд из специального текстового файла, называемого <em>сценарием</em>.
+В простейшем случае сценарий состоит из последовательности команд, набираемых в командной строке.
+В более сложных случаях он содержит переменные, условные и безусловные переходы, циклы и остальные возможности языков программирования.</p>
+<p>В этом разделе мы научимся писать простые сценарии bash.
+Для этого мы коснемся таких возможностей как:</p>
+<ul class="simple">
+<li><p>конструкции <code class="docutils literal notranslate"><span class="pre">if-then-else</span></code>;</p></li>
+<li><p>команда проверки условий <code class="docutils literal notranslate"><span class="pre">test</span></code>;</p></li>
+</ul>
+<p>Часть информации, которая будет полезна:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="streams.html"><span class="std std-doc">ввод и вывод</span></a> через команды <code class="docutils literal notranslate"><span class="pre">read</span></code> и <code class="docutils literal notranslate"><span class="pre">echo</span></code>;</p></li>
+<li><p><a class="reference internal" href="env.html"><span class="std std-doc">переменные bash</span></a>;</p></li>
+</ul>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>Файлам со сценариями <code class="docutils literal notranslate"><span class="pre">bash</span></code> (и других командных оболочек) принято давать расширение <code class="docutils literal notranslate"><span class="pre">.sh</span></code>.</p>
+<p>Ниже показан пример кода из файла со сценарием <code class="docutils literal notranslate"><span class="pre">/etc/profile.d/gnome-session_gnomerc.sh</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shellcheck shell=sh</span>
+
+<span class="c1"># If we are running the GNOME session, source ~/.gnomerc, but only if</span>
+<span class="c1"># we&#39;re in Wayland mode. If we&#39;re in X11 mode, this will be done by</span>
+<span class="c1"># /etc/X11/Xsession.d/55gnome-session_gnomerc instead.</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">XDG_SESSION_TYPE</span><span class="p">-</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>wayland<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">desktops</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nv">IFS</span><span class="o">=</span>:<span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>--<span class="w"> </span><span class="nv">$XDG_CURRENT_DESKTOP</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span>desktop<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$desktops</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$desktop</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;GNOME&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">break</span>
+<span class="w">  </span><span class="k">done</span>
+<span class="w">  </span><span class="nb">unset</span><span class="w"> </span>desktops
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$desktop</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;GNOME&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">unset</span><span class="w"> </span>desktop
+<span class="w">    </span><span class="k">return</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="w">  </span><span class="nb">unset</span><span class="w"> </span>desktop
+
+<span class="w">  </span><span class="nv">GNOMERC</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.gnomerc&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GNOMERC</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="c1"># shellcheck source=/dev/null</span>
+<span class="w">    </span>.<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GNOMERC</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="k">fi</span>
+
+<span class="c1"># We prepend /usr/share/gnome since its defaults.list actually points</span>
+<span class="c1"># to /etc so it is configurable. This is idempotent, so we can do this</span>
+<span class="c1"># unconditionally.</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$XDG_DATA_DIRS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">XDG_DATA_DIRS</span><span class="o">=</span>/usr/share/gnome:/usr/local/share/:/usr/share/
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">XDG_DATA_DIRS</span><span class="p">##*/usr/share/gnome*</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">XDG_DATA_DIRS</span><span class="o">=</span>/usr/share/gnome:<span class="s2">&quot;</span><span class="nv">$XDG_DATA_DIRS</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+<span class="nb">export</span><span class="w"> </span>XDG_DATA_DIRS
+</pre></div>
+</div>
+<p>Те строки, что начинаются с символа <code class="docutils literal notranslate"><span class="pre">#</span></code> относятся к комментариям.
+Кроме знакомых команд <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">unset</span></code> и манипулирования переменными можно увидеть управляющие конструкции условия (<code class="docutils literal notranslate"><span class="pre">if-then-fi</span></code>) и цикла (<code class="docutils literal notranslate"><span class="pre">for-do-done</span></code>).
+Управляющие конструкции превращают <code class="docutils literal notranslate"><span class="pre">bash</span></code> в полноценный язык программирования.</p>
+<p>Если ваш сценарий состоит из нескольких коротких команд, то их можно объединить в одну строку, разделив символом <code class="docutils literal notranslate"><span class="pre">;</span></code>.
+Так, создание каталога <code class="docutils literal notranslate"><span class="pre">mydir</span></code> и переход в него можно выполнить командой <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">mydir;</span> <span class="pre">cd</span> <span class="pre">mydir</span></code>.
+Символ <code class="docutils literal notranslate"><span class="pre">;</span></code> подсказывает интерпретатору, что ввод аргументов команды завершается и за ним идет следующая команда.
+Если вы хотите, чтобы <code class="docutils literal notranslate"><span class="pre">;</span></code> стал частью опции, то эту опцию следует обрамить кавычками.
+Так, команда <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">&quot;mydir;&quot;</span></code> создаст каталог <code class="docutils literal notranslate"><span class="pre">mydir;</span></code>.</p>
+</section>
+<section id="id2">
+<h2>Простой сценарий<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Напишем простой сценарий создания в домашнем каталоге каталога <code class="docutils literal notranslate"><span class="pre">mydir</span></code> и перехода в него.
+Оформим сценарий в полноценный исполняемый файл и запустим его.
+Для этого мы должны:</p>
+<ol class="arabic simple">
+<li><p>создать файл <code class="docutils literal notranslate"><span class="pre">myscript.sh</span></code>;</p></li>
+<li><p>добавить в начало файла строку с <strong>шебангом</strong>;</p></li>
+<li><p>добавить команды, составляющую логику сценария;</p></li>
+<li><p>включить атрибут файла “исполняемый”;</p></li>
+<li><p>запустить файл;</p></li>
+<li><p>проверить, что задача выполнена сценарием правильно.</p></li>
+</ol>
+<p>Первые три пункта выполним в текстовом редакторе <code class="docutils literal notranslate"><span class="pre">vim</span></code>.
+Создайте пустой файл и добавьте первой строкой</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+</pre></div>
+</div>
+<p>В строках ниже добавьте команды:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>~/build
+<span class="nb">cd</span><span class="w"> </span>~/build
+</pre></div>
+</div>
+<p>Сохраните файл и выйдите из редактора.</p>
+<!-- Исполняемый файл и превращение в него -->
+<p>В системе <code class="docutils literal notranslate"><span class="pre">Windows</span></code> исполняемость указывается расширением файла: <code class="docutils literal notranslate"><span class="pre">.exe</span></code>, <code class="docutils literal notranslate"><span class="pre">.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">.com</span></code>.
+В системах <code class="docutils literal notranslate"><span class="pre">UNIX</span></code> признак исполняемости задается атрибутом файла.
+Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> в выводе в терминал исполняемые файлы выделяет зеленым цветом.
+Созданный в текстовом редакторе файл по умолчанию не является исполняемым.
+Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">file.sh</span></code> дает файлу <code class="docutils literal notranslate"><span class="pre">file.sh</span></code> такое свойство.</p>
+<img alt="../_images/chmod-executable-1.png" class="align-center" src="../_images/chmod-executable-1.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">-x</span> <span class="pre">file.sh</span></code> сбрасывает атрибут исполняемого файла.</p>
+</div>
+<!-- Запуск исполняемого файла -->
+<p>Исполняемый файл можно запустить по имени только в том случае, если каталог, в котором он находится, входит в список переменной окружения <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.
+Каталоги из <code class="docutils literal notranslate"><span class="pre">PATH</span></code> обычно являются системными и защищены от модификации.
+Создаваемая пользователем программа часто располагается в домашнем или во вложенном в него каталогах.
+Есть два способа запустить такую программу:</p>
+<ol class="arabic simple">
+<li><p>дополнить переменную PATH новым каталогом и запустить программу по имени;</p></li>
+<li><p>запустить файл по полному или относительному имени.</p></li>
+</ol>
+<p>Короткий способ сослаться на файл в текущем каталоге – это воспользоваться обозначением текущего каталога и именем запускаемого файла:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./myscript.sh
+</pre></div>
+</div>
+<p>После запуска проверьте, что сценарий выполнил свою работу.
+Загляните в домашний каталог и проверьте, появился ли подкаталог <code class="docutils literal notranslate"><span class="pre">mydir</span></code>.</p>
+</section>
+<section id="id3">
+<h2>Подробнее про шебанг<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>Строка с шебангом <code class="docutils literal notranslate"><span class="pre">#!/bin/bash</span></code> подсказывает системе с каким интерпретатором следует ей исполнить текстовый файл.
+В данном случае наш сценарий передается интерпретатору командной строки <code class="docutils literal notranslate"><span class="pre">bash</span></code>, которая расположена в каталоге <code class="docutils literal notranslate"><span class="pre">/bin</span></code>.
+Если этой строки не было (и файл не был исполняемым), нам бы пришлось явно указывать интерпретатор:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/bin/bash<span class="w"> </span>myscript.sh
+</pre></div>
+</div>
+<p>Интерпретатором сценария может быть и <code class="docutils literal notranslate"><span class="pre">python3</span></code>, <code class="docutils literal notranslate"><span class="pre">perl</span></code>, <code class="docutils literal notranslate"><span class="pre">php</span></code>, <code class="docutils literal notranslate"><span class="pre">ruby</span></code>.
+Благодаря шебангу текстовый файл можно превратить в программу, запускаемую по имени или двойному щелчку мыши из среды рабочего стола.</p>
+<p>После шебанга указан путь к программе-интерпретатору, возможно с опциями.
+Например, <code class="docutils literal notranslate"><span class="pre">#!/bin/bash</span> <span class="pre">-e</span></code> указывает, что выполнение сценария <code class="docutils literal notranslate"><span class="pre">bash</span></code> следует завершить сразу же при первой ошибке.</p>
+<!-- Автоматический выбор программы для открытия файла -->
+<p>В среде рабочего стола файл глобально связывается с обрабатываемой его программой благодаря ассоциации расширения файла с исполняемым файлом.
+Механизм с шебангом другой механизм связывания, где выбор делает создатель файла и происходит это локально.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Не рекомендуется использовать кодировки UNICODE (utf-8, utf-16, utf-32) с указанием маркера последовательности байт (BOM).
+В этом случае в файле первые три байта будут равны <code class="docutils literal notranslate"><span class="pre">EF</span> <span class="pre">BB</span> <span class="pre">BF</span></code>, подсказывающие текстовому редактору кодировку и порядок байт.
+Системный загрузчик не увидит шебанг и не сможет выбрать интерпретатор.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Если строка с шебангом отсутствует, исполняемый текстовый файл запустится интерпретатором по умолчанию.</p>
+</div>
+</section>
+<section id="id4">
+<h2>Коды завершения<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>Прежде чем перейти к управляющей конструкции условного перехода <code class="docutils literal notranslate"><span class="pre">if-then-else</span></code> познакомимся с кодами завершения и утилитами <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> и <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p>
+<p>Код завершения – это число от 0 до 255, которое возвращают программы по завершению выполнения.
+Это то число, которое возвращает функция <code class="docutils literal notranslate"><span class="pre">main</span></code> в программах на Си/C++.
+По соглашению число 0 считается признаком успешного завершения.</p>
+<p>Сценарий также может указать код завершения через команду <code class="docutils literal notranslate"><span class="pre">exit</span></code>, которой передают целое число.</p>
+<p>Код завершения программы сохраняется в переменной <code class="docutils literal notranslate"><span class="pre">$?</span></code>, которую можно вывести на экран командой <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code>.</p>
+<p>Существуют команды <code class="docutils literal notranslate"><span class="pre">true</span></code> и <code class="docutils literal notranslate"><span class="pre">false</span></code>, которые возвращают нулевой и ненулевой код.
+Они могут быть полезны при отладке сценариев.</p>
+<p>Другая, наиболее часто используемая команда при написании сценариев, – это <code class="docutils literal notranslate"><span class="pre">test</span></code>.
+Она проверяет типы файлов и сравнивает значения.
+Чтобы проверить файл на существование, выполните команду <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">-e</span> <span class="pre">file.sh</span></code>.
+Если файл существует, то код завершения будет нулевой:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">tim@pc:~$ </span><span class="nb">test</span><span class="w"> </span>-e<span class="w"> </span>example.sh1<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
+<span class="go">1</span>
+<span class="gp">tim@pc:~$ </span><span class="nb">test</span><span class="w"> </span>-e<span class="w"> </span>example.sh<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>О других возможностях <code class="docutils literal notranslate"><span class="pre">test</span></code> вы можете узнать из <code class="docutils literal notranslate"><span class="pre">test(1)</span></code>.</p>
+</section>
+<section id="id5">
+<h2>Условные выражения<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>Управляющие конструкции с условным выражением имеют следующий синтаксис:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>command1<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>command2
+<span class="k">fi</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>command1<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>command2
+<span class="k">else</span>
+<span class="w">    </span>command3
+<span class="k">fi</span>
+</pre></div>
+</div>
+<p>Здесь, в зависимости от кода возврата команды <code class="docutils literal notranslate"><span class="pre">command1</span></code> выполняется либо ветка c <code class="docutils literal notranslate"><span class="pre">then</span></code>, либо, если существует, ветка <code class="docutils literal notranslate"><span class="pre">else</span></code>.
+Но чаще используют другой синтаксис.
+Команду <code class="docutils literal notranslate"><span class="pre">command1</span></code> выносят в отдельную строку, а уже внутри <code class="docutils literal notranslate"><span class="pre">if</span></code> используют команду <code class="docutils literal notranslate"><span class="pre">test</span></code>, а если быть точнее, то его переименованную версию <code class="docutils literal notranslate"><span class="pre">[</span></code>.
+Таким образом синтаксис условного выражения становится как</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>condition<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>command2
+<span class="k">fi</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>condition<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>command2
+<span class="k">else</span>
+<span class="w">    </span>command3
+<span class="k">fi</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Запомните, что <code class="docutils literal notranslate"><span class="pre">[</span></code> – это и есть <code class="docutils literal notranslate"><span class="pre">test</span></code>.
+Это подверждает команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">[</span></code>.</p>
+</div>
+<p><em>Проверка кода завершения программы</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#echo &quot;hello&quot; # &lt;- возвращает нулевой код завершения.</span>
+find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span class="w"> </span><span class="c1"># &lt;- возвращает ненулевой код завершения.</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The program returned a non-zero return code!&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The program returned zero return code!&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+<p><em>Проверка существования файла</em></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-e</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование файла или каталога;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-f</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование регулярного файла;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-d</span> <span class="pre">.git</span> <span class="pre">]</span></code> проверяет существование каталога;</p></li>
+</ul>
+<p>Будем запускаться только из каталога проекта.
+Как узнать, что текущий каталога указывает именно на корневой каталог проекта?
+Любой проект разработки использует систему контроля версий Git, которая в свою очередь хранит свою базу данных в подкаталоге <code class="docutils literal notranslate"><span class="pre">.git</span></code> в корне проекта.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span>.git/<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Сценарий следует запускать только из корневого каталога проекта.&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">if</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Что означает “код завершения”?</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Упражнения<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Найдите в системе файлы со сценариями.</p></li>
+<li><p>В справочных страницах информация о кодах возврата команд прописывается в разделе “EXIT STATUS”.
+Найдите страницы с этим разделом и удостоверьтесь, что 0 – это успешное завершение утилиты.</p></li>
+<li><p>Напишите программу, которая сравнивает два текстовых файла и печатает сообщение о том, что файлы совпадают или нет.
+Для сравнения используйте утилиту <code class="docutils literal notranslate"><span class="pre">diff</span></code>.</p></li>
+<li><p>Сделайте так, чтобы команда <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code> распечатала ненулевое значение.
+Запустите команду во второй раз.
+Почему она вернула нулевое значение?</p></li>
+<li><p>Запустите сценарий bash, выводящий на экран строку “Hello, Terminal!”, оформленный в кодировке utf-8 с маркером BOM.
+Редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code> устанавливает такую кодировку командой <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">fileencoding=utf-8</span> <span class="pre">bomb</span></code>.
+Проверьте присутствие байтов командой <code class="docutils literal notranslate"><span class="pre">hexdump</span> <span class="pre">file.sh</span></code>.
+Запустите сценарий и объясните результат.</p></li>
+<li><p>Напишите простой сценарий для интерпретатора <code class="docutils literal notranslate"><span class="pre">python3</span></code>.
+Чтобы найти путь к исполняемому файлу интерпретатора <code class="docutils literal notranslate"><span class="pre">python3</span></code> воспользуйтесь выводом команды <code class="docutils literal notranslate"><span class="pre">whereis</span> <span class="pre">python3</span></code>.</p></li>
+<li><p>Создайте в домашнем каталоге подкаталог <code class="docutils literal notranslate"><span class="pre">bin</span></code>, внесите путь к нему в список переменной <code class="docutils literal notranslate"><span class="pre">PATH</span></code> и попробуйте запустить свой сценарий по имени файла.</p></li>
+<li><p>Почему в однострочной команде <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">true;</span> <span class="pre">then</span> <span class="pre">echo</span> <span class="pre">success;</span> <span class="pre">fi</span></code> после <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">success</span></code> ставят <code class="docutils literal notranslate"><span class="pre">;</span></code>?
+Если <code class="docutils literal notranslate"><span class="pre">fi</span></code> переместить в новую строку, то <code class="docutils literal notranslate"><span class="pre">;</span></code> уже будет не обязательна для корректного выполнения команды.</p></li>
+</ol>
+<!--
+Проверка, что сценарий запущен под правами суперпользователя: `if [ $EUID -eq 0 ];`
+Список команд:
+* `cmd1; cmd2; cmd3`;
+* `cmd1 && cmd2 && cmd3`;
+* `cmd1 || cmd2 || cmd3`;
+-->
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -429,7 +725,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">13. </span>Создание простой программы</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>Двоичная программа на Си</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -439,6 +735,27 @@
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Введение</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Простой сценарий</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Подробнее про шебанг</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Коды завершения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные выражения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
@@ -483,8 +800,8 @@ By Лазарев Владимир
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
