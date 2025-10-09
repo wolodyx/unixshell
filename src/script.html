@@ -397,7 +397,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Простой сценарий</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Подробнее про шебанг</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Коды завершения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные выражения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные операторы</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
 </ul>
@@ -413,26 +413,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="bash">
 <h1><span class="section-number">12. </span>Сценарии bash<a class="headerlink" href="#bash" title="Link to this heading">#</a></h1>
-<p>До этого момента при решении задач мы последовательно выполняли команды из командной строки.
-При повторении той же задачи мы их искали в истории команд.
-Но есть удобная альтернатива – зафиксировать команды в файле и запутить их как новую команду!
-Это способ расширить функциональность системы собственными наработками.</p>
+<p>В этом разделе мы научимся оформлять сценарии <code class="docutils literal notranslate"><span class="pre">bash</span></code> – исполняемые файлы, содержащие сразу несколько команд.
+Для этого мы познакомимся с кодами возврата программ, командой проверки условий <code class="docutils literal notranslate"><span class="pre">test</span></code>, условным оператором <code class="docutils literal notranslate"><span class="pre">if-then-else-fi</span></code>, механизмом запуска сценариев.
+Часть информации, которая поможет нам, была представлена ранее.
+Так, для ввода и вывода данных воспользуемся командами <code class="docutils literal notranslate"><span class="pre">read</span></code> и <code class="docutils literal notranslate"><span class="pre">echo</span></code> из раздела <a class="reference internal" href="streams.html"><span class="std std-doc">“Стандартные потоки”</span></a>.
+Переменные <code class="docutils literal notranslate"><span class="pre">bash</span></code> отличаются от <a class="reference internal" href="env.html"><span class="std std-doc">переменных среды</span></a> только тем, что вводятся без команды <code class="docutils literal notranslate"><span class="pre">export</span></code>.</p>
+<section id="id1">
+<h2>Введение<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Командная оболочка может считывать и исполнять последовательность команд из специального текстового файла, называемого <em>сценарием</em>.
 В простейшем случае сценарий состоит из последовательности команд, набираемых в командной строке.
 В более сложных случаях он содержит переменные, условные и безусловные переходы, циклы и остальные возможности языков программирования.</p>
-<p>В этом разделе мы научимся писать простые сценарии bash.
-Для этого мы коснемся таких возможностей как:</p>
-<ul class="simple">
-<li><p>конструкции <code class="docutils literal notranslate"><span class="pre">if-then-else</span></code>;</p></li>
-<li><p>команда проверки условий <code class="docutils literal notranslate"><span class="pre">test</span></code>;</p></li>
-</ul>
-<p>Часть информации, которая будет полезна:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="streams.html"><span class="std std-doc">ввод и вывод</span></a> через команды <code class="docutils literal notranslate"><span class="pre">read</span></code> и <code class="docutils literal notranslate"><span class="pre">echo</span></code>;</p></li>
-<li><p><a class="reference internal" href="env.html"><span class="std std-doc">переменные bash</span></a>;</p></li>
-</ul>
-<section id="id1">
-<h2>Введение<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Файлам со сценариями <code class="docutils literal notranslate"><span class="pre">bash</span></code> (и других командных оболочек) принято давать расширение <code class="docutils literal notranslate"><span class="pre">.sh</span></code>.</p>
 <p>Ниже показан пример кода из файла со сценарием <code class="docutils literal notranslate"><span class="pre">/etc/profile.d/gnome-session_gnomerc.sh</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># shellcheck shell=sh</span>
@@ -473,17 +463,20 @@ document.write(`
 </pre></div>
 </div>
 <p>Те строки, что начинаются с символа <code class="docutils literal notranslate"><span class="pre">#</span></code> относятся к комментариям.
-Кроме знакомых команд <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">unset</span></code> и манипулирования переменными можно увидеть управляющие конструкции условия (<code class="docutils literal notranslate"><span class="pre">if-then-fi</span></code>) и цикла (<code class="docutils literal notranslate"><span class="pre">for-do-done</span></code>).
+Кроме знакомых команд <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">unset</span></code> и манипулирования переменными можно увидеть управляющие конструкции как оператор ветвления (<code class="docutils literal notranslate"><span class="pre">if-then-fi</span></code>) и цикла (<code class="docutils literal notranslate"><span class="pre">for-do-done</span></code>).
 Управляющие конструкции превращают <code class="docutils literal notranslate"><span class="pre">bash</span></code> в полноценный язык программирования.</p>
-<p>Если ваш сценарий состоит из нескольких коротких команд, то их можно объединить в одну строку, разделив символом <code class="docutils literal notranslate"><span class="pre">;</span></code>.
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Если сценарий состоит из нескольких коротких команд, то их можно объединить в одну строку, разделив символом <code class="docutils literal notranslate"><span class="pre">;</span></code>.
 Так, создание каталога <code class="docutils literal notranslate"><span class="pre">mydir</span></code> и переход в него можно выполнить командой <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">mydir;</span> <span class="pre">cd</span> <span class="pre">mydir</span></code>.
 Символ <code class="docutils literal notranslate"><span class="pre">;</span></code> подсказывает интерпретатору, что ввод аргументов команды завершается и за ним идет следующая команда.
-Если вы хотите, чтобы <code class="docutils literal notranslate"><span class="pre">;</span></code> стал частью опции, то эту опцию следует обрамить кавычками.
+Чтобы <code class="docutils literal notranslate"><span class="pre">;</span></code> стал частью аргумента команды, то этот аргумент следует обрамить кавычками.
 Так, команда <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">&quot;mydir;&quot;</span></code> создаст каталог <code class="docutils literal notranslate"><span class="pre">mydir;</span></code>.</p>
+</div>
 </section>
 <section id="id2">
 <h2>Простой сценарий<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>Напишем простой сценарий создания в домашнем каталоге каталога <code class="docutils literal notranslate"><span class="pre">mydir</span></code> и перехода в него.
+<p>Напишем простой сценарий добавления в домашнем каталоге каталога <code class="docutils literal notranslate"><span class="pre">mydir</span></code> и создания в нем трех файлов <code class="docutils literal notranslate"><span class="pre">a.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">b.txt</span></code> и <code class="docutils literal notranslate"><span class="pre">c.txt</span></code>, содержащие собственные названия.
 Оформим сценарий в полноценный исполняемый файл и запустим его.
 Для этого мы должны:</p>
 <ol class="arabic simple">
@@ -500,15 +493,17 @@ document.write(`
 </pre></div>
 </div>
 <p>В строках ниже добавьте команды:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>~/build
-<span class="nb">cd</span><span class="w"> </span>~/build
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>mydir
+<span class="nb">echo</span><span class="w"> </span>a.txt<span class="w"> </span>&gt;<span class="w"> </span>mydir/a.txt
+<span class="nb">echo</span><span class="w"> </span>b.txt<span class="w"> </span>&gt;<span class="w"> </span>mydir/b.txt
+<span class="nb">echo</span><span class="w"> </span>c.txt<span class="w"> </span>&gt;<span class="w"> </span>mydir/c.txt
 </pre></div>
 </div>
 <p>Сохраните файл и выйдите из редактора.</p>
 <!-- Исполняемый файл и превращение в него -->
-<p>В системе <code class="docutils literal notranslate"><span class="pre">Windows</span></code> исполняемость указывается расширением файла: <code class="docutils literal notranslate"><span class="pre">.exe</span></code>, <code class="docutils literal notranslate"><span class="pre">.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">.com</span></code>.
+<p>В системе <code class="docutils literal notranslate"><span class="pre">Windows</span></code> исполняемость указывает расширение файла: <code class="docutils literal notranslate"><span class="pre">.exe</span></code>, <code class="docutils literal notranslate"><span class="pre">.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">.com</span></code>.
 В системах <code class="docutils literal notranslate"><span class="pre">UNIX</span></code> признак исполняемости задается атрибутом файла.
-Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> в выводе в терминал исполняемые файлы выделяет зеленым цветом.
+Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> выделяет исполняемые файлы зеленым цветом.
 Созданный в текстовом редакторе файл по умолчанию не является исполняемым.
 Команда <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">file.sh</span></code> дает файлу <code class="docutils literal notranslate"><span class="pre">file.sh</span></code> такое свойство.</p>
 <img alt="../_images/chmod-executable-1.png" class="align-center" src="../_images/chmod-executable-1.png" />
@@ -530,7 +525,15 @@ document.write(`
 </pre></div>
 </div>
 <p>После запуска проверьте, что сценарий выполнил свою работу.
-Загляните в домашний каталог и проверьте, появился ли подкаталог <code class="docutils literal notranslate"><span class="pre">mydir</span></code>.</p>
+Загляните в домашний каталог и проверьте, появился ли подкаталог <code class="docutils literal notranslate"><span class="pre">mydir</span></code> с тремя файлами и содержат ли эти файлы нужный нам контент:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>bob@pc:~$ ls mydir/
+a.txt  b.txt  c.txt
+bob@pc:~$ cat mydir/*.txt
+a.txt
+b.txt
+c.txt
+</pre></div>
+</div>
 </section>
 <section id="id3">
 <h2>Подробнее про шебанг<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
@@ -545,32 +548,28 @@ document.write(`
 <p>После шебанга указан путь к программе-интерпретатору, возможно с опциями.
 Например, <code class="docutils literal notranslate"><span class="pre">#!/bin/bash</span> <span class="pre">-e</span></code> указывает, что выполнение сценария <code class="docutils literal notranslate"><span class="pre">bash</span></code> следует завершить сразу же при первой ошибке.</p>
 <!-- Автоматический выбор программы для открытия файла -->
-<p>В среде рабочего стола файл глобально связывается с обрабатываемой его программой благодаря ассоциации расширения файла с исполняемым файлом.
-Механизм с шебангом другой механизм связывания, где выбор делает создатель файла и происходит это локально.</p>
+<p>В среде рабочего стола файл с документом глобально связывается с обрабатываемой его программой благодаря ассоциации расширения файла с исполняемым файлом.
+Шебанг дает другой механизм связывания, где выбор делает создатель файла.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Не рекомендуется использовать кодировки UNICODE (utf-8, utf-16, utf-32) с указанием маркера последовательности байт (BOM).
 В этом случае в файле первые три байта будут равны <code class="docutils literal notranslate"><span class="pre">EF</span> <span class="pre">BB</span> <span class="pre">BF</span></code>, подсказывающие текстовому редактору кодировку и порядок байт.
 Системный загрузчик не увидит шебанг и не сможет выбрать интерпретатор.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Если строка с шебангом отсутствует, исполняемый текстовый файл запустится интерпретатором по умолчанию.</p>
-</div>
 </section>
 <section id="id4">
 <h2>Коды завершения<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
-<p>Прежде чем перейти к управляющей конструкции условного перехода <code class="docutils literal notranslate"><span class="pre">if-then-else</span></code> познакомимся с кодами завершения и утилитами <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> и <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p>
 <p>Код завершения – это число от 0 до 255, которое возвращают программы по завершению выполнения.
 Это то число, которое возвращает функция <code class="docutils literal notranslate"><span class="pre">main</span></code> в программах на Си/C++.
-По соглашению число 0 считается признаком успешного завершения.</p>
-<p>Сценарий также может указать код завершения через команду <code class="docutils literal notranslate"><span class="pre">exit</span></code>, которой передают целое число.</p>
+По соглашению число 0 считается признаком успешного завершения программы.</p>
+<p>Сценарий также может указать код завершения через команду <code class="docutils literal notranslate"><span class="pre">exit</span></code>, которой передают целое число.
+<code class="docutils literal notranslate"><span class="pre">exit</span></code> без аргумента выдает нулевой код завершения.</p>
 <p>Код завершения программы сохраняется в переменной <code class="docutils literal notranslate"><span class="pre">$?</span></code>, которую можно вывести на экран командой <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code>.</p>
 <p>Существуют команды <code class="docutils literal notranslate"><span class="pre">true</span></code> и <code class="docutils literal notranslate"><span class="pre">false</span></code>, которые возвращают нулевой и ненулевой код.
 Они могут быть полезны при отладке сценариев.</p>
 <p>Другая, наиболее часто используемая команда при написании сценариев, – это <code class="docutils literal notranslate"><span class="pre">test</span></code>.
-Она проверяет типы файлов и сравнивает значения.
-Чтобы проверить файл на существование, выполните команду <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">-e</span> <span class="pre">file.sh</span></code>.
+Она проверяет файлы и сравнивает строковые и целочисленные значения.
+Например, команда <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">-e</span> <span class="pre">file.sh</span></code> проверяет файл на существование.
 Если файл существует, то код завершения будет нулевой:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">tim@pc:~$ </span><span class="nb">test</span><span class="w"> </span>-e<span class="w"> </span>example.sh1<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span>
 <span class="go">1</span>
@@ -578,11 +577,11 @@ document.write(`
 <span class="go">0</span>
 </pre></div>
 </div>
-<p>О других возможностях <code class="docutils literal notranslate"><span class="pre">test</span></code> вы можете узнать из <code class="docutils literal notranslate"><span class="pre">test(1)</span></code>.</p>
+<p>О других возможностях <code class="docutils literal notranslate"><span class="pre">test</span></code> вы можете узнать в <code class="docutils literal notranslate"><span class="pre">test(1)</span></code>.</p>
 </section>
 <section id="id5">
-<h2>Условные выражения<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
-<p>Управляющие конструкции с условным выражением имеют следующий синтаксис:</p>
+<h2>Условные операторы<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>Условные операторы имеют следующий синтаксис:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>command1<span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span>command2
 <span class="k">fi</span>
@@ -598,7 +597,7 @@ document.write(`
 <p>Здесь, в зависимости от кода возврата команды <code class="docutils literal notranslate"><span class="pre">command1</span></code> выполняется либо ветка c <code class="docutils literal notranslate"><span class="pre">then</span></code>, либо, если существует, ветка <code class="docutils literal notranslate"><span class="pre">else</span></code>.
 Но чаще используют другой синтаксис.
 Команду <code class="docutils literal notranslate"><span class="pre">command1</span></code> выносят в отдельную строку, а уже внутри <code class="docutils literal notranslate"><span class="pre">if</span></code> используют команду <code class="docutils literal notranslate"><span class="pre">test</span></code>, а если быть точнее, то его переименованную версию <code class="docutils literal notranslate"><span class="pre">[</span></code>.
-Таким образом синтаксис условного выражения становится как</p>
+Таким образом синтаксис условного выражения выглядит как</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>condition<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span>command2
 <span class="k">fi</span>
@@ -613,28 +612,29 @@ document.write(`
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Запомните, что <code class="docutils literal notranslate"><span class="pre">[</span></code> – это и есть <code class="docutils literal notranslate"><span class="pre">test</span></code>.
-Это подверждает команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">[</span></code>.</p>
+<p>Команда с коротким названием <code class="docutils literal notranslate"><span class="pre">[</span></code> есть версия <code class="docutils literal notranslate"><span class="pre">test</span></code> с тем же поведением.
+Это подверждает команда <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">[</span></code>.
+В отличие от <code class="docutils literal notranslate"><span class="pre">test</span></code> команда <code class="docutils literal notranslate"><span class="pre">[</span></code> требует аргумента <code class="docutils literal notranslate"><span class="pre">]</span></code> в конце.</p>
 </div>
-<p><em>Проверка кода завершения программы</em></p>
+<p>Напишем простой сценарий, который в зависимости от кода возврата вызванной программы выводит на экран сообщение.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#echo &quot;hello&quot; # &lt;- возвращает нулевой код завершения.</span>
 find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span class="w"> </span><span class="c1"># &lt;- возвращает ненулевой код завершения.</span>
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$?</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The program returned a non-zero return code!&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Утилита вернула ненулевой код возврата!&quot;</span>
 <span class="k">else</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The program returned zero return code!&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Утилита вернула нулевой код возврата!&quot;</span>
 <span class="k">fi</span>
 </pre></div>
 </div>
-<p><em>Проверка существования файла</em></p>
+<p>Следующие команды проверяют существование файла и/или каталога:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-e</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование файла или каталога;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-f</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование регулярного файла;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">-d</span> <span class="pre">.git</span> <span class="pre">]</span></code> проверяет существование каталога;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">-e</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование файла или каталога;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">-f</span> <span class="pre">example.sh</span> <span class="pre">]</span></code> проверяет существование обычного файла;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">-d</span> <span class="pre">.git</span> <span class="pre">]</span></code> проверяет существование каталога;</p></li>
 </ul>
-<p>Будем запускаться только из каталога проекта.
-Как узнать, что текущий каталога указывает именно на корневой каталог проекта?
+<p>Напишем код сценария, который выполняет последующие действия только из корневого каталога проекта.
+Как узнать, что текущий каталог указывает именно на корневой каталог проекта?
 Любой проект разработки использует систему контроля версий Git, которая в свою очередь хранит свою базу данных в подкаталоге <code class="docutils literal notranslate"><span class="pre">.git</span></code> в корне проекта.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span>.git/<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
@@ -647,7 +647,24 @@ find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span clas
 <section id="id6">
 <h2>Вопросы для самоконтроля<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
+<li><p>Что такое “сценарий”?</p></li>
+<li><p>Как устанавливается код завершения программы на Си/C++ и сценария?</p></li>
+<li><p>Какое расширение имеют файлы со сценариями?</p></li>
+<li><p>Как оформляются комментарии в сценариях <code class="docutils literal notranslate"><span class="pre">bash</span></code>?</p></li>
+<li><p>Как можно объединить несколько команд в одну командную строку?</p></li>
+<li><p>Как можно установить атрибут “исполняемый” у файла?</p></li>
+<li><p>Как можно убрать атрибут “исполняемый” у файла?</p></li>
+<li><p>Что делает строка с шебангом в сценарии?</p></li>
+<li><p>Как запустить файл со сценарием?</p></li>
+<li><p>Какие причины могут помешать запустить файл со сценарием?</p></li>
 <li><p>Что означает “код завершения”?</p></li>
+<li><p>Какие значения может принимать код завершения?</p></li>
+<li><p>Что делают команды <code class="docutils literal notranslate"><span class="pre">true</span></code> и <code class="docutils literal notranslate"><span class="pre">false</span></code>?
+Где они могут быть полезны?</p></li>
+<li><p>Перечислите возможности команды <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p></li>
+<li><p>Какое другое именование имеет команда <code class="docutils literal notranslate"><span class="pre">test</span></code>?</p></li>
+<li><p>Какой синтаксис имеет условный оператор?
+Продемонстрируйте на примере.</p></li>
 </ol>
 </section>
 <section id="id7">
@@ -659,9 +676,9 @@ find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span clas
 <li><p>Напишите программу, которая сравнивает два текстовых файла и печатает сообщение о том, что файлы совпадают или нет.
 Для сравнения используйте утилиту <code class="docutils literal notranslate"><span class="pre">diff</span></code>.</p></li>
 <li><p>Сделайте так, чтобы команда <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code> распечатала ненулевое значение.
-Запустите команду во второй раз.
+Запустите эту же команду <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$?</span></code> еще раз.
 Почему она вернула нулевое значение?</p></li>
-<li><p>Запустите сценарий bash, выводящий на экран строку “Hello, Terminal!”, оформленный в кодировке utf-8 с маркером BOM.
+<li><p>Запустите сценарий <code class="docutils literal notranslate"><span class="pre">bash</span></code>, выводящий на экран строку <code class="docutils literal notranslate"><span class="pre">Hello,</span> <span class="pre">Terminal!</span></code>, оформленный в кодировке <code class="docutils literal notranslate"><span class="pre">utf-8</span></code> с маркером <code class="docutils literal notranslate"><span class="pre">BOM</span></code>.
 Редактор <code class="docutils literal notranslate"><span class="pre">vim</span></code> устанавливает такую кодировку командой <code class="docutils literal notranslate"><span class="pre">:set</span> <span class="pre">fileencoding=utf-8</span> <span class="pre">bomb</span></code>.
 Проверьте присутствие байтов командой <code class="docutils literal notranslate"><span class="pre">hexdump</span> <span class="pre">file.sh</span></code>.
 Запустите сценарий и объясните результат.</p></li>
@@ -670,6 +687,10 @@ find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span clas
 <li><p>Создайте в домашнем каталоге подкаталог <code class="docutils literal notranslate"><span class="pre">bin</span></code>, внесите путь к нему в список переменной <code class="docutils literal notranslate"><span class="pre">PATH</span></code> и попробуйте запустить свой сценарий по имени файла.</p></li>
 <li><p>Почему в однострочной команде <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">true;</span> <span class="pre">then</span> <span class="pre">echo</span> <span class="pre">success;</span> <span class="pre">fi</span></code> после <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">success</span></code> ставят <code class="docutils literal notranslate"><span class="pre">;</span></code>?
 Если <code class="docutils literal notranslate"><span class="pre">fi</span></code> переместить в новую строку, то <code class="docutils literal notranslate"><span class="pre">;</span></code> уже будет не обязательна для корректного выполнения команды.</p></li>
+<li><p>Код завершения может принимать значения от 0 до 255 (один байт).
+Но функция <code class="docutils literal notranslate"><span class="pre">main</span></code> возвращает число типа <code class="docutils literal notranslate"><span class="pre">int</span></code>, т.е. четыре байта.
+Что будет, если вернуть большее чем 255 число?</p></li>
+<li><p>Продемонстрируйте некоторые возможности команды <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p></li>
 </ol>
 <!--
 Проверка, что сценарий запущен под правами суперпользователя: `if [ $EUID -eq 0 ];`
@@ -749,7 +770,7 @@ find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span clas
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Простой сценарий</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Подробнее про шебанг</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Коды завершения</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные выражения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Условные операторы</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
 </ul>
