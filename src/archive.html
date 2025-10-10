@@ -593,6 +593,9 @@ file1.txt<span class="w">  </span>file2.txt<span class="w">  </span>file3.txt
 <li><p>Подсчитайте размер распакованного файла, воспользовавшись конвейером и командами <code class="docutils literal notranslate"><span class="pre">zcat</span></code>, <code class="docutils literal notranslate"><span class="pre">wc</span></code>.</p></li>
 <li><p>Расшифруйте следующую команду:
 <code class="docutils literal notranslate"><span class="pre">gzip</span> <span class="pre">--to-stdout</span> <span class="pre">--decompress</span> <span class="pre">&quot;infile.tgz&quot;</span> <span class="pre">|</span> <span class="pre">tar</span> <span class="pre">--to-stdout</span> <span class="pre">--delete</span> <span class="pre">'file1.txt'</span> <span class="pre">-f</span> <span class="pre">-</span> <span class="pre">|</span> <span class="pre">gzip</span> <span class="pre">&gt;</span> <span class="pre">'outfile.tgz'</span></code> <!-- Удаляет файл из сжатого архива --></p></li>
+<li><p>Сожмите файлы из каталога <code class="docutils literal notranslate"><span class="pre">/usr/include</span></code> 5-мя разными компрессорами и сравните размеры получившихся архивов.
+Который из компрессоров сжимает сильнее?
+Будьте внимательны, некоторые компрессоры могут отсутствовать.</p></li>
 </ol>
 </section>
 </section>

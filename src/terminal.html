@@ -397,7 +397,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Получение доступа к терминалу</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Интерпретатор командной строки</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnome">Эмулятор терминала GNOME</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вопросы для контроля</a></li>
 </ul>
             </nav>
         </div>
@@ -491,6 +491,14 @@ document.write(`
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>username@hostname:directory$
 </pre></div>
 </div>
+<p>При подключении к машине мы попадаем в домашний каталог, который имеет короткое обозначение <code class="docutils literal notranslate"><span class="pre">~</span></code>.
+Строка с приглашением показывает, что интерпретатор ожидает от пользователя ввода команды.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Часто новички недоумевают, почему команды в терминале не выполняются.
+Это происходит, когда терминал захвачен другой программой, не интерпретатором.
+Именно здесь выручает присутствие строки с приглашением, которая сигнализирует об активности интерпретатора.</p>
+</div>
 <p>После того, как команда набрана, нажатием клавиши Enter она разбирается и исполняется.
 Выше упоминалась команда <code class="docutils literal notranslate"><span class="pre">exit</span></code>, которая завершет сессию и закрывает окно эмулятора.</p>
 <p>Команда <code class="docutils literal notranslate"><span class="pre">date</span></code> выводит на экран текущие дату и время:</p>
@@ -512,7 +520,8 @@ document.write(`
 <p>Команда <code class="docutils literal notranslate"><span class="pre">who</span></code> перечислит активных пользователей в системе.
 Команда <code class="docutils literal notranslate"><span class="pre">history</span></code> выведет на экран ранее выполненные команды.
 Команда <code class="docutils literal notranslate"><span class="pre">clear</span></code> очищает экран и перемещает курсор наверх.
-Это же действие можно вызвать по клавишам <code class="docutils literal notranslate"><span class="pre">ctrl-l</span></code>.</p>
+Это же действие можно вызвать по клавишам <code class="docutils literal notranslate"><span class="pre">ctrl-l</span></code>.
+Команда <code class="docutils literal notranslate"><span class="pre">ls</span></code> выведет на экран список файлов и каталогов в текущем каталоге.</p>
 <p>Все команды делятся на три группы:</p>
 <ul class="simple">
 <li><p>системные программы;</p></li>
@@ -571,7 +580,7 @@ document.write(`
 Но несколько терминалов можно объединить в одном окне, воспользовавшись вкладками.</p>
 </section>
 <section id="id5">
-<h2>Вопросы для самоконтроля<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<h2>Вопросы для контроля<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Для чего существует среда рабочего стола?</p></li>
 <li><p>Что такое интерпретатор командной строки?</p></li>
@@ -584,7 +593,9 @@ document.write(`
 <li><p>Создайте собственный профиль в <code class="docutils literal notranslate"><span class="pre">GNOME</span> <span class="pre">Terminal</span></code>.</p></li>
 <li><p>Какие задачи решает интерпретатор командной строки?</p></li>
 <li><p>Чем отличаются системные программы от пользовательских?</p></li>
-<li><p>Чем отличаются внешние команды от внутренних команд?</p></li>
+<li><p>Чем отличаются внешние команды от внутренних?</p></li>
+<li><p>Для чего служит строка приглашения?</p></li>
+<li><p>Для чего необходимо имя машины в строке с приглашением?</p></li>
 </ol>
 </section>
 </section>
@@ -657,7 +668,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Получение доступа к терминалу</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Интерпретатор командной строки</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gnome">Эмулятор терминала GNOME</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Вопросы для контроля</a></li>
 </ul>
   </nav></div>
 

@@ -370,7 +370,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -386,6 +388,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита locate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Упражнения</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -400,29 +414,25 @@ document.write(`
 <p>Регулярные выражения – это мощное средство для поиска информации в текстовых данных.
 Началу знакомства ими мы положили на предыдущем занятии, изучив подстановку имен файлов.
 В ней мы применили два метасимвола (<code class="docutils literal notranslate"><span class="pre">*</span></code> и <code class="docutils literal notranslate"><span class="pre">?</span></code>) и два оператора (<code class="docutils literal notranslate"><span class="pre">[...]</span></code> и <code class="docutils literal notranslate"><span class="pre">[!...]</span></code>).</p>
+<!-- Где понадобится -->
 <!--
-Символы, обладающие специальным значением
-$. ′" ∗ []^|()+?
-
-Ограничение набора символов [] [^] * . {n,m}
-Позиция, расположение ^ $
-Выбор из нескольких шаблонов |
-^ Начало строки
-$ Конец строки
-[] Любой символ в скобках
-[^] Любой символ кроме тех, что в скобках
-\ Отмена спец. значения следующего за ним метасимвола.
-. Любой отдельный символ
-* Ноль или более раз
-{n}
-{n,}
-{,m}
-{n,m}
-^d -- строки, начинающиеся с символа d.
 Поиск файлов в системе, поиск внутри файла и поиск в потоке, выборка (отбор, фильтрация)
 только интересующих данных, обработка логов (сборки программ, серверов).
+-->
+<!-- Что узнаете -->
+<section id="grep">
+<h2>Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code><a class="headerlink" href="#grep" title="Link to this heading">#</a></h2>
+<!-- https://stackoverflow.com/questions/16956810/find-all-files-containing-a-specific-text-string-on-linux -->
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code>, <code class="docutils literal notranslate"><span class="pre">-R</span></code> рекурсивный поиск;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>, нумерация строки;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-w</span></code>, совпадение по полному слову;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-e</span></code> поисковый шаблон.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--include</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclude</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclude-dir</span></code></p></li>
+</ul>
+<!--
 Семейство команд grep -- grep, egrep, fgrep. Мы рассмотрим первую из них -- grep.
-Утилита grep
 Общий формат команды выглядит как
 grep [параметры] регулярное_выражение [файл]
 Она ищет в файлах строки, соответствующие регулярному выражению. Если файл не задан,
@@ -433,8 +443,30 @@ grep [параметры] регулярное_выражение [файл]
 Так как один из процессов будет управляющим.
 Как вычислить количество ядер/процессоров?
 `grep -c ^processor proc/cpuinfo`
-Файл `proc/cpuinfo` содержит информацию о процессорах системы. Параметр `-c`.
+Файл `proc/cpuinfo` содержит информацию о процессорах системы.
 -->
+</section>
+<section id="find">
+<h2>Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code><a class="headerlink" href="#find" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-type</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-name</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-size</span></code></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">~</span> <span class="pre">-type</span> <span class="pre">d</span></code> ищет каталоги в домашнем каталоге.</p>
+</section>
+<section id="locate">
+<h2>Утилита locate<a class="headerlink" href="#locate" title="Link to this heading">#</a></h2>
+</section>
+<section id="id2">
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+</section>
+<section id="id3">
+<h2>Упражнения<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Подсчитайте количество файлов, каталогов, файлов и каталогов в домашнем каталоге.</p></li>
+</ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -491,6 +523,25 @@ grep [параметры] регулярное_выражение [файл]
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита locate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Упражнения</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

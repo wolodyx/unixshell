@@ -583,6 +583,8 @@ $ STOP
 Введенный в терминале текст появляется во вкладке VSCode: `cat | code -`
 
 Сортирует файлы по размеру: `ls -l /usr/bin | sort -n -k 5 | less`
+
+Перенаправляет стандартный вывод в буфер обмена: cat example.sh | xclip -sel c
 -->
 </section>
 <section id="id5">
@@ -621,6 +623,7 @@ $ STOP
 Команда <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">string</span></code> выведет в стандартный поток вывода только те строки из стандартного потока ввода, в которых содержится слово “string”.
 Команда <code class="docutils literal notranslate"><span class="pre">awk</span> <span class="pre">'{print</span> <span class="pre">$4}'</span></code> выведет только четвертое слово.
 Воспользуйтесь этими командами, чтобы вывести на экран идентификаторы тех процессов, в названиях которых есть слово “kworker”.</p></li>
+<li><p>Подсчитайте количество процессов в системе.</p></li>
 </ol>
 </section>
 </section>
