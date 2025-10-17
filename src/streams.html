@@ -398,6 +398,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Конвейер команд</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Дополнительные источники</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
 </ul>
             </nav>
         </div>
@@ -559,6 +560,27 @@ $ STOP
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yes<span class="w"> </span><span class="p">|</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>gcc
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Если вывод команды объемный и не обозревается на одном экране, то для следует вывод перехватить утилитой <code class="docutils literal notranslate"><span class="pre">less</span></code> и пролистывать ее командами.
+Пример такого конвейера: <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span> <span class="pre">/usr/bin</span> <span class="pre">|</span> <span class="pre">less</span></code>.</p>
+</div>
+<p>При составлении конвейера новичку следует учитывать, что не все команды принимают данные из потока и выдают данные в поток.
+Существуют команды, которые:</p>
+<ul class="simple">
+<li><p>принимают данные из потока и выдают результат в поток (<code class="docutils literal notranslate"><span class="pre">sort</span></code>);</p></li>
+<li><p>принимают данные из потока, но не выдают результат (<code class="docutils literal notranslate"><span class="pre">read</span></code>);</p></li>
+<li><p>не принимают данных из потока, но выдают результат (<code class="docutils literal notranslate"><span class="pre">ls</span></code>, <code class="docutils literal notranslate"><span class="pre">echo</span></code>);</p></li>
+<li><p>не принимают данные из потока и не выдают результат (<code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">rm</span></code>, <code class="docutils literal notranslate"><span class="pre">mv</span></code>).</p></li>
+</ul>
+<p>Графически, это выглядит как показано ниже:</p>
+<figure class="align-default">
+<img alt="../_images/command-in-out.png" src="../_images/command-in-out.png" />
+</figure>
+<p>Некоторые команды могут как принимать данные из стандартного потока, так и брать их из файла, в зависимости от опций и аргументов.
+Так, <code class="docutils literal notranslate"><span class="pre">sort</span></code> отсортирует данные из файла, если его имя передано через свободный аргумент: <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">file.txt</span></code>.
+Если ей передать имя файла через опцию <code class="docutils literal notranslate"><span class="pre">--output</span></code>, то выходные данные сохранятся в этот файл: <code class="docutils literal notranslate"><span class="pre">sort</span> <span class="pre">--output==out.txt</span> <span class="pre">file.txt</span></code>.
+В последнем примере команды <code class="docutils literal notranslate"><span class="pre">sort</span></code> не будет обращаться ни к потоку ввода, ни к потоку вывода.</p>
 <!-- Нужны еще примеры -->
 <!--
 Источники данных:
@@ -581,10 +603,6 @@ $ STOP
 Вычислить распределение файлов по размерам: `find . -type f | xargs ls -l | awk '{print $5}' | sort -g | ...`.
 
 Введенный в терминале текст появляется во вкладке VSCode: `cat | code -`
-
-Сортирует файлы по размеру: `ls -l /usr/bin | sort -n -k 5 | less`
-
-Перенаправляет стандартный вывод в буфер обмена: cat example.sh | xclip -sel c
 -->
 </section>
 <section id="id5">
@@ -601,6 +619,13 @@ $ STOP
 <li><p>Чем отличаются данные из стандартных потоков вывода и ошибок?</p></li>
 <li><p>Что делают команды <code class="docutils literal notranslate"><span class="pre">echo</span></code>, <code class="docutils literal notranslate"><span class="pre">read</span></code> и <code class="docutils literal notranslate"><span class="pre">cat</span></code>?
 Приведите примеры их использования (без перенаправления потоков).</p></li>
+<li><p>Что такое системная корзина и как перенаправить в нее потоки?</p></li>
+<li><p>Что такое конвейер?</p></li>
+</ol>
+</section>
+<section id="id7">
+<h2>Упражнения<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
 <li><p>Создайте файл <code class="docutils literal notranslate"><span class="pre">main.c</span></code> со строкой <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">main(int</span> <span class="pre">argc,</span> <span class="pre">char**</span> <span class="pre">argv)</span></code>.
 В этот же файл добавьте дополнительно строку <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">return</span> <span class="pre">0;</span> <span class="pre">}</span></code>.
 Проверьте, получилось ли у вас сделать это.</p></li>
@@ -609,8 +634,6 @@ $ STOP
 <li><p>Создайте и объедините два файла в один.
 Создайте третий файл и добавьте его в конец предыдущего файла.</p></li>
 <li><p>Покажите пример перенаправления в файл потока ошибок.</p></li>
-<li><p>Что такое системная корзина и как перенаправить в нее потоки?</p></li>
-<li><p>Что такое конвейер?</p></li>
 <li><p>Команда <code class="docutils literal notranslate"><span class="pre">wc</span></code> подсчитывает байты, слова и строки.
 Напишите команду, которая выведет на экран количество файлов и каталогов в каталоге <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code>.</p></li>
 <li><p>Команда <code class="docutils literal notranslate"><span class="pre">sort</span></code> сортирует строки.
@@ -624,6 +647,11 @@ $ STOP
 Команда <code class="docutils literal notranslate"><span class="pre">awk</span> <span class="pre">'{print</span> <span class="pre">$4}'</span></code> выведет только четвертое слово.
 Воспользуйтесь этими командами, чтобы вывести на экран идентификаторы тех процессов, в названиях которых есть слово “kworker”.</p></li>
 <li><p>Подсчитайте количество процессов в системе.</p></li>
+<li><p>Отсортируйте файлы из <code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code> по размеру утилитой <code class="docutils literal notranslate"><span class="pre">sort</span></code>.
+Для этого обратите внимание на ее опции <code class="docutils literal notranslate"><span class="pre">-n</span></code> и <code class="docutils literal notranslate"><span class="pre">-k</span></code>.</p></li>
+<li><p>Команда <code class="docutils literal notranslate"><span class="pre">xclip</span></code> взаимодействует с буфером обмена.
+Передайте с помощью него содержимое файла в графическое приложение. <!-- cat example.sh | xclip -sel c --></p></li>
+<li><p>Командой <code class="docutils literal notranslate"><span class="pre">xclip</span></code> сохраните в файл скопированный из веб-браузера текст.</p></li>
 </ol>
 </section>
 </section>
@@ -697,6 +725,7 @@ $ STOP
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Конвейер команд</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Дополнительные источники</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Упражнения</a></li>
 </ul>
   </nav></div>
 
