@@ -691,6 +691,9 @@ find<span class="w"> </span>.<span class="w"> </span>--nonexist-option<span clas
 Но функция <code class="docutils literal notranslate"><span class="pre">main</span></code> возвращает число типа <code class="docutils literal notranslate"><span class="pre">int</span></code>, т.е. четыре байта.
 Что будет, если вернуть большее чем 255 число?</p></li>
 <li><p>Продемонстрируйте некоторые возможности команды <code class="docutils literal notranslate"><span class="pre">test</span></code>.</p></li>
+<li><p>Напишите сценарий, который выводит на экран переданные ему аргументы в формате <code class="docutils literal notranslate"><span class="pre">argument</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">argument</span></code>.
+Используйте условный оператор и следующие предопределенные переменные: <code class="docutils literal notranslate"><span class="pre">$#</span></code> – количество переданных сценарию аргументов, <code class="docutils literal notranslate"><span class="pre">$0</span></code> – нулевой аргумент, <code class="docutils literal notranslate"><span class="pre">$1</span></code> – первый аргумент и так далее.</p></li>
+<li><p>Напишите сценарий, который возвращает код 0 на аргумент <code class="docutils literal notranslate"><span class="pre">success</span></code>, 1 на аргумент <code class="docutils literal notranslate"><span class="pre">fail</span></code> и 2 на остальные случаи.</p></li>
 </ol>
 <!--
 Проверка, что сценарий запущен под правами суперпользователя: `if [ $EUID -eq 0 ];`
