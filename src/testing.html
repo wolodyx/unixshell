@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
@@ -50,7 +50,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -396,7 +396,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Проверка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Оценка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Примеры технических заданий</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerator"><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerate"><code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, утилита нумерования строк</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cutline"><code class="docutils literal notranslate"><span class="pre">cutline</span></code>, утилита отсекания строк</a></li>
 </ul>
 </li>
@@ -415,32 +415,37 @@ document.write(`
 <h1><span class="section-number">18. </span>Проверочная работа<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>Проверочная работа для учащихся представляет собой экзамен.
 Он охватывает пройденные темы.
-Экзамен длится 60 минут.
+Экзамен длится 90 минут.
 Необходимо написать программу на Си.
-Техническое задание на программу будет предоставлено за 5 минут до экзамена.
+Техническое задание на программу будет предоставлено за 24 часа до экзамена.
 Техническое задание будет один на всех.</p>
 <section id="id2">
 <h2>Требования к результату<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>В результате выполнения задания в файловой системе должен появиться архив с именем <code class="docutils literal notranslate"><span class="pre">~/&lt;your-last-name&gt;/exam.tgz</span></code>.
-Содержимое архива размещается в каталоге <code class="docutils literal notranslate"><span class="pre">exam</span></code> и состоит из следующих подкаталогов и файлов в них:</p>
+<p>В результате выполнения задания в файловой системе должен появиться архив с именем <code class="docutils literal notranslate"><span class="pre">~/&lt;your-last-name&gt;/exam.tgz</span></code>, где <code class="docutils literal notranslate"><span class="pre">&lt;your-last-name&gt;</span></code> – фамилия учащегося.
+Содержимое архива размещается в каталоге <code class="docutils literal notranslate"><span class="pre">exam</span></code> и состоит из файлов:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">src</span></code> содержит файлы с исходными кодами; основная функция <code class="docutils literal notranslate"><span class="pre">main</span></code> должна размещаться в файле <code class="docutils literal notranslate"><span class="pre">main.c</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code> содержит файл со сценарием сборки <code class="docutils literal notranslate"><span class="pre">build-gcc.sh</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code> содержит файлы с тестовыми сценариями и исходными данными к тестам;</p></li>
+<li><p>файл <code class="docutils literal notranslate"><span class="pre">main.c</span></code> с исходными кодами и основной функцией <code class="docutils literal notranslate"><span class="pre">main</span></code>;</p></li>
+<li><p>файл со сценарием сборки <code class="docutils literal notranslate"><span class="pre">build-gcc.sh</span></code>;</p></li>
+<li><p>файлы с тестовыми сценариями и исходными данными к тестам;</p></li>
 </ul>
 <p>В техническом задании перечислены названия тестов и список содержащихся в них команд.
 Далее вместо <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code> подставляется имя теста.
 Для каждого теста создайте сценарий <code class="docutils literal notranslate"><span class="pre">test-&lt;name&gt;.sh</span></code>.
 В тесте вызываются команды, вывод которых перенаправляется в файл <code class="docutils literal notranslate"><span class="pre">output-&lt;name&gt;.txt</span></code></p>
-<div class="highlight-warning notranslate"><div class="highlight"><pre><span></span>Работоспособность сценариев не должно зависеть от положения каталога `exam` в файловой системе.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>your-last-name
+  ├─&gt; main.c
+  ├─&gt; build-gcc.sh
+  ├─&gt; test-version.sh
+  ├─&gt; test-help.sh
+  └─&gt; test-cutline.sh
 </pre></div>
 </div>
 </section>
 <section id="id3">
 <h2>Проверка результата<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>Учащийся распаковывает архив, переходит в каталог <code class="docutils literal notranslate"><span class="pre">exam</span></code> и создает в нем подкаталог <code class="docutils literal notranslate"><span class="pre">output</span></code>.
-Содержимое подкаталогов <code class="docutils literal notranslate"><span class="pre">src</span></code>, <code class="docutils literal notranslate"><span class="pre">build</span></code> и <code class="docutils literal notranslate"><span class="pre">tests</span></code> копируется в <code class="docutils literal notranslate"><span class="pre">output</span></code>.
-Запускаются сборочный сценарий и тестовые сценарии и анализируются выходные файлы на предмет соответствия требованиям технического задания.</p>
+Содержимое архива копируется в <code class="docutils literal notranslate"><span class="pre">output</span></code>.
+Запускаются сборочный и тестовые сценарии и анализируются выходные файлы на предмет соответствия требованиям технического задания.</p>
 </section>
 <section id="id4">
 <h2>Оценка результата<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
@@ -453,8 +458,8 @@ document.write(`
 </section>
 <section id="id5">
 <h2>Примеры технических заданий<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
-<section id="enumerator">
-<h3><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк<a class="headerlink" href="#enumerator" title="Link to this heading">#</a></h3>
+<section id="enumerate">
+<h3><code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, утилита нумерования строк<a class="headerlink" href="#enumerate" title="Link to this heading">#</a></h3>
 <p>Написать программу на языке программирования Си.
 Программа называется <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.
 Программа принимает из командной строки имена файлов и выводит их содержимое на экран, нумеруя каждую строку.
@@ -508,9 +513,9 @@ document.write(`
 </ul>
 <p>Список тестов:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-v</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--version</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">help</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-h</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--help</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cutline</span></code> запускает команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">test-*.sh</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">output-*.txt</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-v</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--version</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">help</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-h</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--help</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cutline</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">test-*.sh</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">output-*.txt</span></code>.</p></li>
 </ul>
 </section>
 </section>
@@ -575,7 +580,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Проверка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Оценка результата</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Примеры технических заданий</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerator"><code class="docutils literal notranslate"><span class="pre">enumerator</span></code>, утилита нумерования строк</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerate"><code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, утилита нумерования строк</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cutline"><code class="docutils literal notranslate"><span class="pre">cutline</span></code>, утилита отсекания строк</a></li>
 </ul>
 </li>
