@@ -13,3 +13,6 @@ sudo docker run --volume $(pwd):/book --rm unixshell
 Затем откройте бразуером появившийся файлы `_build/html/index.html`.
 Файл обновляется после сохранения изменений в исходных файлах.
 
+## Полезные ссылки
+
+* https://habr.com/ru/companies/ruvds/articles/961514/
