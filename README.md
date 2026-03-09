@@ -1,5 +1,7 @@
 # Учебное пособие по теме "Командная оболочка UNIX"
 
+[Ссылка](https://wolodyx.github.io/unixshell/intro.html) на собранный учебник.
+
 ## Настройка системы для сборки учебника
 
 Учебник создан на базе [jupyter-book](https://jupyterbook.org/intro.html).
