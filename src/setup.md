@@ -214,3 +214,7 @@ sudo apt install tmux
 sudo apt install tree
 sudo apt install zip
 ```
+
+<!--
+Создайте дополнительного пользователя.
+-->
