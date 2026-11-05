@@ -21,6 +21,5 @@ chapters:
 - file: src/build
 - file: src/tmux
 - file: src/getopt
-- file: src/compile
 - file: src/search
 - file: src/testing
