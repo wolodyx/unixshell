@@ -46,8 +46,8 @@ your-last-name
 
 ## Примеры технических заданий
 
-### `enumerate`, утилита нумерования строк
-
+````{admonition} *enumerate*, утилита нумерования строк
+:class: dropdown
 Написать программу на языке программирования Си.
 Программа называется `enumerate`.
 Программа принимает из командной строки имена файлов и выводит их содержимое на экран, нумеруя каждую строку.
@@ -72,9 +72,11 @@ Options:
 * `help` запускает команды `enumerate -h` и `enumerate --help`.
 * `mix` запускает команды `enumerate -h -v` и `enumerate -v -h`; должна отработать первая опция в списке.
 * `enumerate` запускает команды `enumerate test-*.sh` и `enumerate output-*.txt`.
+````
 
 
-### `cutline`, утилита отсекания строк
+````{admonition} *cutline*, утилита отсекания строк
+:class: dropdown
 
 Написать программу на языке программирования Си.
 Программа называется `cutline`.
@@ -98,3 +100,4 @@ Options:
 * `version` запускает последовательно команды `cutline -v` и `cutline --version`.
 * `help` запускает последовательно команды `cutline -h` и `cutline --help`.
 * `cutline` запускает последовательно команды `cutline test-*.sh` и `cutline output-*.txt`.
+````

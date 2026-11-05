@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17. Поиск файлов и в файлах &#8212; Командная оболочка UNIX</title>
+    <title>16. Поиск файлов и в файлах &#8212; Командная оболочка UNIX</title>
   
   
   
@@ -64,8 +64,8 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="18. Проверочная работа" href="testing.html" />
-    <link rel="prev" title="16. Компиляция программы на Си" href="compile.html" />
+    <link rel="next" title="17. Проверочная работа" href="testing.html" />
+    <link rel="prev" title="15. Разбор аргументов программы" href="getopt.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -235,9 +235,8 @@
 <li class="toctree-l1"><a class="reference internal" href="build.html">13. Двоичная программа на Си</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tmux.html">14. Терминальный мультиплексор</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getopt.html">15. Разбор аргументов программы</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compile.html">16. Компиляция программы на Си</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. Поиск файлов и в файлах</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">18. Проверочная работа</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">16. Поиск файлов и в файлах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">17. Проверочная работа</a></li>
 </ul>
 
     </div>
@@ -430,11 +429,17 @@
             </div>
             <nav aria-label="Page">
                 <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Шаблоны для поиска</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bre">Синтаксис BRE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ere">Синтаксис ERE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glob">Синтаксис Glob-шаблона</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита locate</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита <code class="docutils literal notranslate"><span class="pre">locate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Упражнения</a></li>
 </ul>
             </nav>
         </div>
@@ -447,65 +452,360 @@
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">17. </span>Поиск файлов и в файлах<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>Регулярные выражения – это мощное средство для поиска информации в текстовых данных.
-Началу знакомства ими мы положили на предыдущем занятии, изучив подстановку имен файлов.
-В ней мы применили два метасимвола (<code class="docutils literal notranslate"><span class="pre">*</span></code> и <code class="docutils literal notranslate"><span class="pre">?</span></code>) и два оператора (<code class="docutils literal notranslate"><span class="pre">[...]</span></code> и <code class="docutils literal notranslate"><span class="pre">[!...]</span></code>).</p>
-<!-- Где понадобится -->
-<!--
-Поиск файлов в системе, поиск внутри файла и поиск в потоке, выборка (отбор, фильтрация)
-только интересующих данных, обработка логов (сборки программ, серверов).
--->
-<!-- Что узнаете -->
+<h1><span class="section-number">16. </span>Поиск файлов и в файлах<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Мы уже сталкивались с поиском в контексте работы с <code class="docutils literal notranslate"><span class="pre">less</span></code>, <code class="docutils literal notranslate"><span class="pre">man</span></code> и автоподстановки <code class="docutils literal notranslate"><span class="pre">bash</span></code> имен файлов.
+Здесь же мы расширим наши знания до поиска произвольных файлов по именам и атрибутам и содержимому в этих файлах.
+С поиском вы столкнетесь в следующих рабочих ситуациях:</p>
+<ul class="simple">
+<li><p>найти файл в системе, когда известна только часть его имени;</p></li>
+<li><p>найти строку в исходном коде, настройках или журнале;</p></li>
+<li><p>отобрать из вывода команды только интересующие строки;</p></li>
+<li><p>проанализировать журналы сборки программ и работы серверов.</p></li>
+</ul>
+<p>В этом разделе мы познакомимся с регулярными выражениями и утилитами <code class="docutils literal notranslate"><span class="pre">grep</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code> и <code class="docutils literal notranslate"><span class="pre">locate</span></code>.</p>
+<section id="id2">
+<h2>Шаблоны для поиска<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p><em>Шаблон</em> – это общее правило или образец, по которому строка проверяется на соответствие.
+Существуют разные способы записи шаблона, некоторые из которых показаны на рисунке ниже.</p>
+<figure class="align-default">
+<img alt="../_images/patterns.excalidraw.png" src="../_images/patterns.excalidraw.png" />
+</figure>
+<p><em>Фиксированная строка</em> – это вид шаблона, который интерпретируется буквально как строка.
+С помощью такой строки мы задаем образец поиска, но не правило.</p>
+<p><em>Регулярное выражение</em> – это вид шаблона, записанный на специальном формальное языке.
+Оно удобно, когда мы не до конца знаем что ищем, но известны некоторые особенности подстроки, например:</p>
+<ul class="simple">
+<li><p>располагается в начале строки, конце или середине;</p></li>
+<li><p>состоит только из определенных символов;</p></li>
+<li><p>известна длина.</p></li>
+</ul>
+<p>Регулярное выражение принимают утилиты <code class="docutils literal notranslate"><span class="pre">grep</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code>.
+Утилита проверяет каждую строку текста на соответствие шаблону и, если строка подходит, включает ее в результат.</p>
+<p>Регулярные выражения не следует путать с подстановкой имен файлов.
+В подстановке <code class="docutils literal notranslate"><span class="pre">*</span></code> заменяет любое количество любых символов, а в регулярном выражении <code class="docutils literal notranslate"><span class="pre">*</span></code> означает повторение предыдущего элемента.
+Кроме того, подстановку выполняет командная оболочка до запуска команды, а регулярное выражение интерпретирует сама утилита.</p>
+<section id="bre">
+<h3>Синтаксис BRE<a class="headerlink" href="#bre" title="Link to this heading">#</a></h3>
+<p>Основные элементы регулярных выражений:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Элемент</p></th>
+<th class="head"><p>Значение</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">.</span></code></p></td>
+<td><p>любой одиночный символ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">*</span></code></p></td>
+<td><p>ноль или более повторений предыдущего элемента</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[...]</span></code></p></td>
+<td><p>один символ из перечисленных в скобках</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[^...]</span></code></p></td>
+<td><p>один символ, кроме перечисленных в скобках</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">^</span></code></p></td>
+<td><p>начало строки</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">$</span></code></p></td>
+<td><p>конец строки</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\</span></code></p></td>
+<td><p>отмена специального значения следующего символа</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Например, <code class="docutils literal notranslate"><span class="pre">^d</span></code> соответствует строкам, начинающимся с символа <code class="docutils literal notranslate"><span class="pre">d</span></code>, а <code class="docutils literal notranslate"><span class="pre">\.c$</span></code> – строкам, заканчивающимся на <code class="docutils literal notranslate"><span class="pre">.c</span></code>.
+Выражение <code class="docutils literal notranslate"><span class="pre">[0-9]</span></code> обозначает одну цифру, <code class="docutils literal notranslate"><span class="pre">[A-Za-z]</span></code> – одну латинскую букву.
+Точка в регулярном выражении означает любой символ, поэтому для поиска именно точки ее экранируют: <code class="docutils literal notranslate"><span class="pre">\.</span></code>.</p>
+<p>Шаблон с пробелами или специальными символами оболочки заключают в кавычки.
+Удобнее всего использовать одинарные кавычки, потому что оболочка не подставляет в них переменные и не выполняет подстановку имен файлов:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="s1">'^d'</span> <span class="nb">list</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>В базовом синтаксисе <code class="docutils literal notranslate"><span class="pre">grep</span></code> операторы <code class="docutils literal notranslate"><span class="pre">|</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">?</span></code>, <code class="docutils literal notranslate"><span class="pre">()</span></code> и <code class="docutils literal notranslate"><span class="pre">{}</span></code> требуют экранирования.
+Опция <code class="docutils literal notranslate"><span class="pre">-E</span></code> включает расширенный синтаксис, в котором они работают как обычно.
+Например, <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-E</span> <span class="pre">'error|warning'</span> <span class="pre">build.log</span></code> найдет строки, содержащие слово “error” или “warning”.</p>
+</section>
+<section id="ere">
+<h3>Синтаксис ERE<a class="headerlink" href="#ere" title="Link to this heading">#</a></h3>
+<p>Синтаксис ERE позволяет описать те же самые возможности, что и BRE, но в отличие от последнего удобен в записи.
+В BRE символы <code class="docutils literal notranslate"><span class="pre">+?|(){}</span></code> по умолчанию являются обычными литералами.
+Чтобы они стали операторами, их нужно экранировать обратным слешем.
+В ERE эти же символы являются метасимволами по умолчанию.
+Чтобы использовать их буквально, их нужно экранировать.</p>
+</section>
+<section id="glob">
+<h3>Синтаксис Glob-шаблона<a class="headerlink" href="#glob" title="Link to this heading">#</a></h3>
+</section>
+</section>
 <section id="grep">
 <h2>Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code><a class="headerlink" href="#grep" title="Link to this heading">#</a></h2>
-<!-- https://stackoverflow.com/questions/16956810/find-all-files-containing-a-specific-text-string-on-linux -->
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code> ищет строки, соответствующие определенному шаблону.
+Общий формат команды выглядит как:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="p">[</span><span class="n">параметры</span><span class="p">]</span> <span class="n">шаблон</span> <span class="p">[</span><span class="n">файл</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Если файл не указан, <code class="docutils literal notranslate"><span class="pre">grep</span></code> читает данные из стандартного потока ввода.
+Если указано несколько файлов, перед каждой найденной строкой выводится имя файла.
+По умолчанию, утилита для шаблона использует BRE-синтаксис регулярных выражений.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Опция</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-n</span></code></p></td>
+<td><p>выводит номер строки перед каждой найденной строкой</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-w</span></code></p></td>
+<td><p>ищет совпадение по целому слову</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-l</span></code></p></td>
+<td><p>выводит только имена файлов с совпадениями</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-e</span></code></p></td>
+<td><p>задает шаблон поиска (опцию можно повторять)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-E</span></code></p></td>
+<td><p>использует ERE-синтаксис регулярных выражений</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-F</span></code></p></td>
+<td><p>использует фиксированную строку для поиска</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code></p></td>
+<td><p>рекурсивно обходит каталоги</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-R</span></code></p></td>
+<td><p>рекурсивно обходить каталоги и следует по всем символическим ссылкам</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--include</span></code></p></td>
+<td><p>ищет только в файлах, имена которых соответствуют шаблону</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--exclude</span></code></p></td>
+<td><p>исключет файлы, имена которых соответствуют шаблону</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--exclude-dir</span></code></p></td>
+<td><p>исключает каталоги, имена которых соответствуют шаблону</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-i</span></code></p></td>
+<td><p>игнорирует регистр символов</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-v</span></code></p></td>
+<td><p>выводит строки, не соответствующие шаблону</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-c</span></code></p></td>
+<td><p>выводит количество совпавших строк</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Пусть в файле <code class="docutils literal notranslate"><span class="pre">main.c</span></code> записана программа:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sppo@pc:~$ cat main.c
+#include &lt;stdio.h&gt;
+
+int main(void)
+{
+    printf("Hello, world!\n");
+    return 0;
+}
+sppo@pc:~$ grep -n 'main' main.c
+3:int main(void)
+</pre></div>
+</div>
+<p>Здесь опция <code class="docutils literal notranslate"><span class="pre">-n</span></code> добавила к найденной строке ее номер.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-w</span></code> требует совпадения по целому слову.
+Пусть файл <code class="docutils literal notranslate"><span class="pre">words.txt</span></code> содержит строки <code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">catalog</span></code> и <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>.
+Тогда <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">'cat'</span> <span class="pre">words.txt</span></code> выведет все три строки, а <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-w</span> <span class="pre">'cat'</span> <span class="pre">words.txt</span></code> – только первую.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-l</span></code> выводит не сами строки, а имена файлов, в которых есть совпадения:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sppo@pc:~$ grep -l 'TODO' src/*.c
+src/main.c
+src/utils.c
+</pre></div>
+</div>
+<p>Опцию <code class="docutils literal notranslate"><span class="pre">-e</span></code> применяют, когда шаблонов несколько или когда шаблон начинается с символа <code class="docutils literal notranslate"><span class="pre">-</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'error'</span> <span class="o">-</span><span class="n">e</span> <span class="s1">'warning'</span> <span class="n">build</span><span class="o">.</span><span class="n">log</span>
+</pre></div>
+</div>
+<p>Эквивалентная запись с расширенными регулярными выражениями: <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-E</span> <span class="pre">'error|warning'</span> <span class="pre">build.log</span></code>.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-r</span></code> включает рекурсивный поиск по каталогу, а <code class="docutils literal notranslate"><span class="pre">-R</span></code> дополнительно следует по всем символическим ссылкам.
+Например, команда <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-rn</span> <span class="pre">'TODO'</span> <span class="pre">src/</span></code> найдет все строки с <code class="docutils literal notranslate"><span class="pre">TODO</span></code> в каталоге <code class="docutils literal notranslate"><span class="pre">src</span></code> и выведет их номера.
+Для <code class="docutils literal notranslate"><span class="pre">-R</span></code> будьте осторожны: переход по ссылкам может привести к повторному обходу одних и тех же файлов.</p>
+<p>При рекурсивном поиске полезно ограничить набор файлов.
+Опции <code class="docutils literal notranslate"><span class="pre">--include</span></code> и <code class="docutils literal notranslate"><span class="pre">--exclude</span></code> задают шаблоны имен файлов, а <code class="docutils literal notranslate"><span class="pre">--exclude-dir</span></code> – имена каталогов:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="o">-</span><span class="n">rn</span> <span class="o">--</span><span class="n">include</span><span class="o">=</span><span class="s1">'*.c'</span> <span class="o">--</span><span class="n">include</span><span class="o">=</span><span class="s1">'*.h'</span> <span class="s1">'TODO'</span> <span class="n">src</span><span class="o">/</span>
+<span class="n">grep</span> <span class="o">-</span><span class="n">rn</span> <span class="o">--</span><span class="n">exclude</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="s1">'.git'</span> <span class="o">--</span><span class="n">exclude</span><span class="o">=</span><span class="s1">'*.log'</span> <span class="s1">'error'</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Первая команда ищет только в файлах с расширениями <code class="docutils literal notranslate"><span class="pre">.c</span></code> и <code class="docutils literal notranslate"><span class="pre">.h</span></code>, вторая исключает каталог <code class="docutils literal notranslate"><span class="pre">.git</span></code> и все файлы с расширением <code class="docutils literal notranslate"><span class="pre">.log</span></code>.</p>
+<p>Кроме перечисленных опций, часто используют:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code>, <code class="docutils literal notranslate"><span class="pre">-R</span></code> рекурсивный поиск;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-n</span></code>, нумерация строки;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-w</span></code>, совпадение по полному слову;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-l</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-e</span></code> поисковый шаблон.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--include</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclude</span></code>, <code class="docutils literal notranslate"><span class="pre">--exclude-dir</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-i</span></code> – игнорировать регистр символов;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code> – выводить строки, не соответствующие шаблону;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c</span></code> – подсчитывать число совпавших строк вместо их вывода.</p></li>
 </ul>
-<!--
-Семейство команд grep -- grep, egrep, fgrep. Мы рассмотрим первую из них -- grep.
-Общий формат команды выглядит как
-grep [параметры] регулярное_выражение [файл]
-Она ищет в файлах строки, соответствующие регулярному выражению. Если файл не задан,
-то текст берется из стандартного входного потока. Если регулярное выражение содержит пробелы,
-то его берут в двойные кавычки.
-Обычно для сборки программ в Unix-подобных ОС используют утилиту `make`. Она позволяет
-ускорить процесс сборки, если воспользоваться ее параллельным запуском. Параметр -j (--jobs) задает количество одновременно исполняемых процессов. Рекомендуется задавать процессов на один больше, чем процессоров.
-Так как один из процессов будет управляющим.
-Как вычислить количество ядер/процессоров?
-`grep -c ^processor proc/cpuinfo`
-Файл `proc/cpuinfo` содержит информацию о процессорах системы.
--->
+<p>Например, число процессоров в системе можно подсчитать командой:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sppo@pc:~$ grep -c '^processor' /proc/cpuinfo
+8
+</pre></div>
+</div>
+<p>Файл <code class="docutils literal notranslate"><span class="pre">/proc/cpuinfo</span></code> содержит информацию о процессорах.
+Это значение используют, например, для параллельной сборки программ утилитой <code class="docutils literal notranslate"><span class="pre">make</span></code> с опцией <code class="docutils literal notranslate"><span class="pre">-j</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">grep</span></code> также удобно применять в конвейере, когда нужно отфильтровать вывод другой команды:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sppo@pc:~$ ps -e | grep 'kworker'
+</pre></div>
+</div>
+<p>В отличие от поиска по файлам, здесь <code class="docutils literal notranslate"><span class="pre">grep</span></code> читает стандартный поток ввода.</p>
+<p>Рассмотренные в этом разделе опции утилиты <code class="docutils literal notranslate"><span class="pre">grep</span></code>:</p>
 </section>
 <section id="find">
 <h2>Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code><a class="headerlink" href="#find" title="Link to this heading">#</a></h2>
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code> ищет файлы и каталоги в дереве каталогов.
+Она умеет отбирать объекты не только по имени, но и по типу, размеру, времени изменения, правам доступа и другим признакам, а также выполнять над найденными объектами действия.</p>
+<p>Общий формат команды:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="p">[</span><span class="n">каталог</span><span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="n">выражение</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Если каталог не указан, поиск начинается с текущего каталога.
+Опция <code class="docutils literal notranslate"><span class="pre">-type</span></code> задает тип объекта:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-type</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-name</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-size</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-type</span> <span class="pre">f</span></code> – обычный файл;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-type</span> <span class="pre">d</span></code> – каталог;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-type</span> <span class="pre">l</span></code> – символическая ссылка.</p></li>
 </ul>
-<p><code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">~</span> <span class="pre">-type</span> <span class="pre">d</span></code> ищет каталоги в домашнем каталоге.</p>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">~</span> <span class="pre">-type</span> <span class="pre">d</span></code> выводит все каталоги в домашнем каталоге.
+Команда <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">/etc</span> <span class="pre">-type</span> <span class="pre">f</span> <span class="pre">-name</span> <span class="pre">'*.conf'</span></code> ищет в <code class="docutils literal notranslate"><span class="pre">/etc</span></code> обычные файлы с расширением <code class="docutils literal notranslate"><span class="pre">.conf</span></code>.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-name</span></code> задает шаблон имени.
+Шаблон заключают в кавычки, чтобы оболочка не выполнила подстановку имен файлов до запуска <code class="docutils literal notranslate"><span class="pre">find</span></code>.
+Опция <code class="docutils literal notranslate"><span class="pre">-iname</span></code> делает сравнение нечувствительным к регистру.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-size</span></code> отбирает файлы по размеру.
+Размер указывают в блоках по 512 байт, а с суффиксами – в других единицах:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code> – байты;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">k</span></code> – килобайты;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M</span></code> – мегабайты;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">G</span></code> – гигабайты.</p></li>
+</ul>
+<p>Перед числом ставят знак <code class="docutils literal notranslate"><span class="pre">+</span></code> (больше) или <code class="docutils literal notranslate"><span class="pre">-</span></code> (меньше).
+Например, <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">~</span> <span class="pre">-type</span> <span class="pre">f</span> <span class="pre">-size</span> <span class="pre">+100M</span></code> находит файлы размером более 100 мегабайт.</p>
+<p>Несколько условий по умолчанию объединяются логическим “И”.
+Логическое “ИЛИ” задают опцией <code class="docutils literal notranslate"><span class="pre">-o</span></code>, отрицание – символом <code class="docutils literal notranslate"><span class="pre">!</span></code>.
+Сложные условия группируют скобками, которые экранируют от оболочки:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> \<span class="p">(</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.c'</span> <span class="o">-</span><span class="n">o</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.h'</span> \<span class="p">)</span>
+</pre></div>
+</div>
+<p>Эта команда найдет все файлы с расширениями <code class="docutils literal notranslate"><span class="pre">.c</span></code> и <code class="docutils literal notranslate"><span class="pre">.h</span></code> в текущем каталоге и его подкаталогах.</p>
+<p>Опция <code class="docutils literal notranslate"><span class="pre">-maxdepth</span></code> ограничивает глубину поиска, а <code class="docutils literal notranslate"><span class="pre">-mtime</span></code> – время последнего изменения в сутках:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="n">maxdepth</span> <span class="mi">2</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span>
+<span class="n">find</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.log'</span> <span class="o">-</span><span class="n">mtime</span> <span class="o">+</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p>Вторая команда найдет журналы, измененные более семи дней назад.</p>
+<p>По умолчанию <code class="docutils literal notranslate"><span class="pre">find</span></code> выводит пути найденных объектов.
+Опция <code class="docutils literal notranslate"><span class="pre">-exec</span></code> позволяет выполнить над каждым найденным объектом произвольную команду:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.tmp'</span> <span class="o">-</span><span class="n">exec</span> <span class="n">rm</span> <span class="o">-</span><span class="n">v</span> <span class="p">{}</span> \<span class="p">;</span>
+</pre></div>
+</div>
+<p>Здесь <code class="docutils literal notranslate"><span class="pre">{}</span></code> заменяется на путь к очередному найденному файлу, а <code class="docutils literal notranslate"><span class="pre">\;</span></code> завершает команду.
+Вместо удаления можно сначала вывести список и проверить его:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.tmp'</span> <span class="o">-</span><span class="nb">print</span>
+</pre></div>
+</div>
+<p>Для удаления у <code class="docutils literal notranslate"><span class="pre">find</span></code> есть и собственное действие <code class="docutils literal notranslate"><span class="pre">-delete</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">.</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.tmp'</span> <span class="o">-</span><span class="n">delete</span>
+</pre></div>
+</div>
+<p>Оно должно стоять после всех условий отбора, иначе можно удалить не то, что планировалось.
+Перед выполнением таких команд всегда проверяйте результат с <code class="docutils literal notranslate"><span class="pre">-print</span></code>.</p>
+<p>Если при обходе встречаются каталоги, недоступные пользователю, <code class="docutils literal notranslate"><span class="pre">find</span></code> отправляет сообщения об ошибках в стандартный поток ошибок.
+Их можно отключить перенаправлением в системную корзину:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="o">/</span> <span class="o">-</span><span class="n">name</span> <span class="s1">'*.conf'</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">find</span></code> выполняет поиск в реальном времени, поэтому всегда видит текущее состояние файловой системы.
+Платой за это является скорость: обход большого дерева каталогов может занять заметное время.</p>
 </section>
 <section id="locate">
-<h2>Утилита locate<a class="headerlink" href="#locate" title="Link to this heading">#</a></h2>
-</section>
-<section id="id2">
-<h2>Вопросы для самоконтроля<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>Утилита <code class="docutils literal notranslate"><span class="pre">locate</span></code><a class="headerlink" href="#locate" title="Link to this heading">#</a></h2>
+<p>Утилита <code class="docutils literal notranslate"><span class="pre">locate</span></code> ищет файлы по имени, используя заранее подготовленную базу данных с путями.
+Поиск в базе происходит значительно быстрее обхода файловой системы, поэтому <code class="docutils literal notranslate"><span class="pre">locate</span></code> удобна для быстрого поиска известного файла.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sppo@pc:~$ locate main.c
+/home/sppo/projects/hello/main.c
+/usr/src/linux/main.c
+</pre></div>
+</div>
+<p>Если шаблон не содержит метасимволов, <code class="docutils literal notranslate"><span class="pre">locate</span></code> находит все пути, содержащие эту строку.
+Если метасимволы есть, шаблон должен соответствовать всему пути, поэтому его обычно начинают и заканчивают символом <code class="docutils literal notranslate"><span class="pre">*</span></code>.
+Опция <code class="docutils literal notranslate"><span class="pre">-i</span></code> игнорирует регистр, а <code class="docutils literal notranslate"><span class="pre">-l</span></code> ограничивает количество выводимых строк:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">locate</span> <span class="o">-</span><span class="n">i</span> <span class="n">readme</span><span class="o">.</span><span class="n">md</span>
+<span class="n">locate</span> <span class="o">-</span><span class="n">l</span> <span class="mi">5</span> <span class="s1">'*.pdf'</span>
+</pre></div>
+</div>
+<p>Главный недостаток <code class="docutils literal notranslate"><span class="pre">locate</span></code> – база данных может устаревать.
+Файл, созданный после последнего обновления базы, не будет найден, а удаленный файл может все еще отображаться в результатах.
+Базу обновляет команда <code class="docutils literal notranslate"><span class="pre">updatedb</span></code>; для записи в системный каталог ей нужны права суперпользователя:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">updatedb</span>
+</pre></div>
+</div>
+<p>Обычно база обновляется автоматически по расписанию.
+Утилита <code class="docutils literal notranslate"><span class="pre">locate</span></code> входит в пакеты <code class="docutils literal notranslate"><span class="pre">mlocate</span></code> или <code class="docutils literal notranslate"><span class="pre">plocate</span></code> и может быть не установлена в системе.</p>
+<p><code class="docutils literal notranslate"><span class="pre">locate</span></code> ищет только по имени и пути, тогда как <code class="docutils literal notranslate"><span class="pre">find</span></code> умеет учитывать тип, размер и время изменения.
+Поэтому <code class="docutils literal notranslate"><span class="pre">locate</span></code> применяют для быстрого поиска по имени, а <code class="docutils literal notranslate"><span class="pre">find</span></code> – когда нужен точный отбор по свойствам файлов или действие над ними.</p>
 </section>
 <section id="id3">
-<h2>Упражнения<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>Вопросы для самоконтроля<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Подсчитайте количество файлов, каталогов, файлов и каталогов в домашнем каталоге.</p></li>
+<li><p>Что такое регулярное выражение?</p></li>
+<li><p>Чем регулярное выражение отличается от подстановки имен файлов?</p></li>
+<li><p>Что означают символы <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">^</span></code>, <code class="docutils literal notranslate"><span class="pre">$</span></code>, <code class="docutils literal notranslate"><span class="pre">[...]</span></code> и <code class="docutils literal notranslate"><span class="pre">\</span></code> в регулярном выражении?</p></li>
+<li><p>Для чего применяют утилиту <code class="docutils literal notranslate"><span class="pre">grep</span></code> и какой у нее формат команды?</p></li>
+<li><p>Откуда <code class="docutils literal notranslate"><span class="pre">grep</span></code> берет данные, если файл не указан?</p></li>
+<li><p>Как вывести номера строк, искать слово целиком и выводить только имена файлов с совпадениями?</p></li>
+<li><p>Как задать несколько шаблонов поиска?</p></li>
+<li><p>Чем отличаются опции <code class="docutils literal notranslate"><span class="pre">-r</span></code> и <code class="docutils literal notranslate"><span class="pre">-R</span></code> утилиты <code class="docutils literal notranslate"><span class="pre">grep</span></code>?</p></li>
+<li><p>Как ограничить рекурсивный поиск <code class="docutils literal notranslate"><span class="pre">grep</span></code> определенными расширениями и исключить каталог?</p></li>
+<li><p>Как с помощью <code class="docutils literal notranslate"><span class="pre">grep</span></code> подсчитать строки, игнорировать регистр и инвертировать выборку?</p></li>
+<li><p>Для чего применяют утилиту <code class="docutils literal notranslate"><span class="pre">find</span></code> и какой у нее формат команды?</p></li>
+<li><p>Как найти файлы, каталоги и символические ссылки?</p></li>
+<li><p>Как найти файлы по имени и по размеру?</p></li>
+<li><p>Как объединить несколько условий в <code class="docutils literal notranslate"><span class="pre">find</span></code> с помощью “И”, “ИЛИ” и отрицания?</p></li>
+<li><p>Как выполнить команду над каждым найденным файлом?</p></li>
+<li><p>Почему перед использованием <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">-delete</span></code> рекомендуется вывести найденные файлы?</p></li>
+<li><p>Как отключить сообщения <code class="docutils literal notranslate"><span class="pre">find</span></code> о недоступных каталогах?</p></li>
+<li><p>Чем <code class="docutils literal notranslate"><span class="pre">locate</span></code> отличается от <code class="docutils literal notranslate"><span class="pre">find</span></code> и в каких случаях его применяют?</p></li>
+<li><p>Почему <code class="docutils literal notranslate"><span class="pre">locate</span></code> может не найти только что созданный файл и как обновить базу данных?</p></li>
+<li><p>Какой код завершения возвращает <code class="docutils literal notranslate"><span class="pre">grep</span></code>, если совпадений не найдено?</p></li>
 </ol>
-<!--
-ls -l | grep "^d" -- вывод только каталогов
--->
+</section>
+<section id="id4">
+<h2>Упражнения<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Подсчитайте количество файлов, каталогов, скрытых файлов и скрытых каталогов в домашнем каталоге.</p></li>
+<li><p>Найдите в домашнем каталоге все файлы размером более 100 МБ.
+Выведите их размер и путь, отсортировав по убыванию размера.</p></li>
+<li><p>Найдите все пустые файлы и каталоги в текущем каталоге.</p></li>
+<li><p>Найдите файлы, измененные за последние сутки.</p></li>
+<li><p>Найдите в проекте из предыдущих занятий все строки с комментариями <code class="docutils literal notranslate"><span class="pre">TODO</span></code> и <code class="docutils literal notranslate"><span class="pre">FIXME</span></code>.
+Пронумеруйте строки и исключите каталоги <code class="docutils literal notranslate"><span class="pre">build</span></code> и <code class="docutils literal notranslate"><span class="pre">.git</span></code>.</p></li>
+<li><p>Подсчитайте количество файлов с расширениями <code class="docutils literal notranslate"><span class="pre">.c</span></code>, <code class="docutils literal notranslate"><span class="pre">.h</span></code>, <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> и <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> в проекте.</p></li>
+<li><p>Подсчитайте суммарное количество строк в исходных файлах проекта.</p></li>
+<li><p>Найдите все сломанные символические ссылки в домашнем каталоге.</p></li>
+<li><p>Найдите 10 самых больших файлов в домашнем каталоге.</p></li>
+<li><p>Выведите список расширений файлов проекта без повторений и подсчитайте количество файлов для каждого расширения.</p></li>
+<li><p>Найдите в журнале сборки все строки с ошибками и предупреждениями.
+Подсчитайте их количество отдельно.</p></li>
+<li><p>Проверьте, какие файлы в каталоге <code class="docutils literal notranslate"><span class="pre">/etc</span></code> содержат заданную строку.
+Ограничьте поиск файлами с расширением <code class="docutils literal notranslate"><span class="pre">.conf</span></code> и отключите сообщения о недоступных каталогах.</p></li>
+<li><p>Подсчитайте количество процессоров в системе и запустите сборку проекта с параллельным выполнением.</p></li>
+<li><p>Создайте новый файл, попробуйте найти его утилитой <code class="docutils literal notranslate"><span class="pre">locate</span></code>, обновите базу данных и повторите поиск.</p></li>
+<li><p>Сравните время выполнения поиска одного и того же файла утилитами <code class="docutils literal notranslate"><span class="pre">find</span></code> и <code class="docutils literal notranslate"><span class="pre">locate</span></code>.</p></li>
+<li><p>Продемонстрируйте коды завершения <code class="docutils literal notranslate"><span class="pre">grep</span></code> при наличии и отсутствии совпадений.</p></li>
+<li><p>Создайте в каталоге несколько файлов с расширением <code class="docutils literal notranslate"><span class="pre">.tmp</span></code>, выведите их список утилитой <code class="docutils literal notranslate"><span class="pre">find</span></code>, а затем удалите.</p></li>
+</ol>
 </section>
 </section>
 
@@ -540,12 +840,12 @@ ls -l | grep "^d" -- вывод только каталогов
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="compile.html"
+       href="getopt.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">16. </span>Компиляция программы на Си</p>
+        <p class="prev-next-title"><span class="section-number">15. </span>Разбор аргументов программы</p>
       </div>
     </a>
     <a class="right-next"
@@ -553,7 +853,7 @@ ls -l | grep "^d" -- вывод только каталогов
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">18. </span>Проверочная работа</p>
+        <p class="prev-next-title"><span class="section-number">17. </span>Проверочная работа</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -575,11 +875,17 @@ ls -l | grep "^d" -- вывод только каталогов
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Шаблоны для поиска</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bre">Синтаксис BRE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ere">Синтаксис ERE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#glob">Синтаксис Glob-шаблона</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grep">Утилита <code class="docutils literal notranslate"><span class="pre">grep</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#find">Утилита <code class="docutils literal notranslate"><span class="pre">find</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита locate</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Вопросы для самоконтроля</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Упражнения</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#locate">Утилита <code class="docutils literal notranslate"><span class="pre">locate</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Вопросы для самоконтроля</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Упражнения</a></li>
 </ul>
   </nav></div>
 
