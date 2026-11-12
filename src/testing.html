@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
   
   <!-- So that users can add custom icons -->
   <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
@@ -55,7 +55,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -490,11 +490,10 @@
 </section>
 <section id="id5">
 <h2>Примеры технических заданий<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>Написать программу на языке программирования Си.</p>
 <div class="dropdown admonition">
 <p class="admonition-title"><em>enumerate</em>, утилита нумерования строк</p>
-<p>Написать программу на языке программирования Си.
-Программа называется <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.
-Программа принимает из командной строки имена файлов и выводит их содержимое на экран, нумеруя каждую строку.
+<p>Программа принимает из командной строки имена файлов и выводит их содержимое на экран, нумеруя каждую строку.
 Нумерация сквозная и начинается с 1.</p>
 <p>Программа поддерживает следующие опции:</p>
 <ul class="simple">
@@ -523,9 +522,7 @@
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title"><em>cutline</em>, утилита отсекания строк</p>
-<p>Написать программу на языке программирования Си.
-Программа называется <code class="docutils literal notranslate"><span class="pre">cutline</span></code>.
-Программа принимает из командной строки имена файлов и выводит строки, отсекая до 30 символов.</p>
+<p>Программа принимает из командной строки имена файлов и выводит строки, отсекая до 30 символов.</p>
 <p>Программа поддерживает следующие опции:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">--help</span></code> выводит следующее сообщение на экран:</p></li>
@@ -548,6 +545,38 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">version</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-v</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--version</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">help</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">-h</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">--help</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cutline</span></code> запускает последовательно команды <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">test-*.sh</span></code> и <code class="docutils literal notranslate"><span class="pre">cutline</span> <span class="pre">output-*.txt</span></code>.</p></li>
+</ul>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title"><em>cutfield</em>, извлечение полей из строк</p>
+<p>Программа принимает из командной строки имя файла и выводит в стандартный поток вывода поле с заданным номером.
+Предполагается, что поля разделены пробелами.</p>
+<p>Поддерживаются следующие опции:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-h</span></code>, <code class="docutils literal notranslate"><span class="pre">--help</span></code> выводит следующее сообщение на экран:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="n">cutfield</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="o">--</span><span class="n">help</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span> <span class="o">|</span> <span class="o">--</span><span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="n">filename</span><span class="p">]</span>
+    <span class="n">Extract</span> <span class="n">field</span> <span class="kn">from</span><span class="w"> </span><span class="nn">line.</span>
+
+<span class="n">Options</span><span class="p">:</span>
+    <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span> 
+        <span class="n">display</span> <span class="n">this</span> <span class="n">help</span> <span class="ow">and</span> <span class="n">exit</span>
+    <span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span>
+        <span class="n">output</span> <span class="n">version</span> <span class="n">information</span> <span class="ow">and</span> <span class="n">exit</span>
+    <span class="o">-</span><span class="n">f</span> <span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span>
+        <span class="n">field</span> <span class="n">number</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">--version</span></code> выводит номер версии, в нашем случае <code class="docutils literal notranslate"><span class="pre">0.0.1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">&lt;number&gt;</span></code> задает номер поля в строке.</p></li>
+</ul>
+<p>Тестовые данные подготовить командой <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">aux</span> <span class="pre">&gt;</span> <span class="pre">test.txt</span></code>.
+Вспомогательные функции:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">strtol(3)</span></code> преобразует строку в число;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fwrite(3)</span></code> записывает строку в файл;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout</span></code> обозначает стандартный поток вывода с типом <code class="docutils literal notranslate"><span class="pre">FILE*</span></code>;</p></li>
 </ul>
 </div>
 </section>
